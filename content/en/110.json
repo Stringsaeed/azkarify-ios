@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/228.mp3",
+      "id": 228,
+      "repeat": 1,
+      "text": {
+        "arabic": "((إِذَا سَمِعْتُمْ صِيَاحَ الدِّيَكَةِ فَاسْأَلُوا اللَّهَ مِنْ فَضْلِهِ؛ فَإِنَّهَا رَأَتْ مَلَكاً وَإِذَا سَمِعْتُمْ نَهِيقَ الْحِمَارِ فَتَعَوَّذُوا بِاللَّهِ مِنَ الشَّيطَانِ؛ فَإِنَّهُ رَأَى شَيْطَاناً)).",
+        "arabicTranslated": "",
+        "translated": "(If you hear the crow of a rooster, ask Allah for his bounty for it has seen an angel and if you hear the braying of an ass, seek refuge in Allah for it has seen a devil.)"
+      }
+    }
+  ],
+  "title": "Invocation upon hearing the cock's crow or the bray of a donkey"
+}

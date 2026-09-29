@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/147.mp3",
+      "id": 147,
+      "repeat": 1,
+      "text": {
+        "arabic": "((لاَ بأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/148.mp3",
+      "id": 148,
+      "repeat": 1,
+      "text": {
+        "arabic": "((أَسْأَلُ اللَّهَ الْعَظيمَ رَبَّ الْعَرْشِ الْعَظِيمِ أَنْ يَشْفيَكَ)) (سبع مرات).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    }
+  ],
+  "title": "الدعاء للمريض في عيادته"
+}

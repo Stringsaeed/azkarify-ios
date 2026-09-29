@@ -1,0 +1,75 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/41.mp3",
+      "id": 41,
+      "repeat": 3,
+      "text": {
+        "arabic": "((سُبْحَانَ رَبِّيَ الأَعْلَى)) ثلاث مرَّاتٍ.",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/42.mp3",
+      "id": 42,
+      "repeat": 1,
+      "text": {
+        "arabic": "((سُبْحَانَكَ اللَّهُمَّ رَبَّنَا وَبِحَمْدِكَ، اللَّهُمَّ اغْفِرْ لِي)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/43.mp3",
+      "id": 43,
+      "repeat": 1,
+      "text": {
+        "arabic": "((سُبوحٌ، قُدُّوسٌ، رَبُّ الْمَلَائِكَةِ وَالرُّوحِ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/44.mp3",
+      "id": 44,
+      "repeat": 1,
+      "text": {
+        "arabic": "((اللَّهُمَّ لَكَ سَجَدْتُ وَبِكَ آمَنْتُ، وَلَكَ أَسْلَمْتُ، سَجَدَ وَجْهِيَ لِلَّذِي خَلَقَهُ، وَصَوَّرَهُ، وَشَقَّ سَمْعَهُ وَبَصَرَهُ، تَبَارَكَ اللَّهُ أَحْسنُ الْخَالِقينَ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/45.mp3",
+      "id": 45,
+      "repeat": 1,
+      "text": {
+        "arabic": "((سُبْحَانَ ذِي الْجَبَرُوتِ، وَالْمَلَكُوتِ، وَالْكِبْرِيَاءِ، وَالْعَظَمَةِ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/46.mp3",
+      "id": 46,
+      "repeat": 1,
+      "text": {
+        "arabic": "((اللَّهُمَّ اغْفِرْ لِي ذَنْبِي كُلَّهُ: دِقَّهُ وَجِلَّهُ، وَأَوَّلَهُ وَآخِرَهُ، وَعَلاَنِيَّتَهُ وَسِرَّهُ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/47.mp3",
+      "id": 47,
+      "repeat": 1,
+      "text": {
+        "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ، وَبِمُعَافَاتِكَ مِنْ عُقوبَتِكَ، وَأَعُوذُ بِكَ مِنْكَ، لاَ أُحْصِي ثَنَاءً عَلَيْكَ، أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    }
+  ],
+  "title": "دعاء السجود"
+}

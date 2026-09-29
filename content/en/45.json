@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/141.mp3",
+      "id": 141,
+      "repeat": 1,
+      "text": {
+        "arabic": "((الْاسْتِعَاذَةُ بِاللَّهِ مِنْهُ)).",
+        "arabicTranslated": "",
+        "translated": "Seeking refuge from him."
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/142.mp3",
+      "id": 142,
+      "repeat": 1,
+      "text": {
+        "arabic": "الْأَذَانُ",
+        "arabicTranslated": "",
+        "translated": "The Adhaan [call to prayer]."
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/143.mp3",
+      "id": 143,
+      "repeat": 1,
+      "text": {
+        "arabic": "((الْأَذْكَارُ وَقِرَاءَةُ الْقُرْآنِ)).",
+        "arabicTranslated": "",
+        "translated": "(Recitation of the Quran and the authentic texts of remembrance and supplications.)(e.g. ‘Do not make your homes like the graveyards, indeed the devils flee from the house in which soorat Al-Baqarah has been read’ related by Muslim 1/539, also supplication and remembrance for the morning & evening, before sleep, when getting up, entering and leaving the toilet, entering and leaving the mosque, the recitation of ayat Al-kursiyy and the last two verses of soorat Al-Baqarah before sleeping, the athan…etc.)"
+      }
+    }
+  ],
+  "title": "Invocations against the Devil and his promptings"
+}

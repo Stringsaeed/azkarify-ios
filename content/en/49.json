@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/147.mp3",
+      "id": 147,
+      "repeat": 1,
+      "text": {
+        "arabic": "((لاَ بأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ)).",
+        "arabicTranslated": "(La ba'sa tahoorun in shaal-lah.)",
+        "translated": "(Never mind, may it (the sickness) be a purification, if Allah wills.)"
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/148.mp3",
+      "id": 148,
+      "repeat": 1,
+      "text": {
+        "arabic": "((أَسْأَلُ اللَّهَ الْعَظيمَ رَبَّ الْعَرْشِ الْعَظِيمِ أَنْ يَشْفيَكَ)) (سبع مرات).",
+        "arabicTranslated": "(Asalul-lahal-AAatheem rabbal-AAarshil-AAatheem an yashfeek (7times).)",
+        "translated": "(I ask Allah The Supreme, Lord of the magnificent throne to cure you’.(7times) (he (the sick person) will be cured.))"
+      }
+    }
+  ],
+  "title": "Invocations for visiting the sick"
+}

@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/176.mp3",
+      "id": 176,
+      "repeat": 1,
+      "text": {
+        "arabic": "((ذَهَبَ الظَّمَأُ وَابْتَلَّتِ العُرُوقُ، وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/177.mp3",
+      "id": 177,
+      "repeat": 1,
+      "text": {
+        "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ بِرَحْمَتِكَ الَّتِي وَسِعَتْ كُلَّ شَيْءٍ أَنْ تَغْفِرَ لِي)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    }
+  ],
+  "title": "الدعاء عند إفطار الصائم"
+}

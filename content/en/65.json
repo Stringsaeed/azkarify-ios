@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/173.mp3",
+      "id": 173,
+      "repeat": 1,
+      "text": {
+        "arabic": "((مُطِرْنَا بِفَضْلِ اللَّهِ وَرَحْمَتِهِ)).",
+        "arabicTranslated": "(Mutirna bifadlil-lahi warahmatih.)",
+        "translated": "(We have been given rain by the grace and mercy of Allah.)"
+      }
+    }
+  ],
+  "title": "Supplication after it rains"
+}

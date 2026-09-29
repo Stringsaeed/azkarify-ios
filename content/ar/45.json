@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/141.mp3",
+      "id": 141,
+      "repeat": 1,
+      "text": {
+        "arabic": "((الْاسْتِعَاذَةُ بِاللَّهِ مِنْهُ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/142.mp3",
+      "id": 142,
+      "repeat": 1,
+      "text": {
+        "arabic": "((الْأَذَانُ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/143.mp3",
+      "id": 143,
+      "repeat": 1,
+      "text": {
+        "arabic": "((الْأَذْكَارُ وَقِرَاءَةُ الْقُرْآنِ)).",
+        "arabicTranslated": "",
+        "translated": ""
+      }
+    }
+  ],
+  "title": "دعاء طرد الشيطان و وساوسه"
+}

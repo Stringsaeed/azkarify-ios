@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/212.mp3",
+      "id": 212,
+      "repeat": 1,
+      "text": {
+        "arabic": "(( أَسْتَوْدِعُ اللَّهَ دِينَكَ، وَأَمَانَتَكَ، وَخَوَاتِيمَ عَمَلِكَ)).",
+        "arabicTranslated": "(AstawdiAAul-laha deenak, wa-amanatak, wakhawateema AAamalik.)",
+        "translated": "(I place your religion, your faithfulness and the ends of your deeds in the trust of Allah.)"
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/213.mp3",
+      "id": 213,
+      "repeat": 1,
+      "text": {
+        "arabic": "((زَوَّدَكَ اللَّهُ التَّقْوَى، وَغَفَرَ ذَنْبَكَ، وَيَسَّرَ لَكَ الخَيْرَ حَيْثُ ما كُنْتَ)).",
+        "arabicTranslated": "(Zawwadakal-lahut-taqwa, waghafara thanbak, wayassara lakal-khayra haythuma kunt.)",
+        "translated": "(May Allah endow you with taqwa, forgive your sins and facilitate all good for you, wherever you be.)(taqwa: a comprehensive term which refers to all good actions and obedience i.e. performing the commanded actions and avoiding the prohibited actions.)"
+      }
+    }
+  ],
+  "title": "The resident's invocations for the traveler"
+}

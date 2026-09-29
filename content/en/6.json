@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/10.mp3",
+      "id": 10,
+      "repeat": 1,
+      "text": {
+        "arabic": "([بِسْمِ اللَّهِ] اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبائِث).",
+        "arabicTranslated": "((Bismil-lah) allahumma innee aAAoothu bika minal-khubthi wal-khaba-ith.)",
+        "translated": "((In the name of Allah).  O Allah, I take refuge with you from all evil and evil-doers.)"
+      }
+    }
+  ],
+  "title": "Invocation for entering the restroom"
+}

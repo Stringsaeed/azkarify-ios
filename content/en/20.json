@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/48.mp3",
+      "id": 48,
+      "repeat": 1,
+      "text": {
+        "arabic": "((رَبِّ اغْفِرْ لِي، رَبِّ اغْفِرْ لِي)).",
+        "arabicTranslated": "(Rabbigh-fir lee, rabbigh-fir lee.)",
+        "translated": "(My Lord forgive me, My Lord forgive me.)"
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/49.mp3",
+      "id": 49,
+      "repeat": 1,
+      "text": {
+        "arabic": "((اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَاجْبُرْنِي، وَعَافِنِي، وَارْزُقْنِي، وَارْفَعْنِي)).",
+        "arabicTranslated": "(Allahummagh-fir lee, warhamnee, wahdinee, wajburnee, waAAafinee, warzuqnee warfaAAnee.)",
+        "translated": "(O Allah, forgive me, have mercy upon me, guide me, enrich me, give me health, grant me sustenance and raise my rank.)"
+      }
+    }
+  ],
+  "title": "Invocations for sitting between two prostrations"
+}
