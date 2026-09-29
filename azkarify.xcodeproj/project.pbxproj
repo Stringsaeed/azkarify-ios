@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A30000000000000000000002 /* content in Resources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000001 /* content */; };
 		30855B07306C1362007AE219 /* new-icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 30855B06306C1362007AE219 /* new-icon.icon */; };
 		A10000000000000000000002 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000005 /* RevenueCat */; };
 		A10000000000000000000003 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000006 /* RevenueCatUI */; };
 		A20000000000000000000002 /* SPIndicator in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000005 /* SPIndicator */; };
+		A30000000000000000000002 /* content in Resources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000001 /* content */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,11 +32,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A30000000000000000000001 /* content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = content; sourceTree = "<group>"; };
 		30855969306BED6A007AE219 /* azkarify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = azkarify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30855978306BED6B007AE219 /* azkarifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = azkarifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		30855982306BED6B007AE219 /* azkarifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = azkarifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		30855B06306C1362007AE219 /* new-icon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "new-icon.icon"; sourceTree = "<group>"; };
+		A30000000000000000000001 /* content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = content; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -333,6 +333,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -390,6 +391,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -401,11 +403,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "new-icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200;
+				CURRENT_PROJECT_VERSION = 201;
 				DEVELOPMENT_TEAM = V3HN8HXZYK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "حصن المسلم - الأذكار";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -435,11 +438,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "new-icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200;
+				CURRENT_PROJECT_VERSION = 201;
 				DEVELOPMENT_TEAM = V3HN8HXZYK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "حصن المسلم - الأذكار";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
