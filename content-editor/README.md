@@ -18,11 +18,11 @@ Review saved changes with `git diff -- content`, then commit and push them throu
 
 ## Dataset
 
-`content/ar/husn_ar.json` and `content/en/husn_en.json` list categories. Each category's `detailUrl` points to its JSON file under `content/`. Original IDs, URLs, item order, and all source fields are preserved. Only JSON indentation and UTF-8 encoding were standardized during download.
+`content/ar/husn_ar.json` and `content/en/husn_en.json` list categories. Each category's `detailUrl` points to its JSON file under `content/`. Original IDs, URLs, item order, and all source fields are preserved. JSON indentation and UTF-8 encoding were standardized during download. Four missing English-collection fields were repaired for bundled decoding: entry 115 has an empty reading guide; entries 133 and 185 copy their existing English reading-guide text into the missing translation field; entry 267 copies Arabic text from its matching Arabic entry. No new translations were written.
 
 Source: the same [Azkarify Hisn CDN v2](https://github.com/Stringsaeed/azkarify-husn-cdn/tree/v2/v1) used by the iOS repository. Downloaded September 29, 2026. Audio URLs are preserved; audio files are not downloaded.
 
-The iOS app has not been switched to these files yet. Bundling this content and replacing its SwiftData/network loading is a separate step.
+Xcode bundles this same `content/` folder without flattening its Arabic and English directories. The iOS app reads these files directly, without SwiftData or content network requests. Rebuild the app after saving edits to include them in the installed app. Reading works offline from first launch; purchases still use RevenueCat.
 
 The download script is retained for reproducibility:
 

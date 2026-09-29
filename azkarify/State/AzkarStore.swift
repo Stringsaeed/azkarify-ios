@@ -19,11 +19,11 @@ final class AzkarStore: ObservableObject {
     favorites = Set(UserDefaults.standard.array(forKey: "favorites") as? [Int] ?? [])
   }
 
-  func load(refresh: Bool = false) async {
+  func load() async {
     isLoading = true
     errorMessage = nil
     defer { isLoading = false }
-    do { categories = try await repository.categories(language: language, refresh: refresh) } catch
+    do { categories = try repository.categories(language: language) } catch
     { errorMessage = error.localizedDescription }
   }
 

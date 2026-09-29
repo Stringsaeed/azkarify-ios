@@ -42,7 +42,7 @@ struct ContentView: View {
           } else if let error = store.errorMessage, store.categories.isEmpty {
             ContentUnavailableView(
               AppCopy.text("Could not load azkar"),
-              systemImage: "wifi.exclamationmark", description: Text(error))
+              systemImage: "doc.text", description: Text(error))
             Button(AppCopy.text("Retry")) {
               Task { await store.load() }
             }
@@ -81,7 +81,6 @@ struct ContentView: View {
         text: $search,
         prompt: AppCopy.text("Search azkar")
       )
-      .refreshable { await store.load(refresh: true) }
       .toolbar {
         ToolbarItem(placement: .topBarLeading) {
           Button {

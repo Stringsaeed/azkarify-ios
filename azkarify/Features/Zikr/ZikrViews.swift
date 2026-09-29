@@ -15,7 +15,7 @@ struct ZikrListView: View {
         if let errorMessage, entries.isEmpty {
           ContentUnavailableView(
             AppCopy.text("Could not load azkar"),
-            systemImage: "wifi.exclamationmark", description: Text(errorMessage))
+            systemImage: "doc.text", description: Text(errorMessage))
           Button(AppCopy.text("Retry")) {
             Task { await load() }
           }
@@ -29,7 +29,6 @@ struct ZikrListView: View {
     }
     .background(AppAppearance.background)
     .appNavigationTitle(category.title, language: store.language)
-    .refreshable { await load(refresh: true) }
     .toolbar {
       Button {
         showSlideshow = true
@@ -43,13 +42,12 @@ struct ZikrListView: View {
     .task(id: category.detailUrl) { await load() }
   }
 
-  private func load(refresh: Bool = false) async {
+  private func load() async {
     isLoading = true
     errorMessage = nil
     defer { isLoading = false }
     do {
-      entries = try await store.repository.entries(
-        for: category, language: store.language, refresh: refresh)
+      entries = try store.repository.entries(for: category)
     } catch { errorMessage = error.localizedDescription }
   }
 }
