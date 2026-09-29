@@ -9,35 +9,98 @@ import XCTest
 
 final class azkarifyUITests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+  @MainActor
+  func testArabicAppearanceAndSlideshow() throws {
+    let app = XCUIApplication()
+    app.launchArguments = [
+      "-language", "ar", "-font", "amiri", "-accent", "teal", "-hasSeenIntro", "YES",
+    ]
+    app.launch()
+    XCTAssertTrue(app.staticTexts["حصن المسلم"].waitForExistence(timeout: 15))
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+    app.buttons["الإعدادات"].tap()
+    XCTAssertTrue(app.staticTexts["الإعدادات"].waitForExistence(timeout: 5))
+    let settingsImage = XCTAttachment(screenshot: app.screenshot())
+    settingsImage.name = "Arabic Settings"
+    settingsImage.lifetime = .keepAlways
+    add(settingsImage)
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
+    app.buttons["لون التمييز"].tap()
+    XCTAssertTrue(app.staticTexts["لون التمييز"].waitForExistence(timeout: 5))
+    let accentImage = XCTAttachment(screenshot: app.screenshot())
+    accentImage.name = "Accent choices"
+    accentImage.lifetime = .keepAlways
+    add(accentImage)
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    app.buttons["فيروزي"].tap()
 
-    @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+    app.navigationBars["الإعدادات"].buttons.firstMatch.tap()
+    app.buttons["أذكار الصباح والمساء"].firstMatch.tap()
+    app.buttons["عرض الشرائح"].tap()
+    let slideshowImage = XCTAttachment(screenshot: app.screenshot())
+    slideshowImage.name = "Arabic slideshow first page"
+    slideshowImage.lifetime = .keepAlways
+    add(slideshowImage)
+  }
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
-    }
+  @MainActor
+  func testAccentSelectionUpdatesSettings() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-language", "ar", "-font", "amiri", "-hasSeenIntro", "YES"]
+    app.launch()
+    app.buttons["الإعدادات"].tap()
+    app.buttons["لون التمييز"].tap()
+    app.buttons["أزرق"].tap()
+    let image = XCTAttachment(screenshot: app.screenshot())
+    image.name = "Settings after selecting blue"
+    image.lifetime = .keepAlways
+    add(image)
+    app.buttons["لون التمييز"].tap()
+    XCTAssertTrue(app.buttons["أزرق"].isSelected)
+  }
 
-    @MainActor
-    func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
-        measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
-        }
-    }
+  @MainActor
+  func testArabicMenuUsesBeadsIcon() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-language", "ar", "-hasSeenIntro", "YES"]
+    app.launch()
+    app.buttons["القائمة"].tap()
+    let image = XCTAttachment(screenshot: app.screenshot())
+    image.name = "Arabic menu"
+    image.lifetime = .keepAlways
+    add(image)
+    app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "السبحة")).firstMatch.tap()
+    XCTAssertTrue(app.buttons["العدد: 0"].waitForExistence(timeout: 5))
+  }
+
+  @MainActor
+  func testAddingFavoriteShowsIndicator() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-language", "en", "-hasSeenIntro", "YES"]
+    app.launch()
+    let addButton = app.buttons["Add to favorites"].firstMatch
+    XCTAssertTrue(addButton.waitForExistence(timeout: 15))
+    addButton.tap()
+    XCTAssertTrue(app.buttons["Remove from favorites"].firstMatch.waitForExistence(timeout: 5))
+    let image = XCTAttachment(screenshot: app.screenshot())
+    image.name = "Favorite added indicator"
+    image.lifetime = .keepAlways
+    add(image)
+  }
+
+  @MainActor
+  func testArabicFontSelectionUpdatesHeader() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-language", "ar", "-hasSeenIntro", "YES"]
+    app.launch()
+    app.buttons["الإعدادات"].tap()
+    app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "الخط")).firstMatch.tap()
+    app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "أميري")).firstMatch.tap()
+    XCTAssertTrue(app.staticTexts["الإعدادات"].waitForExistence(timeout: 5))
+    let image = XCTAttachment(screenshot: app.screenshot())
+    image.name = "Settings after selecting Amiri"
+    image.lifetime = .keepAlways
+    add(image)
+  }
+
 }

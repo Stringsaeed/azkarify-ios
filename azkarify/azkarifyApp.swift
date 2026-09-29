@@ -1,32 +1,48 @@
-//
-//  azkarifyApp.swift
-//  azkarify
-//
-//  Created by Muhammed Saeed on 29/09/2026.
-//
-
-import SwiftUI
 import SwiftData
+import SwiftUI
+import UserNotifications
 
 @main
 struct azkarifyApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+  private let container: ModelContainer
+  @StateObject private var store: AzkarStore
+  @AppStorage("theme") private var theme = "system"
+  @AppStorage("accent") private var accent = "brown"
+  @AppStorage("font") private var selectedFont = "ibmPlexSansArabic"
+  @AppStorage("hasSeenIntro") private var hasSeenIntro = false
 
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-        .modelContainer(sharedModelContainer)
+  init() {
+    AppAppearance.registerFonts()
+    _ = RevenueCatService.isConfigured
+    UNUserNotificationCenter.current().delegate = ReminderScheduler.delegate
+    do {
+      let container = try ModelContainer(for: CachedAzkarDocument.self)
+      self.container = container
+      _store = StateObject(
+        wrappedValue: AzkarStore(repository: AzkarRepository(context: container.mainContext)))
+    } catch {
+      fatalError("Could not open the azkar cache: \(error)")
     }
+  }
+
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
+        .environmentObject(store)
+        .modelContainer(container)
+        .preferredColorScheme(theme == "dark" ? .dark : theme == "light" ? .light : nil)
+        .tint(AppAppearance.accent(accent))
+        .font(AppAppearance.font(language: store.language, choice: selectedFont, size: 17))
+        .fullScreenCover(
+          isPresented: Binding(
+            get: { !hasSeenIntro },
+            set: { if !$0 { hasSeenIntro = true } }
+          )
+        ) {
+          IntroView { hasSeenIntro = true }
+            .environmentObject(store)
+            .tint(AppAppearance.accent(accent))
+        }
+    }
+  }
 }
