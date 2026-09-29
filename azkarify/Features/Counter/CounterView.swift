@@ -8,6 +8,7 @@ struct CounterView: View {
   @AppStorage("accent") private var accent = "brown"
   @AppStorage("font") private var selectedFont = "ibmPlexSansArabic"
   @State private var count = 0
+  @State private var audio = CounterAudio()
 
   var body: some View {
     Group {
@@ -40,7 +41,11 @@ struct CounterView: View {
         .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
       }
     }
-    .onAppear { count = initialCount }
+    .onAppear {
+      count = initialCount
+      audio.prepare()
+    }
+    .onDisappear { audio.stop() }
   }
 
   private var counterControls: some View {
@@ -98,7 +103,7 @@ struct CounterView: View {
         }
       }
       Button(AppCopy.text("Reset", "إعادة ضبط", language: store.language)) {
-        changeCount(to: initialCount)
+        changeCount(to: initialCount, cue: .reset)
       }
       .frame(minHeight: 44)
     }
@@ -106,9 +111,12 @@ struct CounterView: View {
 
   private func changeCount(by value: Int) {
     let next = max(0, count + value)
-    changeCount(to: initialCount > 0 ? min(initialCount, next) : next)
+    let value = initialCount > 0 ? min(initialCount, next) : next
+    changeCount(to: value, cue: initialCount > 0 && value == 0 ? .completion : .tick)
   }
-  private func changeCount(to value: Int) {
+  private func changeCount(to value: Int, cue: CounterAudio.Cue) {
+    guard value != count else { return }
     withAnimation(reduceMotion ? nil : .smooth(duration: 0.25)) { count = value }
+    audio.play(cue)
   }
 }
