@@ -14,9 +14,9 @@ struct ZikrListView: View {
         if isLoading && entries.isEmpty { ProgressView().padding() }
         if let errorMessage, entries.isEmpty {
           ContentUnavailableView(
-            AppCopy.text("Could not load azkar", "تعذر تحميل الأذكار", language: store.language),
-            systemImage: "wifi.exclamationmark", description: Text(errorMessage))
-          Button(AppCopy.text("Retry", "إعادة المحاولة", language: store.language)) {
+            AppCopy.text("Could not load azkar"),
+            systemImage: "doc.text", description: Text(errorMessage))
+          Button(AppCopy.text("Retry")) {
             Task { await load() }
           }
         }
@@ -29,7 +29,6 @@ struct ZikrListView: View {
     }
     .background(AppAppearance.background)
     .appNavigationTitle(category.title, language: store.language)
-    .refreshable { await load(refresh: true) }
     .toolbar {
       Button {
         showSlideshow = true
@@ -37,26 +36,24 @@ struct ZikrListView: View {
         Image(systemName: "slider.horizontal.below.rectangle")
       }
       .disabled(entries.isEmpty)
-      .accessibilityLabel(AppCopy.text("Slideshow", "عرض الشرائح", language: store.language))
+      .accessibilityLabel(AppCopy.text("Slideshow"))
     }
     .sheet(isPresented: $showSlideshow) { SlideshowView(entries: entries, title: category.title) }
     .task(id: category.detailUrl) { await load() }
   }
 
-  private func load(refresh: Bool = false) async {
+  private func load() async {
     isLoading = true
     errorMessage = nil
     defer { isLoading = false }
     do {
-      entries = try await store.repository.entries(
-        for: category, language: store.language, refresh: refresh)
+      entries = try store.repository.entries(for: category)
     } catch { errorMessage = error.localizedDescription }
   }
 }
 
 struct ZikrCard: View {
   @EnvironmentObject private var store: AzkarStore
-  @AppStorage("font") private var selectedFont = "ibmPlexSansArabic"
   let entry: ZikrEntry
   @State private var showCounter = false
   private var text: String { store.language == "ar" ? entry.text.arabic : entry.text.translated }
@@ -65,9 +62,9 @@ struct ZikrCard: View {
     AppListItem(horizontalPadding: 14, verticalPadding: 12) {
       VStack(alignment: .leading, spacing: 12) {
         Text(text)
+          .textSelection(.enabled)
           .font(
             AppAppearance.font(
-              language: store.language, choice: selectedFont,
               size: store.language == "ar" ? 20 : 21, relativeTo: .title3)
           )
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -83,14 +80,12 @@ struct ZikrCard: View {
             }
             .font(
               AppAppearance.font(
-                language: store.language, choice: selectedFont, size: 21, relativeTo: .title3)
+                size: 21, relativeTo: .title3)
             )
             .frame(minHeight: 44)
           }
           .accessibilityLabel(
-            AppCopy.text(
-              "Count down from \(entry.repeat)", "ابدأ العد من \(entry.repeat)",
-              language: store.language))
+            AppCopy.format("Count down from %lld", entry.repeat))
         }
       }
     }
@@ -101,7 +96,6 @@ struct ZikrCard: View {
 struct SlideshowView: View {
   @Environment(\.dismiss) private var dismiss
   @EnvironmentObject private var store: AzkarStore
-  @AppStorage("font") private var selectedFont = "ibmPlexSansArabic"
   let entries: [ZikrEntry]
   let title: String
   @State private var page = 0
@@ -112,9 +106,10 @@ struct SlideshowView: View {
         ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
           ScrollView {
             Text(store.language == "ar" ? entry.text.arabic : entry.text.translated)
+              .textSelection(.enabled)
               .font(
                 AppAppearance.font(
-                  language: store.language, choice: selectedFont, size: 30, relativeTo: .largeTitle)
+                  size: 30, relativeTo: .largeTitle)
               )
               .multilineTextAlignment(.center)
               .frame(maxWidth: .infinity)
@@ -124,9 +119,7 @@ struct SlideshowView: View {
           }
           .tag(index)
           .accessibilityLabel(
-            AppCopy.text(
-              "Zikr \(index + 1) of \(entries.count)", "الذكر \(index + 1) من \(entries.count)",
-              language: store.language))
+            AppCopy.format("Zikr %lld of %lld", index + 1, entries.count))
         }
       }
       .tabViewStyle(.page(indexDisplayMode: .automatic))
@@ -140,7 +133,7 @@ struct SlideshowView: View {
           } label: {
             Image(systemName: "xmark")
           }
-          .accessibilityLabel(AppCopy.text("Close", "إغلاق", language: store.language))
+          .accessibilityLabel(AppCopy.text("Close"))
         }
       }
     }

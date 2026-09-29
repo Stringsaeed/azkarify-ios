@@ -1,0 +1,55 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/33.mp3",
+      "id": 33,
+      "repeat": 3,
+      "text": {
+        "arabic": "((سُبْحانَ رَبِّيَ الْعَظِيمِ)). ثلاث مرَّاتٍ.",
+        "arabicTranslated": "(Subhana rabbiyal-AAatheem (three times))",
+        "translated": "(How perfect my Lord is, The Supreme.’(three times))"
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/34.mp3",
+      "id": 34,
+      "repeat": 1,
+      "text": {
+        "arabic": "((سُبْحَانَكَ اللَّهُمَّ رَبَّنَا وَبِحَمْدِكَ، اللَّهُمَّ اغْفِرْ لِي)).",
+        "arabicTranslated": "(Subhanakal-lahumma rabbana wabihamdik, allahummagh-fir lee)",
+        "translated": "(How perfect You are O Allah, our Lord and I praise You.  O Allah, forgive me.)"
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/35.mp3",
+      "id": 35,
+      "repeat": 1,
+      "text": {
+        "arabic": "((سُبُّوُحٌ، قُدُّوسٌ، رَبُّ المَلاَئِكَةِ وَالرُّوحِ)).",
+        "arabicTranslated": "(Subboohun quddoos, rabbul-mala-ikati warrooh.)",
+        "translated": "(Perfect and Holy (He is), Lord of the angles and the Rooh (i.e. Jibra-eel).)"
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/36.mp3",
+      "id": 36,
+      "repeat": 1,
+      "text": {
+        "arabic": "((اللَّهُمَّ لَكَ رَكَعْتُ، وَبِكَ آمَنْتُ، وَلَكَ أَسْلَمْتُ، خَشَعَ لَكَ سَمْعِي، وَبَصَرِي، وَمُخِّي، وَعَــــظْمِي، وَعَصَبِي، [وَمَا استَقَلَّتْ بِهِ قَدَمِي])).",
+        "arabicTranslated": "(Allahumma laka rakaAAt, wabika amant, walaka aslamt, khashaAAa laka samAAee, wabasaree, wamukhkhee, waAAathmee, waAAasabee, wamas-taqalla bihi qadamee.)",
+        "translated": "(O Allah, unto You I have bowed, and in You I have believed, and to You I have submitted. My hearing, sight, mind, bones, tendons and what my feet carry are humbled before You.)"
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/37.mp3",
+      "id": 37,
+      "repeat": 1,
+      "text": {
+        "arabic": "((سُبْحَانَ ذِي الْجَبَرُوتِ، وَالْمَلَكُوتِ، وَالْكِبْرِيَاءِ، وَالْعَظَمَةِ)).",
+        "arabicTranslated": "(Subhana thil-jabaroot, walmalakoot, walkibriya/, walAAathamah.)",
+        "translated": "(How perfect He is, The Possessor of total power, sovereignty, magnificence and grandeur.)"
+      }
+    }
+  ],
+  "title": "Invocations during Ruki' (bowing in prayer)"
+}

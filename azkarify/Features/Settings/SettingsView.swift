@@ -5,7 +5,6 @@ import SwiftUI
 struct SettingsView: View {
   @EnvironmentObject private var store: AzkarStore
   @AppStorage("theme") private var theme = "system"
-  @AppStorage("font") private var font = "ibmPlexSansArabic"
   @AppStorage("accent") private var accent = "brown"
   @State private var showPaywall = false
   @State private var paywallError: String?
@@ -14,31 +13,19 @@ struct SettingsView: View {
 
   var body: some View {
     Form {
-      Picker(AppCopy.text("Theme", "المظهر", language: store.language), selection: $theme) {
-        Text(AppCopy.text("System", "النظام", language: store.language)).tag("system")
-        Text(AppCopy.text("Light", "فاتح", language: store.language)).tag("light")
-        Text(AppCopy.text("Dark", "داكن", language: store.language)).tag("dark")
+      Picker(AppCopy.text("Theme"), selection: $theme) {
+        Text(AppCopy.text("System")).tag("system")
+        Text(AppCopy.text("Light")).tag("light")
+        Text(AppCopy.text("Dark")).tag("dark")
       }
-      Picker(
-        AppCopy.text("Language", "اللغة", language: store.language), selection: $store.language
-      ) {
-        Text("العربية").tag("ar")
-        Text("English").tag("en")
-      }
-      if store.language == "ar" {
-        Picker("الخط", selection: $font) {
-          Text("أميري · Amiri").tag("amiri")
-          Text("الرقعة · Aref Ruqaa").tag("arefRuqaa")
-          Text("آي بي إم بلكس · IBM Plex Sans Arabic").tag("ibmPlexSansArabic")
-        }
-      } else {
-        LabeledContent("Font", value: "Open Sans")
+      if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+        Link(AppCopy.text("Language"), destination: settingsURL)
       }
       Button {
         showAccentPicker = true
       } label: {
         HStack {
-          Text(AppCopy.text("Accent color", "لون التمييز", language: store.language))
+          Text(AppCopy.text("Accent color"))
           Spacer()
           Circle()
             .fill(AppAppearance.accent(accent))
@@ -46,24 +33,24 @@ struct SettingsView: View {
             .accessibilityHidden(true)
         }
       }
-      Section(AppCopy.text("Reminders", "التذكيرات", language: store.language)) {
+      Section(AppCopy.text("Reminders")) {
         ReminderSettingView(kind: .morning, language: store.language)
         ReminderSettingView(kind: .evening, language: store.language)
       }
-      Button(AppCopy.text("View introduction", "عرض المقدمة", language: store.language)) {
+      Button(AppCopy.text("View introduction")) {
         showIntro = true
       }
-      Button(AppCopy.text("Support the developer", "ادعم المطور", language: store.language)) {
+      Button(AppCopy.text("Support the developer")) {
         Task { await openPaywall() }
       }
       .disabled(!RevenueCatService.isConfigured)
     }
     .scrollContentBackground(.hidden)
     .background(AppAppearance.background)
-    .font(AppAppearance.font(language: store.language, choice: font, size: 17))
+    .font(AppAppearance.font(size: 17))
     .tint(AppAppearance.accent(accent))
     .appNavigationTitle(
-      AppCopy.text("Settings", "الإعدادات", language: store.language), language: store.language
+      AppCopy.text("Settings"), language: store.language
     )
     .sheet(isPresented: $showAccentPicker) {
       AccentPickerView(selection: $accent, language: store.language)
@@ -73,13 +60,13 @@ struct SettingsView: View {
       IntroView { showIntro = false }.environmentObject(store)
     }
     .alert(
-      AppCopy.text("Paywall unavailable", "صفحة الدعم غير متاحة", language: store.language),
+      AppCopy.text("Paywall unavailable"),
       isPresented: Binding(
         get: { paywallError != nil },
         set: { if !$0 { paywallError = nil } }
       )
     ) {
-      Button(AppCopy.text("OK", "حسنًا", language: store.language)) { paywallError = nil }
+      Button(AppCopy.text("OK")) { paywallError = nil }
     } message: {
       Text(paywallError ?? "")
     }
@@ -88,9 +75,7 @@ struct SettingsView: View {
   private func openPaywall() async {
     do {
       guard try await Purchases.shared.offerings().current != nil else {
-        paywallError = AppCopy.text(
-          "No support offering is available yet.", "لا توجد باقة دعم متاحة حاليًا.",
-          language: store.language)
+        paywallError = AppCopy.text("No support offering is available yet.")
         return
       }
       showPaywall = true

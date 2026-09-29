@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A30000000000000000000002 /* content in Resources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000001 /* content */; };
 		30855B07306C1362007AE219 /* new-icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 30855B06306C1362007AE219 /* new-icon.icon */; };
 		A10000000000000000000002 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000005 /* RevenueCat */; };
 		A10000000000000000000003 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000006 /* RevenueCatUI */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A30000000000000000000001 /* content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = content; sourceTree = "<group>"; };
 		30855969306BED6A007AE219 /* azkarify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = azkarify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30855978306BED6B007AE219 /* azkarifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = azkarifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		30855982306BED6B007AE219 /* azkarifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = azkarifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +82,7 @@
 		30855960306BED6A007AE219 = {
 			isa = PBXGroup;
 			children = (
+				A30000000000000000000001 /* content */,
 				3085596B306BED6A007AE219 /* azkarify */,
 				3085597B306BED6B007AE219 /* azkarifyTests */,
 				30855985306BED6B007AE219 /* azkarifyUITests */,
@@ -223,6 +226,7 @@
 		30855967306BED6A007AE219 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				A30000000000000000000002 /* content in Resources */,
 				30855B07306C1362007AE219 /* new-icon.icon in Resources */,
 			);
 		};

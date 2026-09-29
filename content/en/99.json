@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/210.mp3",
+      "id": 210,
+      "repeat": 1,
+      "text": {
+        "arabic": "((بِسْمِ اللَّهِ)).",
+        "arabicTranslated": "(Bismil-lah.)",
+        "translated": "(In the name of Allah.)"
+      }
+    }
+  ],
+  "title": "Invocation for when your vehicle or mount begins to fail"
+}

@@ -10,7 +10,6 @@ private enum HomeRoute: Hashable {
 
 struct ContentView: View {
   @EnvironmentObject private var store: AzkarStore
-  @AppStorage("font") private var selectedFont = "ibmPlexSansArabic"
   @AppStorage("accent") private var accent = "brown"
   @State private var search = ""
   @State private var path = [HomeRoute]()
@@ -26,31 +25,30 @@ struct ContentView: View {
       ScrollView {
         LazyVStack(alignment: .leading, spacing: 12) {
           Text(
-            AppCopy.text(
-              "Find the right zikr faster", "ابحث عن الذكر المناسب", language: store.language)
+            AppCopy.text("Find the right zikr faster")
           )
           .font(
             AppAppearance.font(
-              language: store.language, choice: selectedFont, size: 25, relativeTo: .title2,
+              size: 25, relativeTo: .title2,
               bold: true))
-          Text(AppCopy.text("All azkar", "جميع الأذكار", language: store.language))
+          Text(AppCopy.text("All azkar"))
             .font(
               AppAppearance.font(
-                language: store.language, choice: selectedFont, size: 18, relativeTo: .headline,
+                size: 18, relativeTo: .headline,
                 bold: true))
           if store.isLoading && store.categories.isEmpty {
             ProgressView().frame(maxWidth: .infinity).accessibilityLabel(
-              AppCopy.text("Loading azkar", "جارٍ تحميل الأذكار", language: store.language))
+              AppCopy.text("Loading azkar"))
           } else if let error = store.errorMessage, store.categories.isEmpty {
             ContentUnavailableView(
-              AppCopy.text("Could not load azkar", "تعذر تحميل الأذكار", language: store.language),
-              systemImage: "wifi.exclamationmark", description: Text(error))
-            Button(AppCopy.text("Retry", "إعادة المحاولة", language: store.language)) {
+              AppCopy.text("Could not load azkar"),
+              systemImage: "doc.text", description: Text(error))
+            Button(AppCopy.text("Retry")) {
               Task { await store.load() }
             }
           } else if results.isEmpty {
             ContentUnavailableView(
-              AppCopy.text("No azkar found", "لم يُعثر على أذكار", language: store.language),
+              AppCopy.text("No azkar found"),
               systemImage: "magnifyingglass")
           }
           ForEach(Array(results.enumerated()), id: \.element.id) { index, category in
@@ -61,14 +59,28 @@ struct ContentView: View {
         .padding(16)
       }
       .background(AppAppearance.background)
+      .overlay(alignment: .bottom) {
+        LinearGradient(
+          stops: (0...12).map { index in
+            let progress = Double(index) / 12
+            let opacity = progress * progress * (3 - 2 * progress)
+            return .init(
+              color: AppAppearance.background.opacity(opacity), location: CGFloat(progress))
+          },
+          startPoint: .top,
+          endPoint: .bottom
+        )
+        .frame(height: 120)
+        .ignoresSafeArea(edges: .bottom)
+        .allowsHitTesting(false)
+      }
       .appNavigationTitle(
-        AppCopy.text("Husn", "حصن المسلم", language: store.language), language: store.language
+        AppCopy.text("Husn"), language: store.language
       )
       .searchable(
         text: $search,
-        prompt: AppCopy.text("Search azkar", "ابحث في الأذكار", language: store.language)
+        prompt: AppCopy.text("Search azkar")
       )
-      .refreshable { await store.load(refresh: true) }
       .toolbar {
         ToolbarItem(placement: .topBarLeading) {
           Button {
@@ -79,13 +91,13 @@ struct ContentView: View {
           .popover(isPresented: $showMenu) {
             VStack(alignment: .leading, spacing: 4) {
               menuButton(
-                AppCopy.text("Favorites", "المفضلة", language: store.language),
+                AppCopy.text("Favorites"),
                 emoji: "⭐", route: .favorites)
               menuButton(
-                AppCopy.text("Counter", "السبحة", language: store.language),
+                AppCopy.text("Counter"),
                 emoji: "📿", route: .counter)
               menuButton(
-                AppCopy.text("Quick Mode", "الوضع السريع", language: store.language),
+                AppCopy.text("Quick Mode"),
                 emoji: "⚡", route: .quickMode)
             }
             .padding(12)
@@ -94,7 +106,7 @@ struct ContentView: View {
             .presentationCompactAdaptation(.popover)
           }
           .foregroundStyle(AppAppearance.accent(accent))
-          .accessibilityLabel(AppCopy.text("Menu", "القائمة", language: store.language))
+          .accessibilityLabel(AppCopy.text("Menu"))
         }
         ToolbarItem(placement: .topBarTrailing) {
           NavigationLink {
@@ -103,7 +115,7 @@ struct ContentView: View {
             Image(systemName: "gearshape")
           }
           .foregroundStyle(AppAppearance.accent(accent))
-          .accessibilityLabel(AppCopy.text("Settings", "الإعدادات", language: store.language))
+          .accessibilityLabel(AppCopy.text("Settings"))
         }
       }
       .navigationDestination(for: HomeRoute.self) { route in
@@ -128,7 +140,7 @@ struct ContentView: View {
       HStack(spacing: 12) {
         Text(emoji).frame(width: 26).accessibilityHidden(true)
         Text(title)
-          .font(AppAppearance.font(language: store.language, choice: selectedFont, size: 17))
+          .font(AppAppearance.font(size: 17))
         Spacer(minLength: 0)
       }
       .frame(minHeight: 44)
@@ -141,7 +153,6 @@ struct ContentView: View {
 
 struct CategoryRow: View {
   @EnvironmentObject private var store: AzkarStore
-  @AppStorage("font") private var selectedFont = "ibmPlexSansArabic"
   @AppStorage("accent") private var accent = "brown"
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   let category: ZikrCategory
@@ -158,7 +169,7 @@ struct CategoryRow: View {
               .frame(width: 26)
               .accessibilityHidden(true)
             Text(category.title)
-              .font(AppAppearance.font(language: store.language, choice: selectedFont, size: 16))
+              .font(AppAppearance.font(size: 16))
               .multilineTextAlignment(.leading)
             Spacer(minLength: 8)
             Image(systemName: "chevron.forward").font(.caption2)
@@ -168,15 +179,14 @@ struct CategoryRow: View {
           .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
         }
         .accessibilityLabel(category.title)
-        .accessibilityHint(AppCopy.text("Open azkar", "افتح الأذكار", language: store.language))
+        .accessibilityHint(AppCopy.text("Open azkar"))
         Button {
           let isAdding = !store.favorites.contains(category.id)
           withAnimation(reduceMotion ? nil : .smooth(duration: 0.25)) {
             store.toggleFavorite(category.id)
           }
           if isAdding {
-            let title = AppCopy.text(
-              "Zikr added to favourites", "أُضيف الذكر إلى المفضلة", language: store.language)
+            let title = AppCopy.text("Zikr added to favourites")
             SPIndicatorView(title: title, preset: .done).present()
             UIAccessibility.post(notification: .announcement, argument: title)
           }
@@ -188,8 +198,8 @@ struct CategoryRow: View {
         }
         .accessibilityLabel(
           store.favorites.contains(category.id)
-            ? AppCopy.text("Remove from favorites", "إزالة من المفضلة", language: store.language)
-            : AppCopy.text("Add to favorites", "إضافة إلى المفضلة", language: store.language))
+            ? AppCopy.text("Remove from favorites")
+            : AppCopy.text("Add to favorites"))
       }
       .foregroundStyle(.primary)
     }

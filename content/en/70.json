@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/180.mp3",
+      "id": 180,
+      "repeat": 1,
+      "text": {
+        "arabic": " ((الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا، وَرَزَقَنِيهِ، مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّةٍ)).",
+        "arabicTranslated": "(Alhamdu lillahil-lathee atAAamanee hatha warazaqaneehi min ghayri hawlin minnee wala quwwah.)",
+        "translated": "(All praise is for Allah who fed me this and provided it for me without any might nor power from myself.)"
+      }
+    },
+    {
+      "audioUrl": "https://www.hisnmuslim.com/audio/ar/181.mp3",
+      "id": 181,
+      "repeat": 1,
+      "text": {
+        "arabic": "((الْحَمْدُ لِلَّهِ حَمْداً كَثِيراً طَيِّباً مُبَارَكاً فِيهِ، غَيْرَ [مَكْفِيٍّ وَلاَ ] مُوَدَّعٍ، وَلاَ مُسْتَغْنَىً عَنْهُ رَبَّنَا)).",
+        "arabicTranslated": "(Alhamdu lillahi hamdan katheeran tayyiban mubarakan feeh, ghayra makfiyyin wala muwaddaAAin, wala mustaghnan AAanhu rabbuna.)",
+        "translated": "(Allah be praised with an abundant beautiful blessed praise, a never-ending praise, a praise which we will never bid farewell to and an indispensable praise, He is our Lord.)(There are other views as regards to the understanding of this supplication, from them: Allah be praised with an abundant beautiful blessed praise. He is The One Who is sufficient, feeds and is not fed. The One Who is longed for, along with that which is with Him and The One Who is needed, He is our Lord.)"
+      }
+    }
+  ],
+  "title": "Invocations after eating"
+}

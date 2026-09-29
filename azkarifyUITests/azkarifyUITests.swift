@@ -13,7 +13,7 @@ final class azkarifyUITests: XCTestCase {
   func testArabicAppearanceAndSlideshow() throws {
     let app = XCUIApplication()
     app.launchArguments = [
-      "-language", "ar", "-font", "amiri", "-accent", "teal", "-hasSeenIntro", "YES",
+      "-AppleLanguages", "(ar)", "-accent", "teal", "-hasSeenIntro", "YES",
     ]
     app.launch()
     XCTAssertTrue(app.staticTexts["حصن المسلم"].waitForExistence(timeout: 15))
@@ -46,7 +46,7 @@ final class azkarifyUITests: XCTestCase {
   @MainActor
   func testAccentSelectionUpdatesSettings() throws {
     let app = XCUIApplication()
-    app.launchArguments = ["-language", "ar", "-font", "amiri", "-hasSeenIntro", "YES"]
+    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES"]
     app.launch()
     app.buttons["الإعدادات"].tap()
     app.buttons["لون التمييز"].tap()
@@ -62,7 +62,7 @@ final class azkarifyUITests: XCTestCase {
   @MainActor
   func testArabicMenuUsesBeadsIcon() throws {
     let app = XCUIApplication()
-    app.launchArguments = ["-language", "ar", "-hasSeenIntro", "YES"]
+    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES"]
     app.launch()
     app.buttons["القائمة"].tap()
     let image = XCTAttachment(screenshot: app.screenshot())
@@ -76,7 +76,7 @@ final class azkarifyUITests: XCTestCase {
   @MainActor
   func testAddingFavoriteShowsIndicator() throws {
     let app = XCUIApplication()
-    app.launchArguments = ["-language", "en", "-hasSeenIntro", "YES"]
+    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES"]
     app.launch()
     let addButton = app.buttons["Add to favorites"].firstMatch
     XCTAssertTrue(addButton.waitForExistence(timeout: 15))
@@ -91,7 +91,7 @@ final class azkarifyUITests: XCTestCase {
   @MainActor
   func testCounterKeepsFullZikrScrollable() throws {
     let app = XCUIApplication()
-    app.launchArguments = ["-language", "ar", "-hasSeenIntro", "YES"]
+    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES"]
     app.launch()
     app.buttons["أذكار الصباح والمساء"].firstMatch.tap()
     let counterButton = app.buttons.matching(
@@ -102,33 +102,21 @@ final class azkarifyUITests: XCTestCase {
 
     let zikrScroll = app.scrollViews["counterZikrScroll"]
     XCTAssertTrue(zikrScroll.waitForExistence(timeout: 5))
-    XCTAssertTrue(app.buttons["العدد: 3"].exists)
+    let expanded = XCTNSPredicateExpectation(
+      predicate: NSPredicate { _, _ in zikrScroll.frame.height > app.frame.height * 0.75 },
+      object: nil)
+    XCTAssertEqual(XCTWaiter.wait(for: [expanded], timeout: 5), .completed)
     let before = XCTAttachment(screenshot: app.screenshot())
     before.name = "Counter zikr beginning"
     before.lifetime = .keepAlways
     add(before)
 
     zikrScroll.swipeUp()
-    XCTAssertTrue(app.buttons["العدد: 3"].exists)
+    XCTAssertTrue(app.buttons["العدد: 3"].waitForExistence(timeout: 5))
     let after = XCTAttachment(screenshot: app.screenshot())
     after.name = "Counter zikr ending"
     after.lifetime = .keepAlways
     add(after)
-  }
-
-  @MainActor
-  func testArabicFontSelectionUpdatesHeader() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-language", "ar", "-hasSeenIntro", "YES"]
-    app.launch()
-    app.buttons["الإعدادات"].tap()
-    app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "الخط")).firstMatch.tap()
-    app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "أميري")).firstMatch.tap()
-    XCTAssertTrue(app.staticTexts["الإعدادات"].waitForExistence(timeout: 5))
-    let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = "Settings after selecting Amiri"
-    image.lifetime = .keepAlways
-    add(image)
   }
 
 }
