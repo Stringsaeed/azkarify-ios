@@ -41,7 +41,7 @@ struct QuickModeView: View {
       }
     }
     .padding(.top, 16)
-    .background(AppAppearance.background)
+    .background(AppAppearance.background(accent))
     .appNavigationTitle(
       AppCopy.text("Quick Mode"), language: store.language
     )

@@ -43,7 +43,7 @@ struct AccentPickerView: View {
         }
         .padding(.horizontal, 20)
       }
-      .background(AppAppearance.background)
+      .background(AppAppearance.background(selection))
       .appNavigationTitle(
         AppCopy.text("Accent color"), language: language
       )

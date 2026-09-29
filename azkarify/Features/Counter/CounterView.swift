@@ -32,7 +32,7 @@ struct CounterView: View {
       .frame(maxWidth: .infinity)
     }
     .accessibilityIdentifier("counterZikrScroll")
-    .background(AppAppearance.background)
+    .background(AppAppearance.background(accent))
     .onScrollGeometryChange(for: CGFloat.self) { $0.contentSize.height } action: { _, height in
       contentHeight = height
       selectedDetent = height > maximumSheetHeight ? .large : .height(height)

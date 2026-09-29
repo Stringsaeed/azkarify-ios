@@ -46,7 +46,7 @@ struct SettingsView: View {
       .disabled(!RevenueCatService.isConfigured)
     }
     .scrollContentBackground(.hidden)
-    .background(AppAppearance.background)
+    .background(AppAppearance.background(accent))
     .font(AppAppearance.font(size: 17))
     .tint(AppAppearance.accent(accent))
     .appNavigationTitle(

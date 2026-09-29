@@ -21,10 +21,10 @@ struct AppListItem<Content: View>: View {
       .padding(.horizontal, horizontalPadding)
       .padding(.vertical, verticalPadding)
       .frame(maxWidth: .infinity, alignment: .leading)
-      .background(AppAppearance.background, in: RoundedRectangle(cornerRadius: 12))
+      .background(AppAppearance.background(accent), in: RoundedRectangle(cornerRadius: 12))
       .background {
         RoundedRectangle(cornerRadius: 12)
-          .fill(Color.primary.opacity(0.45))
+          .fill(AppAppearance.accent(accent))
           .offset(x: 4, y: 4)
       }
       .overlay {

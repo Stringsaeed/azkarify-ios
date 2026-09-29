@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct FavoritesView: View {
+  @AppStorage("accent") private var accent = "brown"
   @EnvironmentObject private var store: AzkarStore
   var body: some View {
     ScrollView {
@@ -14,7 +15,7 @@ struct FavoritesView: View {
         ForEach(items) { CategoryRow(category: $0) }
       }.padding(16)
     }
-    .background(AppAppearance.background)
+    .background(AppAppearance.background(accent))
     .appNavigationTitle(
       AppCopy.text("Favorites"), language: store.language)
   }

@@ -35,12 +35,25 @@ struct AppAppearance {
       uiColor: UIColor { traits in traits.userInterfaceStyle == .dark ? pair.dark : pair.light })
   }
 
-  static let background = Color(
-    uiColor: UIColor { traits in
-      traits.userInterfaceStyle == .dark
-        ? UIColor(red: 0.14, green: 0.09, blue: 0.07, alpha: 1)
-        : UIColor(red: 252 / 255, green: 247 / 255, blue: 240 / 255, alpha: 1)
-    })
+  static func background(_ name: String) -> Color {
+    let accentColor = UIColor(accent(name))
+    return Color(
+      uiColor: UIColor { traits in
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        accentColor.resolvedColor(with: traits).getRed(
+          &red, green: &green, blue: &blue, alpha: nil)
+        let isDark = traits.userInterfaceStyle == .dark
+        let accentWeight: CGFloat = isDark ? 0.10 : 0.04
+        let base: CGFloat = isDark ? 0 : 1 - accentWeight
+        return UIColor(
+          red: base + red * accentWeight,
+          green: base + green * accentWeight,
+          blue: base + blue * accentWeight,
+          alpha: 1)
+      })
+  }
 
   static func font(
     size: CGFloat, relativeTo style: Font.TextStyle = .body, bold: Bool = false

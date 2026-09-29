@@ -113,7 +113,7 @@ struct IntroView: View {
       .padding(.horizontal, 24)
       .padding(.bottom, 24)
     }
-    .background(AppAppearance.background)
+    .background(AppAppearance.background(accent))
     .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
   }
 }

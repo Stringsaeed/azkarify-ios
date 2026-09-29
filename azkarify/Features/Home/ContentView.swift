@@ -58,14 +58,14 @@ struct ContentView: View {
         }
         .padding(16)
       }
-      .background(AppAppearance.background)
+      .background(AppAppearance.background(accent))
       .overlay(alignment: .bottom) {
         LinearGradient(
           stops: (0...12).map { index in
             let progress = Double(index) / 12
             let opacity = progress * progress * (3 - 2 * progress)
             return .init(
-              color: AppAppearance.background.opacity(opacity), location: CGFloat(progress))
+              color: AppAppearance.background(accent).opacity(opacity), location: CGFloat(progress))
           },
           startPoint: .top,
           endPoint: .bottom
@@ -102,7 +102,7 @@ struct ContentView: View {
             }
             .padding(12)
             .frame(minWidth: 220)
-            .background(AppAppearance.background)
+            .background(AppAppearance.background(accent))
             .presentationCompactAdaptation(.popover)
           }
           .foregroundStyle(AppAppearance.accent(accent))

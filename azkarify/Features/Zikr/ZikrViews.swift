@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ZikrListView: View {
+  @AppStorage("accent") private var accent = "brown"
   @EnvironmentObject private var store: AzkarStore
   let category: ZikrCategory
   @State private var entries: [ZikrEntry] = []
@@ -27,7 +28,7 @@ struct ZikrListView: View {
       }
       .padding(16)
     }
-    .background(AppAppearance.background)
+    .background(AppAppearance.background(accent))
     .appNavigationTitle(category.title, language: store.language)
     .toolbar {
       Button {
@@ -94,6 +95,7 @@ struct ZikrCard: View {
 }
 
 struct SlideshowView: View {
+  @AppStorage("accent") private var accent = "brown"
   @Environment(\.dismiss) private var dismiss
   @EnvironmentObject private var store: AzkarStore
   let entries: [ZikrEntry]
@@ -124,7 +126,7 @@ struct SlideshowView: View {
       }
       .tabViewStyle(.page(indexDisplayMode: .automatic))
       .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
-      .background(AppAppearance.background)
+      .background(AppAppearance.background(accent))
       .appNavigationTitle(title, language: store.language)
       .toolbar {
         ToolbarItem(placement: store.language == "ar" ? .topBarLeading : .topBarTrailing) {
