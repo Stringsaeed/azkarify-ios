@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 110;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		30855979306BED6B007AE219 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30855961306BED6A007AE219 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30855968306BED6A007AE219;
+			remoteInfo = azkarify;
+		};
+		30855983306BED6B007AE219 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30855961306BED6A007AE219 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30855968306BED6A007AE219;
+			remoteInfo = azkarify;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		30855969306BED6A007AE219 /* azkarify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = azkarify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		30855978306BED6B007AE219 /* azkarifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = azkarifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		30855982306BED6B007AE219 /* azkarifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = azkarifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3085596B306BED6A007AE219 /* azkarify */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = azkarify;
+			sourceTree = "<group>";
+		};
+		3085597B306BED6B007AE219 /* azkarifyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = azkarifyTests;
+			sourceTree = "<group>";
+		};
+		30855985306BED6B007AE219 /* azkarifyUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = azkarifyUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		30855966306BED6A007AE219 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		30855975306BED6B007AE219 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		3085597F306BED6B007AE219 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		30855960306BED6A007AE219 = {
+			isa = PBXGroup;
+			children = (
+				3085596B306BED6A007AE219 /* azkarify */,
+				3085597B306BED6B007AE219 /* azkarifyTests */,
+				30855985306BED6B007AE219 /* azkarifyUITests */,
+				3085596A306BED6A007AE219 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3085596A306BED6A007AE219 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30855969306BED6A007AE219 /* azkarify.app */,
+				30855978306BED6B007AE219 /* azkarifyTests.xctest */,
+				30855982306BED6B007AE219 /* azkarifyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		30855968306BED6A007AE219 /* azkarify */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3085598A306BED6B007AE219 /* Build configuration list for PBXNativeTarget "azkarify" */;
+			buildPhases = (
+				30855965306BED6A007AE219 /* Sources */,
+				30855966306BED6A007AE219 /* Frameworks */,
+				30855967306BED6A007AE219 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				3085596B306BED6A007AE219 /* azkarify */,
+			);
+			name = azkarify;
+			productName = azkarify;
+			productReference = 30855969306BED6A007AE219 /* azkarify.app */;
+			productType = "com.apple.product-type.application";
+		};
+		30855977306BED6B007AE219 /* azkarifyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3085598D306BED6B007AE219 /* Build configuration list for PBXNativeTarget "azkarifyTests" */;
+			buildPhases = (
+				30855974306BED6B007AE219 /* Sources */,
+				30855975306BED6B007AE219 /* Frameworks */,
+				30855976306BED6B007AE219 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3085597A306BED6B007AE219 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				3085597B306BED6B007AE219 /* azkarifyTests */,
+			);
+			name = azkarifyTests;
+			productName = azkarifyTests;
+			productReference = 30855978306BED6B007AE219 /* azkarifyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		30855981306BED6B007AE219 /* azkarifyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30855990306BED6B007AE219 /* Build configuration list for PBXNativeTarget "azkarifyUITests" */;
+			buildPhases = (
+				3085597E306BED6B007AE219 /* Sources */,
+				3085597F306BED6B007AE219 /* Frameworks */,
+				30855980306BED6B007AE219 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30855984306BED6B007AE219 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				30855985306BED6B007AE219 /* azkarifyUITests */,
+			);
+			name = azkarifyUITests;
+			productName = azkarifyUITests;
+			productReference = 30855982306BED6B007AE219 /* azkarifyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		30855961306BED6A007AE219 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2710;
+				LastUpgradeCheck = 2710;
+				TargetAttributes = {
+					30855968306BED6A007AE219 = {
+						CreatedOnToolsVersion = 27.1;
+					};
+					30855977306BED6B007AE219 = {
+						CreatedOnToolsVersion = 27.1;
+						TestTargetID = 30855968306BED6A007AE219;
+					};
+					30855981306BED6B007AE219 = {
+						CreatedOnToolsVersion = 27.1;
+						TestTargetID = 30855968306BED6A007AE219;
+					};
+				};
+			};
+			buildConfigurationList = 30855964306BED6A007AE219 /* Build configuration list for PBXProject "azkarify" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 30855960306BED6A007AE219;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 3085596A306BED6A007AE219 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				30855968306BED6A007AE219 /* azkarify */,
+				30855977306BED6B007AE219 /* azkarifyTests */,
+				30855981306BED6B007AE219 /* azkarifyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		30855967306BED6A007AE219 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		30855976306BED6B007AE219 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		30855980306BED6B007AE219 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		30855965306BED6A007AE219 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		30855974306BED6B007AE219 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		3085597E306BED6B007AE219 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3085597A306BED6B007AE219 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30855968306BED6A007AE219 /* azkarify */;
+			targetProxy = 30855979306BED6B007AE219 /* PBXContainerItemProxy */;
+		};
+		30855984306BED6B007AE219 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30855968306BED6A007AE219 /* azkarify */;
+			targetProxy = 30855983306BED6B007AE219 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		30855988306BED6B007AE219 /* Debug configuration for PBXProject "azkarify" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = V3HN8HXZYK;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		30855989306BED6B007AE219 /* Release configuration for PBXProject "azkarify" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = V3HN8HXZYK;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3085598B306BED6B007AE219 /* Debug configuration for PBXNativeTarget "azkarify" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V3HN8HXZYK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stringsaeed.azkarify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3085598C306BED6B007AE219 /* Release configuration for PBXNativeTarget "azkarify" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V3HN8HXZYK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stringsaeed.azkarify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3085598E306BED6B007AE219 /* Debug configuration for PBXNativeTarget "azkarifyTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V3HN8HXZYK;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stringsaeed.azkarifyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/azkarify.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/azkarify";
+			};
+			name = Debug;
+		};
+		3085598F306BED6B007AE219 /* Release configuration for PBXNativeTarget "azkarifyTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V3HN8HXZYK;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stringsaeed.azkarifyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/azkarify.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/azkarify";
+			};
+			name = Release;
+		};
+		30855991306BED6B007AE219 /* Debug configuration for PBXNativeTarget "azkarifyUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V3HN8HXZYK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stringsaeed.azkarifyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = azkarify;
+			};
+			name = Debug;
+		};
+		30855992306BED6B007AE219 /* Release configuration for PBXNativeTarget "azkarifyUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V3HN8HXZYK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stringsaeed.azkarifyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = azkarify;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		30855964306BED6A007AE219 /* Build configuration list for PBXProject "azkarify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30855988306BED6B007AE219 /* Debug configuration for PBXProject "azkarify" */,
+				30855989306BED6B007AE219 /* Release configuration for PBXProject "azkarify" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		3085598A306BED6B007AE219 /* Build configuration list for PBXNativeTarget "azkarify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3085598B306BED6B007AE219 /* Debug configuration for PBXNativeTarget "azkarify" */,
+				3085598C306BED6B007AE219 /* Release configuration for PBXNativeTarget "azkarify" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		3085598D306BED6B007AE219 /* Build configuration list for PBXNativeTarget "azkarifyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3085598E306BED6B007AE219 /* Debug configuration for PBXNativeTarget "azkarifyTests" */,
+				3085598F306BED6B007AE219 /* Release configuration for PBXNativeTarget "azkarifyTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		30855990306BED6B007AE219 /* Build configuration list for PBXNativeTarget "azkarifyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30855991306BED6B007AE219 /* Debug configuration for PBXNativeTarget "azkarifyUITests" */,
+				30855992306BED6B007AE219 /* Release configuration for PBXNativeTarget "azkarifyUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 30855961306BED6A007AE219 /* Project object */;
+	validationLevel = 1;
+}
