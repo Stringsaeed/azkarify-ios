@@ -21,17 +21,17 @@ enum ReminderKind: String {
 
   func title(language: String) -> String {
     switch self {
-    case .morning: AppCopy.text("🌅 Morning reminder", "🌅 تذكير الصباح", language: language)
-    case .evening: AppCopy.text("🌙 Evening reminder", "🌙 تذكير المساء", language: language)
+    case .morning: AppCopy.text("🌅 Morning reminder")
+    case .evening: AppCopy.text("🌙 Evening reminder")
     }
   }
 
   func body(language: String) -> String {
     switch self {
     case .morning:
-      AppCopy.text("Time for morning azkar", "حان وقت أذكار الصباح", language: language)
+      AppCopy.text("Time for morning azkar")
     case .evening:
-      AppCopy.text("Time for evening azkar", "حان وقت أذكار المساء", language: language)
+      AppCopy.text("Time for evening azkar")
     }
   }
 }
@@ -42,7 +42,7 @@ enum ReminderError: LocalizedError {
   var errorDescription: String? {
     switch self {
     case .permissionDenied:
-      "Notifications are disabled. Enable them in iOS Settings to use reminders."
+      AppCopy.text("Notifications are disabled. Enable them in iOS Settings to use reminders.")
     }
   }
 }

@@ -8,7 +8,6 @@ struct azkarifyApp: App {
   @StateObject private var store: AzkarStore
   @AppStorage("theme") private var theme = "system"
   @AppStorage("accent") private var accent = "brown"
-  @AppStorage("font") private var selectedFont = "ibmPlexSansArabic"
   @AppStorage("hasSeenIntro") private var hasSeenIntro = false
 
   init() {
@@ -32,7 +31,7 @@ struct azkarifyApp: App {
         .modelContainer(container)
         .preferredColorScheme(theme == "dark" ? .dark : theme == "light" ? .light : nil)
         .tint(AppAppearance.accent(accent))
-        .font(AppAppearance.font(language: store.language, choice: selectedFont, size: 17))
+        .font(AppAppearance.font(size: 17))
         .fullScreenCover(
           isPresented: Binding(
             get: { !hasSeenIntro },

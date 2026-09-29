@@ -10,18 +10,13 @@ final class AzkarStore: ObservableObject {
   @Published var favorites: Set<Int> {
     didSet { UserDefaults.standard.set(Array(favorites), forKey: "favorites") }
   }
-  @Published var language: String {
-    didSet {
-      UserDefaults.standard.set(language, forKey: "language")
-      categories = []
-    }
+  var language: String {
+    Bundle.main.preferredLocalizations.first?.hasPrefix("ar") == true ? "ar" : "en"
   }
 
   init(repository: AzkarRepository) {
     self.repository = repository
     favorites = Set(UserDefaults.standard.array(forKey: "favorites") as? [Int] ?? [])
-    let deviceLanguage = Locale.preferredLanguages.first?.hasPrefix("ar") == true ? "ar" : "en"
-    language = UserDefaults.standard.string(forKey: "language") ?? deviceLanguage
   }
 
   func load(refresh: Bool = false) async {

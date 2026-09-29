@@ -30,13 +30,13 @@ struct ReminderSettingView: View {
       }
     }
     .alert(
-      AppCopy.text("Reminder unavailable", "التذكير غير متاح", language: language),
+      AppCopy.text("Reminder unavailable"),
       isPresented: Binding(
         get: { errorMessage != nil },
         set: { if !$0 { errorMessage = nil } }
       )
     ) {
-      Button(AppCopy.text("OK", "حسنًا", language: language)) { errorMessage = nil }
+      Button(AppCopy.text("OK")) { errorMessage = nil }
     } message: {
       Text(errorMessage ?? "")
     }
@@ -69,9 +69,7 @@ struct ReminderSettingView: View {
     } catch {
       errorMessage =
         error is ReminderError
-        ? AppCopy.text(
-          "Enable notifications for Azkarify in iOS Settings.",
-          "فعّل إشعارات أذكاريفاي من إعدادات iOS.", language: language)
+        ? AppCopy.text("Enable notifications for Azkarify in iOS Settings.")
         : error.localizedDescription
     }
   }

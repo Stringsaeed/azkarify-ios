@@ -5,12 +5,12 @@ struct AccentPickerView: View {
   @Binding var selection: String
   let language: String
 
-  private let options: [(id: String, english: String, arabic: String)] = [
-    ("brown", "Brown", "بني"),
-    ("saffron", "Saffron", "زعفراني"),
-    ("teal", "Teal", "فيروزي"),
-    ("blue", "Blue", "أزرق"),
-    ("green", "Green", "أخضر"),
+  private let options: [(id: String, title: String)] = [
+    ("brown", "Brown"),
+    ("saffron", "Saffron"),
+    ("teal", "Teal"),
+    ("blue", "Blue"),
+    ("green", "Green"),
   ]
 
   var body: some View {
@@ -27,7 +27,7 @@ struct AccentPickerView: View {
                   .fill(AppAppearance.accent(option.id))
                   .frame(width: 24, height: 24)
                   .accessibilityHidden(true)
-                Text(AppCopy.text(option.english, option.arabic, language: language))
+                Text(AppCopy.text(option.title))
                   .foregroundStyle(.primary)
                 Spacer()
                 if selection == option.id {
@@ -45,7 +45,7 @@ struct AccentPickerView: View {
       }
       .background(AppAppearance.background)
       .appNavigationTitle(
-        AppCopy.text("Accent color", "لون التمييز", language: language), language: language
+        AppCopy.text("Accent color"), language: language
       )
       .tint(AppAppearance.accent(selection))
     }

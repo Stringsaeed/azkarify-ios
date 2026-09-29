@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct AppNavigationTitle: ViewModifier {
-  @AppStorage("font") private var selectedFont = "ibmPlexSansArabic"
   let title: String
   let language: String
 
@@ -14,7 +13,7 @@ struct AppNavigationTitle: ViewModifier {
           Text(title)
             .font(
               AppAppearance.font(
-                language: language, choice: selectedFont, size: 17, relativeTo: .headline,
+                size: 17, relativeTo: .headline,
                 bold: true)
             )
             .lineLimit(1)
