@@ -89,6 +89,34 @@ final class azkarifyUITests: XCTestCase {
   }
 
   @MainActor
+  func testCounterKeepsFullZikrScrollable() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-language", "ar", "-hasSeenIntro", "YES"]
+    app.launch()
+    app.buttons["أذكار الصباح والمساء"].firstMatch.tap()
+    let counterButton = app.buttons.matching(
+      NSPredicate(format: "label CONTAINS %@", "ابدأ العد من 3")
+    ).firstMatch
+    XCTAssertTrue(counterButton.waitForExistence(timeout: 15))
+    counterButton.tap()
+
+    let zikrScroll = app.scrollViews["counterZikrScroll"]
+    XCTAssertTrue(zikrScroll.waitForExistence(timeout: 5))
+    XCTAssertTrue(app.buttons["العدد: 3"].exists)
+    let before = XCTAttachment(screenshot: app.screenshot())
+    before.name = "Counter zikr beginning"
+    before.lifetime = .keepAlways
+    add(before)
+
+    zikrScroll.swipeUp()
+    XCTAssertTrue(app.buttons["العدد: 3"].exists)
+    let after = XCTAttachment(screenshot: app.screenshot())
+    after.name = "Counter zikr ending"
+    after.lifetime = .keepAlways
+    add(after)
+  }
+
+  @MainActor
   func testArabicFontSelectionUpdatesHeader() throws {
     let app = XCUIApplication()
     app.launchArguments = ["-language", "ar", "-hasSeenIntro", "YES"]

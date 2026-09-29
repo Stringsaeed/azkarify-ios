@@ -10,14 +10,41 @@ struct CounterView: View {
   @State private var count = 0
 
   var body: some View {
-    VStack(spacing: 28) {
-      if !title.isEmpty {
-        Text(title).font(
-          AppAppearance.font(
-            language: store.language, choice: selectedFont, size: 18, relativeTo: .headline,
-            bold: true)
-        ).lineLimit(3)
+    Group {
+      if title.isEmpty {
+        counterControls
+          .padding(24)
+          .presentationDetents([.medium])
+      } else {
+        ScrollView {
+          Text(title)
+            .font(
+              AppAppearance.font(
+                language: store.language, choice: selectedFont, size: 20, relativeTo: .title3)
+            )
+            .multilineTextAlignment(store.language == "ar" ? .trailing : .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(24)
+        }
+        .accessibilityIdentifier("counterZikrScroll")
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+          counterControls
+            .padding(.horizontal, 24)
+            .padding(.top, 16)
+            .padding(.bottom, 24)
+            .frame(maxWidth: .infinity)
+            .background(AppAppearance.background)
+        }
+        .presentationDetents([.large])
+        .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
       }
+    }
+    .onAppear { count = initialCount }
+  }
+
+  private var counterControls: some View {
+    VStack(spacing: 20) {
       Text(
         initialCount > 0
           ? AppCopy.text(
@@ -75,9 +102,6 @@ struct CounterView: View {
       }
       .frame(minHeight: 44)
     }
-    .padding(24)
-    .presentationDetents([.medium])
-    .onAppear { count = initialCount }
   }
 
   private func changeCount(by value: Int) {
