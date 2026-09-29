@@ -8,7 +8,7 @@ struct FavoritesView: View {
         let items = store.categories.filter { store.favorites.contains($0.id) }
         if items.isEmpty {
           ContentUnavailableView(
-            AppCopy.text("No favorites yet", "لا توجد مفضلة بعد", language: store.language),
+            AppCopy.text("No favorites yet"),
             systemImage: "star")
         }
         ForEach(items) { CategoryRow(category: $0) }
@@ -16,6 +16,6 @@ struct FavoritesView: View {
     }
     .background(AppAppearance.background)
     .appNavigationTitle(
-      AppCopy.text("Favorites", "المفضلة", language: store.language), language: store.language)
+      AppCopy.text("Favorites"), language: store.language)
   }
 }

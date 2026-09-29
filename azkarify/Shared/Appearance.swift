@@ -43,38 +43,25 @@ struct AppAppearance {
     })
 
   static func font(
-    language: String, choice: String, size: CGFloat, relativeTo style: Font.TextStyle = .body,
-    bold: Bool = false
+    size: CGFloat, relativeTo style: Font.TextStyle = .body, bold: Bool = false
   ) -> Font {
-    let family: String
-    if language == "en" {
-      family = "OpenSans"
-    } else {
-      switch choice {
-      case "amiri": family = "Amiri"
-      case "arefRuqaa": family = "ArefRuqaa"
-      default: family = "IBMPlexSansArabic"
-      }
-    }
-    return .custom("\(family)-\(bold ? "Bold" : "Regular")", size: size, relativeTo: style)
+    .custom(bold ? "AlanSans-Bold" : "AlanSans-Regular", size: size, relativeTo: style)
   }
 
   static func registerFonts() {
-    let names = [
-      "Amiri_400Regular", "Amiri_700Bold", "ArefRuqaa_400Regular", "ArefRuqaa_700Bold",
-      "IBMPlexSansArabic_400Regular", "IBMPlexSansArabic_700Bold", "OpenSans_400Regular",
-      "OpenSans_700Bold",
-    ]
-    for name in names {
-      if let url = Bundle.main.url(forResource: name, withExtension: "ttf") {
-        CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
-      }
+    if let url = Bundle.main.url(forResource: "AlanSans", withExtension: "ttf") {
+      CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
     }
   }
 }
 
 enum AppCopy {
-  static func text(_ english: String, _ arabic: String, language: String) -> String {
-    language == "ar" ? arabic : english
+  static func text(_ key: String) -> String {
+    Bundle.main.localizedString(forKey: key, value: key, table: "Localizable")
+  }
+
+  static func format(_ key: String, _ values: CVarArg...) -> String {
+    let language = Bundle.main.preferredLocalizations.first ?? "en"
+    return String(format: text(key), locale: Locale(identifier: language), arguments: values)
   }
 }

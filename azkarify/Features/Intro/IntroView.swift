@@ -4,45 +4,41 @@ struct IntroView: View {
   @EnvironmentObject private var store: AzkarStore
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   @AppStorage("accent") private var accent = "brown"
-  @AppStorage("font") private var selectedFont = "ibmPlexSansArabic"
   let onFinish: () -> Void
   @State private var page = 0
 
-  private let pages: [(String, String, String, String, String)] = [
+  private let pages: [(String, String, String)] = [
     (
-      "📖", "Browse azkar", "تصفح الأذكار", "Find a zikr by topic or search for it.",
-      "ابحث عن الذكر بحسب الموضوع أو بالبحث."
+      "📖", "Browse azkar",
+      "Find a zikr by topic or search for it."
     ),
     (
-      "text.📖", "Read and reflect", "اقرأ وتدبر",
-      "Open a topic to read its azkar or use the slideshow.",
-      "افتح موضوعًا لقراءة أذكاره أو استخدم عرض الشرائح."
+      "text.📖", "Read and reflect",
+      "Open a topic to read its azkar or use the slideshow."
     ),
     (
-      "⭐", "Save favorites", "احفظ المفضلة", "Keep the topics you return to close at hand.",
-      "احفظ المواضيع التي تعود إليها كثيرًا."
+      "⭐", "Save favorites",
+      "Keep the topics you return to close at hand."
     ),
     (
-      "⚡", "Quick Mode", "الوضع السريع", "Start with morning, evening, sleep, or waking azkar.",
-      "ابدأ بأذكار الصباح والمساء أو النوم والاستيقاظ."
+      "⚡", "Quick Mode",
+      "Start with morning, evening, sleep, or waking azkar."
     ),
     (
-      "📿", "Use the counter", "استخدم السبحة",
-      "Tap to count, or count down repeated azkar.", "اضغط للعد أو للعد التنازلي للأذكار المكررة."
+      "📿", "Use the counter",
+      "Tap to count, or count down repeated azkar."
     ),
     (
-      "🔔", "Set reminders", "اضبط التذكيرات", "Choose morning and evening times in Settings.",
-      "اختر أوقات الصباح والمساء من الإعدادات."
+      "🔔", "Set reminders",
+      "Choose morning and evening times in Settings."
     ),
     (
-      "🎨", "Make it yours", "خصص التطبيق",
-      "Choose Arabic or English, a font, and an accent color.",
-      "اختر العربية أو الإنجليزية والخط ولون التمييز."
+      "🎨", "Make it yours",
+      "Choose an accent color. Change language in iOS Settings."
     ),
     (
-      "💛", "Support the app", "ادعم التطبيق",
-      "Find ways to support future updates in Settings.",
-      "تجد طرق دعم التحديثات القادمة في الإعدادات."
+      "💛", "Support the app",
+      "Find ways to support future updates in Settings."
     ),
   ]
 
@@ -50,7 +46,7 @@ struct IntroView: View {
     VStack(spacing: 20) {
       HStack {
         Spacer()
-        Button(AppCopy.text("Skip", "تخطي", language: store.language), action: onFinish)
+        Button(AppCopy.text("Skip"), action: onFinish)
           .frame(minHeight: 44)
       }
       .padding(.horizontal, 24)
@@ -66,17 +62,17 @@ struct IntroView: View {
               .overlay(Circle().stroke(AppAppearance.accent(accent).opacity(0.35), lineWidth: 1.5))
               .shadow(color: .black.opacity(0.08), radius: 12, y: 5)
               .accessibilityHidden(true)
-            Text(AppCopy.text(item.1, item.2, language: store.language))
+            Text(AppCopy.text(item.1))
               .font(
                 AppAppearance.font(
-                  language: store.language, choice: selectedFont, size: 34, relativeTo: .largeTitle,
+                  size: 34, relativeTo: .largeTitle,
                   bold: true)
               )
               .multilineTextAlignment(.center)
-            Text(AppCopy.text(item.3, item.4, language: store.language))
+            Text(AppCopy.text(item.2))
               .font(
                 AppAppearance.font(
-                  language: store.language, choice: selectedFont, size: 20, relativeTo: .title3)
+                  size: 20, relativeTo: .title3)
               )
               .foregroundStyle(.secondary)
               .multilineTextAlignment(.center)
@@ -97,9 +93,7 @@ struct IntroView: View {
       }
       .accessibilityElement(children: .ignore)
       .accessibilityLabel(
-        AppCopy.text(
-          "Page \(page + 1) of \(pages.count)", "الصفحة \(page + 1) من \(pages.count)",
-          language: store.language))
+        AppCopy.format("Page %lld of %lld", page + 1, pages.count))
 
       Button {
         if page == pages.count - 1 {
@@ -110,8 +104,8 @@ struct IntroView: View {
       } label: {
         Text(
           page == pages.count - 1
-            ? AppCopy.text("Get started", "ابدأ", language: store.language)
-            : AppCopy.text("Next", "التالي", language: store.language)
+            ? AppCopy.text("Get started")
+            : AppCopy.text("Next")
         )
         .frame(maxWidth: .infinity, minHeight: 52)
       }
