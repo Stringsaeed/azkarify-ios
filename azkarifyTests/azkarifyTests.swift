@@ -1,9 +1,50 @@
 import Foundation
+import SwiftUI
 import Testing
+import UIKit
 
 @testable import azkarify
 
 struct azkarifyTests {
+  @MainActor
+  @Test func nativeSearchFieldUsesAppFont() async throws {
+    let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 834, height: 1194))
+    let host = UIHostingController(
+      rootView: ContentView().environmentObject(AzkarStore(repository: AzkarRepository())))
+    window.rootViewController = host
+    window.makeKeyAndVisible()
+    defer { window.isHidden = true }
+
+    func searchField(in view: UIView) -> UISearchTextField? {
+      if let field = view as? UISearchTextField { return field }
+      return view.subviews.lazy.compactMap { searchField(in: $0) }.first
+    }
+
+    for _ in 0..<20 where searchField(in: host.view) == nil {
+      try await Task.sleep(for: .milliseconds(100))
+      host.view.layoutIfNeeded()
+    }
+    let field = try #require(searchField(in: host.view))
+    for _ in 0..<20 where field.font?.familyName != "Alan Sans" {
+      try await Task.sleep(for: .milliseconds(100))
+      host.view.layoutIfNeeded()
+    }
+    #expect(field.font?.familyName == "Alan Sans")
+    if let placeholder = field.attributedPlaceholder, placeholder.length > 0 {
+      let font = placeholder.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
+      #expect(font?.familyName == "Alan Sans")
+    }
+
+    let originalSize = try #require(field.font?.pointSize)
+    host.traitOverrides.preferredContentSizeCategory = .accessibilityExtraExtraExtraLarge
+    for _ in 0..<20 where (field.font?.pointSize ?? 0) <= originalSize {
+      try await Task.sleep(for: .milliseconds(100))
+      host.view.layoutIfNeeded()
+    }
+    #expect(field.font?.familyName == "Alan Sans")
+    #expect((field.font?.pointSize ?? 0) > originalSize)
+  }
+
   @MainActor
   @Test(arguments: ["ar", "en"])
   func allBundledCategoriesAndEntriesLoad(language: String) throws {

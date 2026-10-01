@@ -10,6 +10,39 @@ import XCTest
 final class azkarifyUITests: XCTestCase {
 
   @MainActor
+  func testAdaptiveCategoryNavigation() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES"]
+    app.launch()
+    let morning = app.buttons["Words of remembrance for morning and evening"].firstMatch
+    let sleeping = app.buttons["What to say before sleeping"].firstMatch
+    XCTAssertTrue(morning.waitForExistence(timeout: 15))
+    morning.tap()
+    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+
+    if app.frame.width >= 700 {
+      XCTAssertTrue(sleeping.isHittable, "The sidebar should remain available beside the azkar")
+      XCTAssertTrue(morning.isSelected)
+    } else {
+      XCTAssertFalse(sleeping.isHittable)
+      let back = app.buttons["BackButton"]
+      if back.exists {
+        back.tap()
+      } else {
+        app.navigationBars.buttons.firstMatch.tap()
+      }
+      XCTAssertTrue(sleeping.waitForExistence(timeout: 5))
+    }
+    sleeping.tap()
+    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+    XCTAssertTrue(app.staticTexts["What to say before sleeping"].firstMatch.exists)
+    let image = XCTAttachment(screenshot: app.screenshot())
+    image.name = "Adaptive category navigation"
+    image.lifetime = .keepAlways
+    add(image)
+  }
+
+  @MainActor
   func testArabicAppearanceAndSlideshow() throws {
     let app = XCUIApplication()
     app.launchArguments = [

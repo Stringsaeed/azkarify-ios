@@ -3,6 +3,8 @@ import SwiftUI
 import UIKit
 
 private enum HomeRoute: Hashable {
+  case category(Int)
+  case settings
   case favorites
   case counter
   case quickMode
@@ -12,7 +14,8 @@ struct ContentView: View {
   @EnvironmentObject private var store: AzkarStore
   @AppStorage("accent") private var accent = "brown"
   @State private var search = ""
-  @State private var path = [HomeRoute]()
+  @State private var selection: HomeRoute?
+  @State private var preferredColumn: NavigationSplitViewColumn = .sidebar
   @State private var showMenu = false
 
   private var results: [ZikrCategory] {
@@ -21,7 +24,7 @@ struct ContentView: View {
   }
 
   var body: some View {
-    NavigationStack(path: $path) {
+    NavigationSplitView(preferredCompactColumn: $preferredColumn) {
       ScrollView {
         LazyVStack(alignment: .leading, spacing: 12) {
           Text(
@@ -52,8 +55,12 @@ struct ContentView: View {
               systemImage: "magnifyingglass")
           }
           ForEach(Array(results.enumerated()), id: \.element.id) { index, category in
-            CategoryRow(category: category)
-              .modifier(StaggeredEntrance(index: index))
+            CategoryRow(
+              category: category,
+              isSelected: selection == .category(category.id),
+              onSelect: { select(.category(category.id)) }
+            )
+            .modifier(StaggeredEntrance(index: index))
           }
         }
         .padding(16)
@@ -81,6 +88,7 @@ struct ContentView: View {
         text: $search,
         prompt: AppCopy.text("Search azkar")
       )
+      .background(SearchFieldTypography().allowsHitTesting(false))
       .toolbar {
         ToolbarItem(placement: .topBarLeading) {
           Button {
@@ -109,8 +117,8 @@ struct ContentView: View {
           .accessibilityLabel(AppCopy.text("Menu"))
         }
         ToolbarItem(placement: .topBarTrailing) {
-          NavigationLink {
-            SettingsView()
+          Button {
+            select(.settings)
           } label: {
             Image(systemName: "gearshape")
           }
@@ -118,16 +126,45 @@ struct ContentView: View {
           .accessibilityLabel(AppCopy.text("Settings"))
         }
       }
-      .navigationDestination(for: HomeRoute.self) { route in
-        switch route {
-        case .favorites: FavoritesView()
-        case .counter: CounterView()
-        case .quickMode: QuickModeView()
-        }
+      .navigationSplitViewColumnWidth(min: 280, ideal: 340, max: 400)
+      .accessibilityIdentifier("azkarSidebar")
+    } detail: {
+      NavigationStack {
+        detail
       }
-      .task(id: store.language) { await store.load() }
+      .id(selection)
+      .accessibilityIdentifier("azkarDetail")
     }
+    .navigationSplitViewStyle(.balanced)
+    .task(id: store.language) { await store.load() }
     .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
+  }
+
+  @ViewBuilder
+  private var detail: some View {
+    switch selection {
+    case .category(let id):
+      if let category = store.categories.first(where: { $0.id == id }) {
+        ZikrListView(category: category)
+          .id(category.detailUrl)
+      }
+    case .settings: SettingsView()
+    case .favorites: FavoritesView()
+    case .counter: CounterView()
+    case .quickMode: QuickModeView()
+    case nil:
+      ContentUnavailableView(
+        AppCopy.text("All azkar"), systemImage: "book.closed",
+        description: Text(AppCopy.text("Find the right zikr faster"))
+      )
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .background(AppAppearance.background(accent))
+    }
+  }
+
+  private func select(_ route: HomeRoute) {
+    selection = route
+    preferredColumn = .detail
   }
 
   private func menuButton(
@@ -135,7 +172,7 @@ struct ContentView: View {
   ) -> some View {
     Button {
       showMenu = false
-      path.append(route)
+      select(route)
     } label: {
       HStack(spacing: 12) {
         Text(emoji).frame(width: 26).accessibilityHidden(true)
@@ -156,27 +193,24 @@ struct CategoryRow: View {
   @AppStorage("accent") private var accent = "brown"
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   let category: ZikrCategory
+  var isSelected = false
+  var onSelect: (() -> Void)?
 
   var body: some View {
     AppListItem(horizontalPadding: 12, verticalPadding: 6) {
       HStack(spacing: 8) {
-        NavigationLink {
-          ZikrListView(category: category)
-        } label: {
-          HStack(spacing: 8) {
-            Text(ZikrEmoji.forCategory(category.id))
-              .font(.system(size: 21))
-              .frame(width: 26)
-              .accessibilityHidden(true)
-            Text(category.title)
-              .font(AppAppearance.font(size: 16))
-              .multilineTextAlignment(.leading)
-            Spacer(minLength: 8)
-            Image(systemName: "chevron.forward").font(.caption2)
-              .foregroundStyle(AppAppearance.accent(accent))
-              .accessibilityHidden(true)
+        Group {
+          if let onSelect {
+            Button(action: onSelect) { categoryLabel }
+              .buttonStyle(.plain)
+              .accessibilityAddTraits(isSelected ? .isSelected : [])
+          } else {
+            NavigationLink {
+              ZikrListView(category: category)
+            } label: {
+              categoryLabel
+            }
           }
-          .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
         }
         .accessibilityLabel(category.title)
         .accessibilityHint(AppCopy.text("Open azkar"))
@@ -203,5 +237,27 @@ struct CategoryRow: View {
       }
       .foregroundStyle(.primary)
     }
+    .overlay {
+      RoundedRectangle(cornerRadius: 16)
+        .strokeBorder(AppAppearance.accent(accent).opacity(isSelected ? 0.65 : 0), lineWidth: 2)
+        .allowsHitTesting(false)
+    }
+  }
+
+  private var categoryLabel: some View {
+    HStack(spacing: 8) {
+      Text(ZikrEmoji.forCategory(category.id))
+        .font(.system(size: 21))
+        .frame(width: 26)
+        .accessibilityHidden(true)
+      Text(category.title)
+        .font(AppAppearance.font(size: 16))
+        .multilineTextAlignment(.leading)
+      Spacer(minLength: 8)
+      Image(systemName: "chevron.forward").font(.caption2)
+        .foregroundStyle(AppAppearance.accent(accent))
+        .accessibilityHidden(true)
+    }
+    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
   }
 }
