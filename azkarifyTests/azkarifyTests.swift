@@ -10,7 +10,11 @@ struct azkarifyTests {
   @Test func nativeSearchFieldUsesAppFont() async throws {
     let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 834, height: 1194))
     let host = UIHostingController(
-      rootView: ContentView().environmentObject(AzkarStore(repository: AzkarRepository())))
+      rootView: ContentView()
+        .environmentObject(AzkarStore(repository: AzkarRepository()))
+        .environmentObject(PrayerScheduleStore())
+        .environmentObject(JourneyProgressStore())
+        .environmentObject(LocationCatalogStore()))
     window.rootViewController = host
     window.makeKeyAndVisible()
     defer { window.isHidden = true }

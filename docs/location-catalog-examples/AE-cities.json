@@ -1,0 +1,27 @@
+{
+  "data": [
+    {
+      "id": 292223,
+      "countryCode": "AE",
+      "names": {
+        "en": "Dubai",
+        "ar": "دبي"
+      },
+      "name": "Dubai",
+      "nameLanguage": "en",
+      "region": "03",
+      "location": {
+        "latitude": 25.2048,
+        "longitude": 55.2708
+      },
+      "timezone": "Asia/Dubai",
+      "prayerCalculationMethod": "dubai"
+    }
+  ],
+  "meta": {
+    "language": "en",
+    "version": "example-dataset",
+    "coverage": "world",
+    "nextCursor": null
+  }
+}

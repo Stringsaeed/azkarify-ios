@@ -8,15 +8,23 @@ private enum HomeRoute: Hashable {
   case favorites
   case counter
   case quickMode
+  case journeys
+  case prayerSettings
 }
 
 struct ContentView: View {
+  var canPresentLocationSetup = false
   @EnvironmentObject private var store: AzkarStore
+  @EnvironmentObject private var prayerSchedule: PrayerScheduleStore
+  @Environment(\.scenePhase) private var scenePhase
   @AppStorage("accent") private var accent = "brown"
+  @AppStorage("hasPresentedPrayerLocationSetup") private var hasPresentedLocationSetup = false
   @State private var search = ""
   @State private var selection: HomeRoute?
   @State private var preferredColumn: NavigationSplitViewColumn = .sidebar
   @State private var showMenu = false
+  @State private var showLocationSetup = false
+  @State private var openPrayerSettingsAfterDismiss = false
 
   private var results: [ZikrCategory] {
     guard !search.isEmpty else { return store.categories }
@@ -27,6 +35,35 @@ struct ContentView: View {
     NavigationSplitView(preferredCompactColumn: $preferredColumn) {
       ScrollView {
         LazyVStack(alignment: .leading, spacing: 12) {
+          if search.isEmpty {
+            Button { select(.journeys) } label: {
+              HStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 6) {
+                  Text(store.language == "ar" ? "رحلاتك اليومية" : "Your daily journeys")
+                    .font(AppAppearance.font(size: 24, relativeTo: .title2, bold: true))
+                  Text(store.language == "ar" ? "خطوات صغيرة، من الصباح إلى المساء" : "Small steps, from morning to night")
+                    .font(AppAppearance.font(size: 15))
+                    .foregroundStyle(.secondary)
+                  Label(store.language == "ar" ? "ابدأ رحلتك" : "Explore journeys", systemImage: "arrow.forward")
+                    .font(AppAppearance.font(size: 15, bold: true))
+                    .foregroundStyle(AppAppearance.accent(accent))
+                    .padding(.top, 6)
+                }
+                Spacer(minLength: 0)
+                JourneyCrescent(accent: accent)
+                  .frame(width: 68, height: 92)
+              }
+              .padding(20)
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .background(AppAppearance.background(accent).opacity(0.9), in: RoundedRectangle(cornerRadius: 24))
+              .overlay(RoundedRectangle(cornerRadius: 24).strokeBorder(AppAppearance.accent(accent).opacity(0.18)))
+              .contentShape(RoundedRectangle(cornerRadius: 24))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("dailyJourneys")
+            .padding(.bottom, 12)
+
+          }
           Text(
             AppCopy.text("Find the right zikr faster")
           )
@@ -65,7 +102,7 @@ struct ContentView: View {
         }
         .padding(16)
       }
-      .background(AppAppearance.background(accent))
+      .background { BotanicalBackground(accent: accent) }
       .overlay(alignment: .bottom) {
         LinearGradient(
           stops: (0...12).map { index in
@@ -81,16 +118,22 @@ struct ContentView: View {
         .ignoresSafeArea(edges: .bottom)
         .allowsHitTesting(false)
       }
-      .appNavigationTitle(
-        AppCopy.text("Husn"), language: store.language
-      )
+      .navigationTitle(AppCopy.text("Husn"))
+      .navigationBarTitleDisplayMode(.inline)
       .searchable(
         text: $search,
         prompt: AppCopy.text("Search azkar")
       )
       .background(SearchFieldTypography().allowsHitTesting(false))
       .toolbar {
-        ToolbarItem(placement: .topBarLeading) {
+        ToolbarItem(placement: .principal) {
+          PrayerLocationTitle(title: AppCopy.text("Husn"), language: store.language,
+                              location: prayerSchedule.configuration?.locationName) {
+            showLocationSetup = true
+          }
+        }
+        ToolbarItem(placement: store.language == "ar" ? .topBarLeading : .topBarTrailing) { JourneyPointsButton() }
+        ToolbarItem(placement: store.language == "ar" ? .topBarTrailing : .topBarLeading) {
           Button {
             showMenu = true
           } label: {
@@ -137,6 +180,26 @@ struct ContentView: View {
     }
     .navigationSplitViewStyle(.balanced)
     .task(id: store.language) { await store.load() }
+    .task(id: canPresentLocationSetup) { presentLocationSetupIfNeeded() }
+    .onChange(of: scenePhase) { _, phase in
+      if phase == .active { presentLocationSetupIfNeeded() }
+    }
+    .sheet(isPresented: $showLocationSetup, onDismiss: {
+      if openPrayerSettingsAfterDismiss {
+        openPrayerSettingsAfterDismiss = false
+        select(.prayerSettings)
+      }
+    }) {
+      PrayerLocationSheet(
+        onFinish: { showLocationSetup = false },
+        onOpenSettings: {
+          openPrayerSettingsAfterDismiss = true
+          showLocationSetup = false
+        })
+
+        .presentationDragIndicator(.visible)
+        .onAppear { hasPresentedLocationSetup = true }
+    }
     .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
   }
 
@@ -152,6 +215,8 @@ struct ContentView: View {
     case .favorites: FavoritesView()
     case .counter: CounterView()
     case .quickMode: QuickModeView()
+    case .journeys: JourneysView()
+    case .prayerSettings: PrayerScheduleSettingsView()
     case nil:
       ContentUnavailableView(
         AppCopy.text("All azkar"), systemImage: "book.closed",
@@ -165,6 +230,13 @@ struct ContentView: View {
   private func select(_ route: HomeRoute) {
     selection = route
     preferredColumn = .detail
+  }
+
+  private func presentLocationSetupIfNeeded() {
+    guard canPresentLocationSetup, scenePhase == .active,
+      !hasPresentedLocationSetup, prayerSchedule.configuration == nil,
+      selection == nil else { return }
+    showLocationSetup = true
   }
 
   private func menuButton(

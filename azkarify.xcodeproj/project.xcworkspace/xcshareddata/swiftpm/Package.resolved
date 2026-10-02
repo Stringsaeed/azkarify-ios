@@ -1,6 +1,24 @@
 {
-  "originHash" : "9654de2e5743099c951494618951bb0c894561a03645aee4df3bef1122172f21",
+  "originHash" : "d5871140d018cc04df1b44d0e34895d79e977d17fea85e08c758985a3f82531b",
   "pins" : [
+    {
+      "identity" : "adhan-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/batoulapps/adhan-swift.git",
+      "state" : {
+        "revision" : "a6fa2deee80c5abb0b9ad04466f8ab12b53144e7",
+        "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "countrykit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/frederik-jacques/countrykit.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "2d61cc9137bca33b8942bb58ab96edd52ad94b60"
+      }
+    },
     {
       "identity" : "purchases-ios-spm",
       "kind" : "remoteSourceControl",
