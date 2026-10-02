@@ -432,7 +432,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCATION_CATALOG_BASE_URL = "https://staging.api.saeed.sh/v1";
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stringsaeed.azkarify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -472,7 +472,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCATION_CATALOG_BASE_URL = "https://staging.api.saeed.sh/v1";
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stringsaeed.azkarify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
