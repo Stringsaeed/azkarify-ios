@@ -2,13 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SchemeUserState</key>
-	<dict>
-		<key>azkarify.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
-	</dict>
+	<key>AppAttestEnvironment</key>
+	<string>$(APP_ATTEST_ENVIRONMENT)</string>
+	<key>LocationCatalogBaseURL</key>
+	<string>$(LOCATION_CATALOG_BASE_URL)</string>
 </dict>
 </plist>

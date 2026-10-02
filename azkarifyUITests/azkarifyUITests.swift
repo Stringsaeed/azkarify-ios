@@ -12,7 +12,7 @@ final class azkarifyUITests: XCTestCase {
   @MainActor
   func testAdaptiveCategoryNavigation() throws {
     let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES"]
+    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
     app.launch()
     let morning = app.buttons["Words of remembrance for morning and evening"].firstMatch
     let sleeping = app.buttons["What to say before sleeping"].firstMatch
@@ -46,7 +46,7 @@ final class azkarifyUITests: XCTestCase {
   func testArabicAppearanceAndSlideshow() throws {
     let app = XCUIApplication()
     app.launchArguments = [
-      "-AppleLanguages", "(ar)", "-accent", "teal", "-hasSeenIntro", "YES",
+      "-AppleLanguages", "(ar)", "-accent", "teal", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES",
     ]
     app.launch()
     XCTAssertTrue(app.staticTexts["حصن المسلم"].waitForExistence(timeout: 15))
@@ -79,7 +79,7 @@ final class azkarifyUITests: XCTestCase {
   @MainActor
   func testAccentSelectionUpdatesSettings() throws {
     let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES"]
+    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
     app.launch()
     app.buttons["الإعدادات"].tap()
     app.buttons["لون التمييز"].tap()
@@ -95,7 +95,7 @@ final class azkarifyUITests: XCTestCase {
   @MainActor
   func testArabicMenuUsesBeadsIcon() throws {
     let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES"]
+    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
     app.launch()
     app.buttons["القائمة"].tap()
     let image = XCTAttachment(screenshot: app.screenshot())
@@ -109,7 +109,7 @@ final class azkarifyUITests: XCTestCase {
   @MainActor
   func testAddingFavoriteShowsIndicator() throws {
     let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES"]
+    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
     app.launch()
     let addButton = app.buttons["Add to favorites"].firstMatch
     XCTAssertTrue(addButton.waitForExistence(timeout: 15))
@@ -124,7 +124,7 @@ final class azkarifyUITests: XCTestCase {
   @MainActor
   func testCounterKeepsFullZikrScrollable() throws {
     let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES"]
+    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
     app.launch()
     app.buttons["أذكار الصباح والمساء"].firstMatch.tap()
     let counterButton = app.buttons.matching(

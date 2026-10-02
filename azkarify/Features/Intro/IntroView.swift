@@ -13,7 +13,7 @@ struct IntroView: View {
       "Find a zikr by topic or search for it."
     ),
     (
-      "text.📖", "Read and reflect",
+      "📖", "Read and reflect",
       "Open a topic to read its azkar or use the slideshow."
     ),
     (

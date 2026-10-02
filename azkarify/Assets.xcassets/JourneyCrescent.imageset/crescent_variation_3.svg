@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="778.6" height="936.6" fill="none" viewBox="20.7 42.7 778.6 936.6">
+<!-- SVG created with Arrow, by QuiverAI (https://quiver.ai) -->
+  <defs>
+    <linearGradient id="pedestal-side" x1="115" x2="687" y1="827" y2="889" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f6e4c9" offset="0"/>
+      <stop stop-color="#f8e7ce" offset=".24"/>
+      <stop stop-color="#e8cdae" offset=".53"/>
+      <stop stop-color="#dabc98" offset=".79"/>
+      <stop stop-color="#c9a27c" offset="1"/>
+    </linearGradient>
+    <radialGradient id="pedestal-top" cx="0" cy="0" r="1" gradientTransform="translate(326 773) scale(379 83)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff3dd" offset="0"/>
+      <stop stop-color="#f8e6ca" offset=".65"/>
+      <stop stop-color="#e4c8a7" offset="1"/>
+    </radialGradient>
+    <radialGradient id="floor-shadow" cx="0" cy="0" r="1" gradientTransform="translate(410 904) scale(367 53)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#694219" stop-opacity=".32" offset="0"/>
+      <stop stop-color="#856038" stop-opacity=".16" offset=".55"/>
+      <stop stop-color="#a88758" stop-opacity="0" offset="1"/>
+    </radialGradient>
+    <radialGradient id="contact-shadow" cx="0" cy="0" r="1" gradientTransform="translate(421 782) scale(247 28)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#674018" stop-opacity=".73" offset="0"/>
+      <stop stop-color="#805020" stop-opacity=".5" offset=".35"/>
+      <stop stop-color="#ac7b43" stop-opacity=".23" offset=".7"/>
+      <stop stop-color="#bf9562" stop-opacity="0" offset="1"/>
+    </radialGradient>
+    <linearGradient id="gold-body" x1="151" x2="606" y1="257" y2="743" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffcf78" offset="0"/>
+      <stop stop-color="#efb75d" offset=".29"/>
+      <stop stop-color="#d99a3e" offset=".64"/>
+      <stop stop-color="#b47524" offset="1"/>
+    </linearGradient>
+    <linearGradient id="outer-edge" x1="145" x2="490" y1="246" y2="785" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffd589" offset="0"/>
+      <stop stop-color="#f3bb62" offset=".35"/>
+      <stop stop-color="#c1842c" offset=".7"/>
+      <stop stop-color="#98601d" offset="1"/>
+    </linearGradient>
+    <linearGradient id="inner-gold" x1="262" x2="578" y1="256" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a5641a" offset="0"/>
+      <stop stop-color="#c7872c" offset=".2"/>
+      <stop stop-color="#ecb25b" offset=".45"/>
+      <stop stop-color="#ffd18b" offset=".74"/>
+      <stop stop-color="#ffd18a" offset="1"/>
+    </linearGradient>
+    <linearGradient id="inner-top" x1="363" x2="434" y1="139" y2="183" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#975916" stop-opacity=".6" offset="0"/>
+      <stop stop-color="#e3a043" stop-opacity="0" offset="1"/>
+    </linearGradient>
+    <linearGradient id="face-shade" x1="170" x2="545" y1="444" y2="673" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c38730" stop-opacity="0" offset="0"/>
+      <stop stop-color="#a9671b" stop-opacity=".08" offset=".65"/>
+      <stop stop-color="#9a5915" stop-opacity=".42" offset="1"/>
+    </linearGradient>
+    <linearGradient id="rim-highlight" x1="145" x2="447" y1="253" y2="793" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe3a4" offset="0"/>
+      <stop stop-color="#ffda90" offset=".4"/>
+      <stop stop-color="#e8ad52" offset=".8"/>
+      <stop stop-color="#b47a2b" offset="1"/>
+    </linearGradient>
+    <linearGradient id="leaf-gold" x1="151" x2="237" y1="356" y2="397" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d2973e" offset="0"/>
+      <stop stop-color="#bd802c" offset=".46"/>
+      <stop stop-color="#925719" offset="1"/>
+    </linearGradient>
+    <linearGradient id="leaf-low" x1="179" x2="278" y1="568" y2="664" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c58a33" offset="0"/>
+      <stop stop-color="#ac6f22" offset=".49"/>
+      <stop stop-color="#8d5117" offset="1"/>
+    </linearGradient>
+    <linearGradient id="stem-gold" x1="186" x2="368" y1="400" y2="743" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b37829" offset="0"/>
+      <stop stop-color="#985c19" offset=".6"/>
+      <stop stop-color="#9a5b16" offset="1"/>
+    </linearGradient>
+    <radialGradient id="bud-gold" cx=".28" cy=".22" r=".8">
+      <stop stop-color="#e2ac57" offset="0"/>
+      <stop stop-color="#c68b35" offset=".42"/>
+      <stop stop-color="#985c1c" offset="1"/>
+    </radialGradient>
+    <clipPath id="marble-side-clip">
+      <path d="m92 779c1-28 130-45 299-44 167 0 302 17 304 46l1 97c-10 32-156 58-304 58-142 0-278-24-301-56z"/>
+    </clipPath>
+    <clipPath id="marble-top-clip">
+      <ellipse cx="393" cy="782" rx="301" ry="47"/>
+    </clipPath>
+  </defs>
+  <g id="ground-contact">
+    <ellipse cx="410" cy="904" rx="367" ry="53" fill="url(#floor-shadow)"/>
+  </g>
+  <g id="round-marble-plinth">
+    <path id="plinth-bottom-edge" d="m90 875c15 28 156 57 304 57s287-24 303-57v8c-18 31-159 57-307 57-143-1-278-26-301-57z" fill="#9c7650" opacity=".55"/>
+    <path id="plinth-cylinder" d="m92 779c1-28 130-45 299-44 167 0 302 17 304 46l1 97c-10 32-156 58-304 58-142 0-278-24-301-56z" fill="url(#pedestal-side)"/>
+    <g id="marble-side-veining" clip-path="url(#marble-side-clip)">
+      <path d="m115 787 7 24-10 21 6 19-8 23-7 7 2 28m11-76-14 6-3 19m39-56 9 20-8 15-7 12-6 21 5 15-8 21" opacity=".34" stroke="#d9b893" stroke-width="4"/>
+      <path d="m165 809 8 19 6 17-6 13 6 8-3 19 6 15-4 20 20 5-8-21 7-17 9-6-2-14 11-9 12 6-1-14 13-12 14-5-13-5-19 7-12-10-10-3-11 20-7-4z" fill="#ceaa81" opacity=".37"/>
+      <path d="m189 848 9-5 6-14 7 9 2 13-8 8-10 4-8 16m-3 14 12 8 8 17" opacity=".24" stroke="#bc9369" stroke-width="2"/>
+      <path d="m250 837 17 12 11 3 7 11 12 10 10 19 1 14" opacity=".33" stroke="#d2ad84" stroke-width="3"/>
+      <path d="m320 841h17l13-14 6 4 9 13 12 7-5 11 17 13 5 9-11-3-5-11-12-2-11-9-13 11-9 2-6 14-9 7-4 15-14-5 6-9-1-12 11-12 4-11z" fill="#d4b18a" opacity=".37"/>
+      <path d="m352 831 7 14 8 7-7 8-14-2-9 9" opacity=".62" stroke="#ead0ae" stroke-width="4"/>
+      <path d="m386 936 2-13-5-5 11-10 13-7 8 3-6 9-10 6-2 13z" fill="#bb9469" opacity=".46"/>
+      <path d="m421 936 8-14 8-8-4-13 10-13 2-14 9-10 12-24 15-14 7 2-9 14-3 15-12 7-6 15-11 7-6 12 1 15 11 10 2 14" opacity=".26" stroke="#ba936b" stroke-width="4"/>
+      <path d="m489 837 16-8 24-5 13 2 2 12-9 10-5 13-12 2-9 9-11-2 9-14-4-12-10 9-6-2z" fill="#b99269" opacity=".22"/>
+      <path d="m568 820-2 15 9 9 4 11-10 8-7 14-14 12v11l-12 12" opacity=".3" stroke="#b9926a" stroke-width="4"/>
+      <path d="m565 862-17 8-8 9-11 6" opacity=".24" stroke="#b08760" stroke-width="3"/>
+      <path d="m601 814 2 15 7 13 7-5v-14l9 4 5 13-3 15 7 8 6-4-1-13-8-16-2-20" opacity=".25" stroke="#aa7e52" stroke-width="5"/>
+      <path d="m655 802 6 13 13 11 2 14 11 12 3 22-5 13m-19-81 5 8-1 7" opacity=".28" stroke="#a47a50" stroke-width="3"/>
+      <path d="m475 937 8-17v-10l10-8h14l-6 11 3 12 13 6m27-4 10-14 5-17 11-1 4 12 10-5 14-18 6 7 3 14 11 5" opacity=".23" stroke="#bd976e" stroke-width="7"/>
+      <path d="m92 791 8 16-4 13 11 20-4 15 9 18-2 23" opacity=".5" stroke="#fff1d9" stroke-width="5"/>
+      <path d="m97 891c137 55 437 63 588 4" opacity=".3" stroke="#f9e4c6" stroke-width="4"/>
+    </g>
+    <ellipse id="polished-top" cx="393" cy="782" rx="301" ry="47" fill="url(#pedestal-top)"/>
+    <g id="marble-top-veining" clip-path="url(#marble-top-clip)">
+      <path d="m103 772 69-2 34 9h35l17 9 58 5 27 9 45 2 30 12 53 2 21 12" opacity=".19" stroke="#d9b58c" stroke-width="5"/>
+      <path d="m103 759 34-7 17 6 14 5-37-2-15 4 29 4h22" fill="#dfbd95" opacity=".26"/>
+      <path d="m148 792 65-2 34 8 12 9 33 6 41 3 17 9" opacity=".25" stroke="#d7b38a" stroke-width="3"/>
+      <path d="m224 749 50 5 33-3 34 8 22 1m165-12 31 9 33-1 25 7 55 4 12 8-26 5-38-2-31 7-30-1" opacity=".22" stroke="#d4ae82" stroke-width="6"/>
+      <path d="m512 810 38-3 18-7 42-1 21-8 39 1 12-3" opacity=".24" stroke="#c6a078" stroke-width="4"/>
+      <path d="m115 781 58 5 36-1 23 7 37-1m247 28 36-1 32-9 38-1 19-6" opacity=".48" stroke="#fff5e2" stroke-width="4"/>
+    </g>
+    <path id="plinth-top-lip" d="m94 778c-2 24 133 49 297 51 158 1 301-22 303-48" opacity=".8" stroke="#fff2da" stroke-width="3.5"/>
+    <path d="m92 784v91" opacity=".6" stroke="#fff0d7" stroke-width="3"/>
+    <path id="bottom-fine-shadow" d="m92 881c27 30 159 54 301 55 146 0 281-24 302-54" opacity=".72" stroke="#946a3c" stroke-width="2.5"/>
+    <ellipse id="sculpture-cast-shadow" cx="421" cy="782" rx="247" ry="28" fill="url(#contact-shadow)"/>
+    <ellipse cx="403" cy="786" rx="112" ry="11" fill="url(#contact-shadow)" opacity=".55"/>
+  </g>
+  <g id="golden-crescent-sculpture">
+    <path id="crescent-silhouette" d="m484 65c-115 2-224 55-302 154-65 81-94 159-88 247 5 102 49 192 128 263 55 48 120 66 185 61 146-6 267-106 320-238 2-5-1-7-5-2-67 68-156 86-235 54-96-38-149-139-150-251-2-116 53-222 148-282 5-3 3-6-1-6z" fill="url(#outer-edge)" stroke="#f5d7a0" stroke-width="1.5"/>
+    <path id="crescent-front-face" d="m482 69c-116 20-216 70-290 165-58 75-87 154-81 236 8 103 52 181 124 244 55 48 115 67 181 60 135-9 252-99 307-220-66 71-155 121-243 96-119-30-213-128-232-245-22-123 38-252 160-309z" fill="url(#gold-body)"/>
+    <path id="front-warm-shading" d="m482 69c-116 20-216 70-290 165-58 75-87 154-81 236 8 103 52 181 124 244 55 48 115 67 181 60 135-9 252-99 307-220-66 71-155 121-243 96-119-30-213-128-232-245-22-123 38-252 160-309z" fill="url(#face-shade)"/>
+    <path id="outer-raised-rim" d="m483 68c-129 9-239 78-315 188-51 74-74 161-61 243 13 92 59 170 128 228 54 44 119 64 185 54 130-15 253-107 304-227-60 119-173 202-304 215-71 7-130-13-185-62-65-57-105-133-117-217-13-86 13-168 63-240 73-107 181-164 302-182z" fill="url(#rim-highlight)"/>
+    <path id="outer-inset-line" d="m385 96c-98 32-169 96-219 177-45 74-62 143-51 219 15 100 63 176 133 231 50 38 105 54 168 46" opacity=".68" stroke="#bb7e28" stroke-width="6"/>
+    <path id="outer-inset-glint" d="m386 94c-102 28-179 101-232 190-44 75-61 161-38 252 20 79 66 149 126 197" opacity=".56" stroke="#ffdc96" stroke-width="2.5"/>
+    <path id="inner-bevel-shadow" d="m482 70c-135 51-224 156-238 256-18 124 35 227 126 289 59 41 117 52 176 43 71-11 140-55 179-107-51 58-112 91-176 100-67 10-128-10-181-45-87-60-132-163-116-278 14-102 95-206 230-258z" fill="#a76a20" opacity=".75"/>
+    <path id="broad-inner-gold-bevel" d="m483 69c-107 44-195 128-224 216-35 106-1 222 73 297 57 60 144 88 213 72 76-16 140-56 180-103-66 66-158 86-240 51-94-40-147-137-148-249-3-115 52-221 146-284z" fill="url(#inner-gold)"/>
+    <path d="m483 69c-107 44-195 128-224 216-13 42-14 85-9 120 1-107 40-195 114-266 38-34 82-57 119-70z" fill="url(#inner-top)"/>
+    <path id="inside-rim-light" d="m485 68c-94 62-151 168-148 285 0 110 53 211 148 250 83 35 174 14 240-53" opacity=".82" stroke="#ffe4ae" stroke-linecap="round" stroke-width="3"/>
+    <path id="bevel-bottom-highlight" d="m259 446c22 73 71 137 137 178 46 28 100 41 154 29 72-16 135-56 175-102" opacity=".88" stroke="#ffdc91" stroke-width="3"/>
+    <path id="bevel-left-glint" d="m397 99c-90 54-138 132-152 216-13 93 13 178 62 235" opacity=".63" stroke="#f9c774" stroke-width="2.3"/>
+    <path id="right-tip-edge" d="m726 550c-27 72-79 136-139 180-56 41-118 58-179 60" opacity=".67" stroke="#a7681c" stroke-linecap="round" stroke-width="3.5"/>
+    <path id="outer-left-highlight" d="m482 65c-130 2-244 74-314 171-62 85-84 179-71 254 15 100 58 177 126 239" opacity=".82" stroke="#ffe8ba" stroke-width="2.3"/>
+    <g id="engraved-botanical-branch">
+      <path id="stem-highlight" d="m172 365c-6 45 14 108 39 162 27 62 60 122 105 159 41 34 89 52 139 55" stroke="#ffd389" stroke-linecap="round" stroke-width="5"/>
+      <path id="main-curved-stem" d="m173 364c-5 43 12 103 39 163 29 64 60 121 108 160 42 34 87 52 135 54" stroke="url(#stem-gold)" stroke-linecap="round" stroke-width="4.5"/>
+      <path d="m209 522c33 74 67 131 112 166 41 32 86 50 133 53" opacity=".55" stroke="#7f4916" stroke-width="1.6"/>
+      <g id="upper-lance-leaf">
+        <path d="m173 367c-9-55 22-117 84-176-16 32-14 73-32 110-11 24-28 40-43 51-5 5-8 10-9 15z" fill="url(#leaf-gold)"/>
+        <path d="m174 355c5-57 42-118 83-164-37 30-69 67-80 100-9 24-9 52-4 76z" fill="#e7ac50" opacity=".7"/>
+        <path d="m173 366c-7-52 19-113 83-175" stroke="#ffe1a0" stroke-linecap="round" stroke-width="3.3"/>
+        <path d="m175 356c11-28 26-67 44-103 14-28 27-49 37-61" opacity=".8" stroke="#c48a35" stroke-width="2"/>
+        <path d="m181 352c23-17 39-35 49-63 9-29 10-65 27-96" opacity=".75" stroke="#955b1c" stroke-width="2.4"/>
+      </g>
+      <g id="left-upper-leaf">
+        <path d="m214 553c-20-23-48-29-66-60-13-23-17-54-17-80 15 23 31 33 47 60 15 26 24 55 36 80z" fill="url(#leaf-gold)"/>
+        <path d="m133 418c3 46 22 88 55 111 12 9 19 16 26 24-25-34-40-67-59-97z" fill="#d59b40" opacity=".54"/>
+        <path d="m131 413c14 22 31 35 46 59 16 28 24 55 37 80" stroke="#ffdb94" stroke-linecap="round" stroke-width="3"/>
+        <path d="m134 421c22 40 43 76 71 118" opacity=".57" stroke="#9e631e" stroke-width="2.5"/>
+        <path d="m131 417c1 35 6 60 22 82 16 21 37 34 55 47" opacity=".75" stroke="#bc7c29" stroke-width="2"/>
+      </g>
+      <g id="upright-middle-leaf">
+        <path d="m212 536c-28-42-27-83-13-123 6-20 18-37 24-51-1 35 10 61 4 92-4 30-15 54-15 82z" fill="url(#leaf-gold)"/>
+        <path d="m211 527c-13-43-6-93 11-160-16 30-30 60-31 88-2 28 7 53 20 72z" fill="#dda149"/>
+        <path d="m212 535c-25-41-26-80-13-119 7-21 18-40 24-54" stroke="#ffdf9c" stroke-linecap="round" stroke-width="3.6"/>
+        <path d="m223 366c-1 34 9 59 4 87-3 30-14 54-13 77" opacity=".7" stroke="#995c19" stroke-width="2.4"/>
+        <path d="m211 521c-10-43-2-97 11-150" opacity=".64" stroke="#aa6c21" stroke-width="2"/>
+      </g>
+      <g id="lower-upright-leaf">
+        <path d="m306 667c-31-21-50-52-55-86-4-25-2-48 2-71 17 26 31 54 37 83 5 27 0 51 16 74z" fill="url(#leaf-low)"/>
+        <path d="m303 660c-26-31-43-91-49-146-7 27-6 52-1 73 8 33 25 57 50 73z" fill="#ce9137" opacity=".8"/>
+        <path d="m305 665c-27-19-47-49-53-84-5-25-3-49 1-71" stroke="#fbd08a" stroke-linecap="round" stroke-width="3.5"/>
+        <path d="m254 512c17 26 29 53 35 81 5 27 2 51 15 71" opacity=".8" stroke="#aa6c21" stroke-width="2.7"/>
+        <path d="m255 520c13 43 19 91 39 128" opacity=".48" stroke="#915718" stroke-width="2.5"/>
+      </g>
+      <g id="lower-left-leaf">
+        <path d="m283 659c-23-8-51-4-78-18-23-13-36-38-45-68 22 12 45 12 67 29 25 18 36 42 56 57z" fill="url(#leaf-low)"/>
+        <path d="m161 575c27 24 58 33 82 55 15 14 27 22 40 29-25-9-50-5-76-18-23-13-37-39-46-66z" fill="#a96d21" opacity=".42"/>
+        <path d="m159 572c20 11 46 14 66 29 24 17 40 44 58 58" stroke="#ffdd98" stroke-linecap="round" stroke-width="3.6"/>
+        <path d="m165 582c31 21 72 42 108 69" opacity=".54" stroke="#925719" stroke-width="2.6"/>
+        <path d="m161 576c11 31 25 53 46 65 25 13 51 10 71 16" stroke="#c78a32" stroke-width="2"/>
+      </g>
+      <g id="bottom-sweeping-leaf">
+        <path d="m369 724c-27-1-47 7-76-2-22-6-39-21-53-37 30 1 51 0 74 10 21 9 37 23 55 29z" fill="url(#leaf-low)"/>
+        <path d="m243 687c27 15 61 22 87 29 14 4 26 6 39 8-32 0-49 5-74-1-22-6-39-19-52-36z" fill="#a66920" opacity=".52"/>
+        <path d="m240 684c29 2 51 1 74 11 22 10 38 23 55 29" stroke="#ffdc96" stroke-linecap="round" stroke-width="3.6"/>
+        <path d="m246 690c27 14 65 24 106 31" opacity=".65" stroke="#925819" stroke-width="2.2"/>
+        <path d="m244 691c19 18 33 26 51 31 26 8 48 1 68 2" stroke="#be812c" stroke-width="2"/>
+      </g>
+      <g id="small-golden-buds">
+        <path d="m174 403c-9 0-14-6-13-14 1-5 5-8 10-8 1-6 7-6 11-2 7 3 8 10 5 15s-8 9-13 9z" fill="url(#bud-gold)"/>
+        <path d="m165 383c-5 6-2 14 4 16m6-21c4-2 7 2 7 5" opacity=".8" stroke="#edba68" stroke-linecap="round" stroke-width="2.4"/>
+        <path d="m164 398c7 9 20 1 23-5" opacity=".7" stroke="#a66a21" stroke-width="1.7"/>
+        <path d="m237 526c-5 0-6-5-6-9 0-5 3-8 7-8 5-2 8 3 7 8 0 6-3 10-8 9z" fill="url(#bud-gold)"/>
+        <path d="m234 513c0-3 3-4 5-2l-1 6" stroke="#e5ac51" stroke-linecap="round" stroke-width="2"/>
+        <path d="m319 643c-9-1-12-8-8-14 0-5 5-9 9-7 6-2 12 3 12 10 0 6-6 12-13 11z" fill="url(#bud-gold)"/>
+        <path d="m312 630c-1-5 2-9 5-10" stroke="#f0bc69" stroke-linecap="round" stroke-width="3.2"/>
+        <path d="m314 641c8 5 17-1 18-9" stroke="#b5792b" stroke-width="1.5"/>
+      </g>
+    </g>
+    <path id="bottom-rim-soft-glint" d="m259 746c53 31 104 42 164 32 97-14 171-57 226-113" opacity=".45" stroke="#e6a449" stroke-width="2.3"/>
+  </g>
+</svg>

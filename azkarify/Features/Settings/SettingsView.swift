@@ -37,6 +37,13 @@ struct SettingsView: View {
         ReminderSettingView(kind: .morning, language: store.language)
         ReminderSettingView(kind: .evening, language: store.language)
       }
+      Section(store.language == "ar" ? "الرحلات اليومية" : "Daily journeys") {
+        NavigationLink {
+          PrayerScheduleSettingsView()
+        } label: {
+          Label(store.language == "ar" ? "مواقيت الصلاة" : "Prayer times", systemImage: "sun.horizon")
+        }
+      }
       Button(AppCopy.text("View introduction")) {
         showIntro = true
       }

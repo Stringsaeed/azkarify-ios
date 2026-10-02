@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "code": "AE",
+      "flag": "🇦🇪",
+      "name": "United Arab Emirates",
+      "nameLanguage": "en",
+      "names": {
+        "en": "United Arab Emirates",
+        "ar": "الإمارات العربية المتحدة"
+      },
+      "prayerCalculationMethod": "dubai"
+    }
+  ],
+  "meta": {
+    "language": "en",
+    "version": "example-dataset",
+    "coverage": "world",
+    "nextCursor": null,
+    "total": 1
+  }
+}
