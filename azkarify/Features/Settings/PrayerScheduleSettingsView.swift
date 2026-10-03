@@ -3,6 +3,8 @@ import SwiftUI
 private struct AppliedLocationMetadata: Equatable {
   let countryCode: String?
   let cityID: String?
+  let localizedNames: [String: String]?
+  let usesDeviceLocation: Bool
   let locationName: String
   let latitude: Double
   let longitude: Double
@@ -68,7 +70,9 @@ struct PrayerScheduleSettingsView: View {
       madhab: madhab,
       ishaAdjustmentMinutes: ishaAdjustmentMinutes,
       countryCode: metadata?.countryCode,
-      cityID: metadata?.cityID)
+      cityID: metadata?.cityID,
+      localizedLocationNames: metadata?.localizedNames,
+      usesDeviceLocation: metadata?.usesDeviceLocation ?? false)
     return configuration.isValid ? configuration : nil
   }
 
@@ -85,6 +89,8 @@ struct PrayerScheduleSettingsView: View {
             appliedLocationMetadata = AppliedLocationMetadata(
               countryCode: city.countryCode,
               cityID: city.id,
+              localizedNames: city.localizedNames,
+              usesDeviceLocation: false,
               locationName: city.name(language: store.language),
               latitude: city.latitude,
               longitude: city.longitude,
@@ -188,17 +194,20 @@ struct PrayerScheduleSettingsView: View {
       selectedCountryCode = saved.countryCode
         ?? PrayerCountryCatalog.countryCode(for: saved.locationName)
         ?? ""
-      if saved.countryCode != nil || saved.cityID != nil {
+      let savedLocationName = saved.displayLocationName(language: store.language)
+      if saved.countryCode != nil || saved.cityID != nil || saved.usesDeviceLocation {
         appliedLocationMetadata = AppliedLocationMetadata(
           countryCode: saved.countryCode,
           cityID: saved.cityID,
-          locationName: saved.locationName,
+          localizedNames: saved.localizedLocationNames,
+          usesDeviceLocation: saved.usesDeviceLocation,
+          locationName: savedLocationName,
           latitude: saved.latitude,
           longitude: saved.longitude,
           timeZoneIdentifier: saved.timeZoneIdentifier,
           method: saved.method)
       }
-      locationName = saved.locationName
+      locationName = savedLocationName
       latitude = String(saved.latitude)
       longitude = String(saved.longitude)
       timeZoneIdentifier = saved.timeZoneIdentifier

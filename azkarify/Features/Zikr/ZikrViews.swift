@@ -39,7 +39,9 @@ struct ZikrListView: View {
       .disabled(entries.isEmpty)
       .accessibilityLabel(AppCopy.text("Slideshow"))
     }
-    .sheet(isPresented: $showSlideshow) { SlideshowView(entries: entries, title: category.title) }
+    .fullScreenCover(isPresented: $showSlideshow) {
+      SlideshowView(entries: entries, title: category.title)
+    }
     .task(id: category.detailUrl) { await load() }
   }
 

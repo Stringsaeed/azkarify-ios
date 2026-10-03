@@ -167,7 +167,7 @@ struct JourneyDetailView: View {
         }
         ForEach(step.categoryIDs, id: \.self) { categoryID in
           if let category = store.categories.first(where: { $0.id == categoryID }) {
-            NavigationLink { ZikrListView(category: category) } label: {
+            NavigationLink(value: DetailRoute.category(category)) {
               HStack(spacing: 8) {
                 Image(systemName: "book.closed")
                   .font(.system(size: 13))
