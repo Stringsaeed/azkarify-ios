@@ -128,7 +128,8 @@ final class PrayerLocationProvider: NSObject, ObservableObject, CLLocationManage
       longitude: longitude,
       timeZoneIdentifier: timeZone.identifier,
       method: calculationMethod(for: timeZone.identifier),
-      madhab: .shafi)
+      madhab: .shafi,
+      usesDeviceLocation: true)
   }
 
   static func isUsableLocation(_ location: CLLocation, now: Date = Date()) -> Bool {

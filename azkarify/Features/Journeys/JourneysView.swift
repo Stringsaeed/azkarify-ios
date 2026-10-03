@@ -62,7 +62,7 @@ struct JourneysView: View {
       .toolbar {
         ToolbarItem(placement: .principal) {
           PrayerLocationTitle(title: text("Journeys", "الرحلات"), language: store.language,
-                              location: schedule.configuration?.locationName) {
+                              location: schedule.configuration?.displayLocationName(language: store.language)) {
             showLocationSetup = true
           }
         }
@@ -155,9 +155,7 @@ struct JourneysView: View {
   }
 
   private func journeyLink(_ journey: JourneyDefinition, date: Date) -> some View {
-    NavigationLink {
-      JourneyDetailView(journey: journey, progress: progress)
-    } label: {
+    NavigationLink(value: DetailRoute.journey(journey)) {
       JourneyCard(
         journey: journey, completedCount: progress.completedCount(for: journey, on: date),
         time: journey.prayer.flatMap { schedule.formattedTime(for: $0, on: date, language: store.language) },

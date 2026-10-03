@@ -60,6 +60,10 @@ struct PrayerCity: Identifiable, Equatable {
     language.hasPrefix("ar") && !arabicName.isEmpty ? arabicName : englishName
   }
 
+  var localizedNames: [String: String] {
+    ["en": englishName, "ar": arabicName.isEmpty ? englishName : arabicName]
+  }
+
   static let cities: [PrayerCity] = [
     .init(id: "Dubai", arabicName: "دبي", countryCode: "AE", latitude: 25.2048, longitude: 55.2708,
       timeZone: "Asia/Dubai", method: .dubai),

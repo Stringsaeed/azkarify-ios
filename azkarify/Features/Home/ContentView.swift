@@ -12,15 +12,25 @@ private enum HomeRoute: Hashable {
   case prayerSettings
 }
 
+/// Screens pushed inside the detail column. Pushing by value keeps them in
+/// `detailPath`, so choosing a new sidebar item can pop them.
+enum DetailRoute: Hashable {
+  case journey(JourneyDefinition)
+  case category(ZikrCategory)
+  case prayerSettings
+}
+
 struct ContentView: View {
   var canPresentLocationSetup = false
   @EnvironmentObject private var store: AzkarStore
   @EnvironmentObject private var prayerSchedule: PrayerScheduleStore
+  @EnvironmentObject private var journeyProgress: JourneyProgressStore
   @Environment(\.scenePhase) private var scenePhase
   @AppStorage("accent") private var accent = "brown"
   @AppStorage("hasPresentedPrayerLocationSetup") private var hasPresentedLocationSetup = false
   @State private var search = ""
   @State private var selection: HomeRoute?
+  @State private var detailPath = NavigationPath()
   @State private var preferredColumn: NavigationSplitViewColumn = .sidebar
   @State private var showMenu = false
   @State private var showLocationSetup = false
@@ -128,7 +138,7 @@ struct ContentView: View {
       .toolbar {
         ToolbarItem(placement: .principal) {
           PrayerLocationTitle(title: AppCopy.text("Husn"), language: store.language,
-                              location: prayerSchedule.configuration?.locationName) {
+                              location: prayerSchedule.configuration?.displayLocationName(language: store.language)) {
             showLocationSetup = true
           }
         }
@@ -169,11 +179,21 @@ struct ContentView: View {
           .accessibilityLabel(AppCopy.text("Settings"))
         }
       }
-      .navigationSplitViewColumnWidth(min: 280, ideal: 340, max: 400)
+      .navigationSplitViewColumnWidth(min: 320, ideal: 400, max: 440)
       .accessibilityIdentifier("azkarSidebar")
     } detail: {
-      NavigationStack {
+      NavigationStack(path: $detailPath) {
         detail
+          .navigationDestination(for: DetailRoute.self) { route in
+            switch route {
+            case .journey(let journey):
+              JourneyDetailView(journey: journey, progress: journeyProgress)
+            case .category(let category):
+              ZikrListView(category: category)
+            case .prayerSettings:
+              PrayerScheduleSettingsView()
+            }
+          }
       }
       .id(selection)
       .accessibilityIdentifier("azkarDetail")
@@ -228,6 +248,7 @@ struct ContentView: View {
   }
 
   private func select(_ route: HomeRoute) {
+    detailPath = NavigationPath()
     selection = route
     preferredColumn = .detail
   }
@@ -277,9 +298,7 @@ struct CategoryRow: View {
               .buttonStyle(.plain)
               .accessibilityAddTraits(isSelected ? .isSelected : [])
           } else {
-            NavigationLink {
-              ZikrListView(category: category)
-            } label: {
+            NavigationLink(value: DetailRoute.category(category)) {
               categoryLabel
             }
           }

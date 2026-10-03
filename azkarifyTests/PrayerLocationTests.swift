@@ -36,6 +36,53 @@ struct PrayerLocationTests {
     #expect(configuration.timeZoneIdentifier == "Pacific/Auckland")
   }
 
+  @Test func deviceLocationLabelFollowsAppLanguage() {
+    let configuration = PrayerLocationProvider.localConfiguration(
+      latitude: 25.2048, longitude: 55.2708, language: "en",
+      timeZone: TimeZone(identifier: "Asia/Dubai")!)
+
+    #expect(configuration.displayLocationName(language: "en") == "Current location")
+    #expect(configuration.displayLocationName(language: "ar") == "الموقع الحالي")
+  }
+
+  @Test func cityNameFollowsAppLanguage() {
+    let dubai = PrayerCity.cities.first { $0.id == "Dubai" }!
+    let configuration = PrayerScheduleConfiguration(
+      city: dubai, madhab: .shafi, ishaAdjustmentMinutes: 0, language: "ar")
+
+    #expect(configuration.locationName == "دبي")
+    #expect(configuration.displayLocationName(language: "en") == "Dubai")
+    #expect(configuration.displayLocationName(language: "ar") == "دبي")
+  }
+
+  @Test func typedLocationNameIsShownAsTyped() {
+    let dubai = PrayerCity.cities.first { $0.id == "Dubai" }!
+    var configuration = PrayerScheduleConfiguration(
+      city: dubai, madhab: .shafi, ishaAdjustmentMinutes: 0, language: "en")
+    configuration.locationName = "Home"
+
+    #expect(configuration.displayLocationName(language: "ar") == "Home")
+  }
+
+  @Test func olderSavedConfigurationsGetLocalizedLabels() throws {
+    func decode(_ json: String) throws -> PrayerScheduleConfiguration {
+      try JSONDecoder().decode(PrayerScheduleConfiguration.self, from: Data(json.utf8))
+    }
+    let city = try decode("""
+      {"locationName":"دبي","latitude":25.2048,"longitude":55.2708,"timeZoneIdentifier":"Asia/Dubai",
+      "method":"dubai","madhab":"shafi","ishaAdjustmentMinutes":0,"countryCode":"AE","cityID":"Dubai"}
+      """)
+    let device = try decode("""
+      {"locationName":"Current location","latitude":25.2048,"longitude":55.2708,
+      "timeZoneIdentifier":"Asia/Dubai","method":"dubai","madhab":"shafi","ishaAdjustmentMinutes":0}
+      """)
+
+    #expect(city.displayLocationName(language: "en") == "Dubai")
+    #expect(!city.usesDeviceLocation)
+    #expect(device.usesDeviceLocation)
+    #expect(device.displayLocationName(language: "ar") == "الموقع الحالي")
+  }
+
   @Test func invalidStaleAndInaccurateLocationsAreRejected() {
     let now = Date(timeIntervalSince1970: 1_000_000)
     let invalid = CLLocation(

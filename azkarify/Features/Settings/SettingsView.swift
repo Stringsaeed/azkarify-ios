@@ -38,9 +38,7 @@ struct SettingsView: View {
         ReminderSettingView(kind: .evening, language: store.language)
       }
       Section(store.language == "ar" ? "الرحلات اليومية" : "Daily journeys") {
-        NavigationLink {
-          PrayerScheduleSettingsView()
-        } label: {
+        NavigationLink(value: DetailRoute.prayerSettings) {
           Label(store.language == "ar" ? "مواقيت الصلاة" : "Prayer times", systemImage: "sun.horizon")
         }
       }

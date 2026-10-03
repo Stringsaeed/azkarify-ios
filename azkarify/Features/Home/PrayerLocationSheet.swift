@@ -431,16 +431,10 @@ struct PrayerLocationSheet: View {
     stopLocationRequest()
     let existing = prayerSchedule.configuration
     let configuration = PrayerScheduleConfiguration(
-      locationName: city.name(language: store.language),
-      latitude: city.latitude,
-      longitude: city.longitude,
-      timeZoneIdentifier: city.timeZone,
-      method: city.method,
+      city: city,
       madhab: existing?.madhab ?? .shafi,
       ishaAdjustmentMinutes: existing?.ishaAdjustmentMinutes ?? 0,
-      countryCode: city.countryCode,
-      cityID: city.id
-    )
+      language: store.language)
     save(configuration)
   }
 

@@ -90,6 +90,20 @@ struct PrayerScheduleConfiguration: Codable, Equatable {
   var ishaAdjustmentMinutes: Int = 0
   var countryCode: String? = nil
   var cityID: String? = nil
+  /// The chosen city's name in each app language, keyed by "en" and "ar".
+  var localizedLocationNames: [String: String]? = nil
+  var usesDeviceLocation = false
+
+  /// The location label in the given language. Saved city and device labels
+  /// follow the app language; a name the user typed is shown as typed.
+  func displayLocationName(language: String) -> String {
+    let arabic = language.hasPrefix("ar")
+    if usesDeviceLocation { return arabic ? "الموقع الحالي" : "Current location" }
+    guard let names = localizedLocationNames, names.values.contains(locationName) else {
+      return locationName
+    }
+    return names[arabic ? "ar" : "en"] ?? locationName
+  }
 
   var isValid: Bool {
     !locationName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -104,6 +118,55 @@ struct PrayerScheduleConfiguration: Codable, Equatable {
     var calendar = Calendar(identifier: .gregorian)
     calendar.timeZone = timeZone
     return calendar
+  }
+}
+
+extension PrayerScheduleConfiguration {
+  static let deviceLocationNames: Set<String> = ["Current location", "الموقع الحالي"]
+
+  init(
+    city: PrayerCity,
+    madhab: PrayerMadhab,
+    ishaAdjustmentMinutes: Int,
+    language: String
+  ) {
+    self.init(
+      locationName: city.name(language: language),
+      latitude: city.latitude,
+      longitude: city.longitude,
+      timeZoneIdentifier: city.timeZone,
+      method: city.method,
+      madhab: madhab,
+      ishaAdjustmentMinutes: ishaAdjustmentMinutes,
+      countryCode: city.countryCode,
+      cityID: city.id,
+      localizedLocationNames: city.localizedNames)
+  }
+
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    locationName = try container.decode(String.self, forKey: .locationName)
+    latitude = try container.decode(Double.self, forKey: .latitude)
+    longitude = try container.decode(Double.self, forKey: .longitude)
+    timeZoneIdentifier = try container.decode(String.self, forKey: .timeZoneIdentifier)
+    method = try container.decode(PrayerCalculationMethod.self, forKey: .method)
+    madhab = try container.decode(PrayerMadhab.self, forKey: .madhab)
+    ishaAdjustmentMinutes =
+      try container.decodeIfPresent(Int.self, forKey: .ishaAdjustmentMinutes) ?? 0
+    countryCode = try container.decodeIfPresent(String.self, forKey: .countryCode)
+    cityID = try container.decodeIfPresent(String.self, forKey: .cityID)
+    localizedLocationNames =
+      try container.decodeIfPresent([String: String].self, forKey: .localizedLocationNames)
+    // Older configurations stored only the label, in the language that was
+    // active when it was saved.
+    usesDeviceLocation =
+      try container.decodeIfPresent(Bool.self, forKey: .usesDeviceLocation)
+      ?? (cityID == nil && Self.deviceLocationNames.contains(locationName))
+    if localizedLocationNames == nil, let cityID,
+      let city = PrayerCity.cities.first(where: { $0.id == cityID })
+    {
+      localizedLocationNames = city.localizedNames
+    }
   }
 }
 
