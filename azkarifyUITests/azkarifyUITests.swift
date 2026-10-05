@@ -67,11 +67,31 @@ final class azkarifyUITests: XCTestCase {
 
     app.buttons["فيروزي"].tap()
 
-    app.navigationBars["الإعدادات"].buttons.firstMatch.tap()
+    if app.frame.width < 700 {
+      app.navigationBars["الإعدادات"].buttons.firstMatch.tap()
+    }
     app.buttons["أذكار الصباح والمساء"].firstMatch.tap()
     app.buttons["عرض الشرائح"].tap()
     XCTAssertTrue(app.staticTexts["slideshowProgress"].waitForExistence(timeout: 5))
     let slideshowImage = XCTAttachment(screenshot: app.screenshot())
+    let progress = app.staticTexts["slideshowProgress"]
+    let progressY = progress.frame.midY
+    let next = app.buttons["slideshowNext"]
+    let previous = app.buttons["slideshowPrevious"]
+    XCTAssertTrue(next.label.contains("التالي"))
+    XCTAssertTrue(previous.label.contains("السابق"))
+    XCTAssertGreaterThan(previous.frame.midX, next.frame.midX)
+    next.tap()
+    XCTAssertEqual(progress.frame.midY, progressY, accuracy: 1)
+    let counter = app.buttons["slideshowCounter"]
+    XCTAssertTrue(counter.isHittable)
+    XCTAssertGreaterThan(counter.frame.midX, app.frame.midX)
+    XCTAssertLessThan(counter.frame.midY, app.frame.height / 3)
+    previous.tap()
+    XCTAssertEqual(progress.label, "1 من 24")
+    let counterHidden = XCTNSPredicateExpectation(
+      predicate: NSPredicate(format: "exists == false"), object: counter)
+    XCTAssertEqual(XCTWaiter.wait(for: [counterHidden], timeout: 3), .completed)
     slideshowImage.name = "Arabic slideshow first page"
     slideshowImage.lifetime = .keepAlways
     add(slideshowImage)
@@ -91,14 +111,23 @@ final class azkarifyUITests: XCTestCase {
 
     let progress = app.staticTexts["slideshowProgress"]
     XCTAssertTrue(progress.waitForExistence(timeout: 5))
-    XCTAssertEqual(progress.label, "Zikr 1 of 24")
-    XCTAssertFalse(app.buttons["slideshowCounter"].exists)
+    XCTAssertEqual(progress.label, "1 of 24")
+    XCTAssertFalse(app.buttons["slideshowCounter"].isHittable)
 
-    app.swipeLeft()
+    let progressY = progress.frame.midY
+    XCTAssertFalse(app.buttons["slideshowPrevious"].isEnabled)
+    app.buttons["slideshowNext"].tap()
     XCTAssertTrue(progress.waitForExistence(timeout: 5))
-    XCTAssertEqual(progress.label, "Zikr 2 of 24")
+    XCTAssertEqual(progress.label, "2 of 24")
+    XCTAssertEqual(progress.frame.midY, progressY, accuracy: 1)
+    XCTAssertTrue(app.buttons["slideshowPrevious"].isEnabled)
+    app.buttons["slideshowPrevious"].tap()
+    XCTAssertEqual(progress.label, "1 of 24")
+    app.buttons["slideshowNext"].tap()
     let counter = app.buttons["slideshowCounter"]
     XCTAssertTrue(counter.waitForExistence(timeout: 5))
+    XCTAssertLessThan(counter.frame.midX, app.frame.midX)
+    XCTAssertLessThan(counter.frame.midY, app.frame.height / 3)
     counter.tap()
     XCTAssertTrue(app.scrollViews["counterZikrScroll"].waitForExistence(timeout: 5))
     XCTAssertTrue(app.buttons["Count: 3"].waitForExistence(timeout: 5))
@@ -124,6 +153,17 @@ final class azkarifyUITests: XCTestCase {
     app.buttons["Slideshow"].tap()
     XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 5))
     XCTAssertFalse(app.staticTexts["slideshowProgress"].exists)
+    XCTAssertTrue(app.buttons["slideshowNext"].exists)
+    XCTAssertTrue(app.buttons["slideshowPrevious"].exists)
+    XCTAssertFalse(app.otherElements["slideshowPagination"].exists)
+    app.buttons["slideshowNext"].tap()
+    app.buttons["slideshowNext"].tap()
+    XCTAssertTrue(app.buttons["slideshowNext"].label.contains("Done"))
+    XCTAssertTrue(app.buttons["Close"].exists, "The last slide stays open until Done.")
+    app.buttons["slideshowNext"].tap()
+    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+    XCTAssertFalse(app.buttons["Close"].exists)
+    XCTAssertFalse(app.keyboards.firstMatch.exists)
     let image = XCTAttachment(screenshot: app.screenshot())
     image.name = "Short slideshow without progress"
     image.lifetime = .keepAlways
@@ -152,6 +192,49 @@ final class azkarifyUITests: XCTestCase {
     image.name = "Short slideshow keeps counter"
     image.lifetime = .keepAlways
     add(image)
+  }
+
+  @MainActor
+  func testTwoSlidePaginationAndSingleSlideNavigation() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
+    app.launch()
+    let search = app.searchFields.firstMatch
+    XCTAssertTrue(search.waitForExistence(timeout: 15))
+    search.tap()
+    search.typeText("sitting between")
+    let category = app.buttons["Invocations for sitting between two prostrations"].firstMatch
+    XCTAssertTrue(category.waitForExistence(timeout: 5))
+    category.tap()
+    app.buttons["Slideshow"].tap()
+    XCTAssertTrue(app.otherElements["slideshowPagination"].waitForExistence(timeout: 5))
+    XCTAssertFalse(app.staticTexts["slideshowProgress"].exists)
+    app.buttons["slideshowNext"].tap()
+    XCTAssertTrue(app.buttons["slideshowNext"].label.contains("Done"))
+    app.buttons["slideshowPrevious"].tap()
+    XCTAssertTrue(app.buttons["slideshowNext"].label.contains("Next"))
+    app.buttons["Close"].tap()
+    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+    if app.buttons["BackButton"].exists {
+      app.buttons["BackButton"].tap()
+    } else {
+      app.navigationBars.buttons.firstMatch.tap()
+    }
+    XCTAssertTrue(search.waitForExistence(timeout: 5))
+    search.tap()
+    if app.buttons["Clear text"].exists { app.buttons["Clear text"].tap() }
+    search.typeText("undressing")
+    let single = app.buttons["What to say when undressing"].firstMatch
+    XCTAssertTrue(single.waitForExistence(timeout: 5))
+    single.tap()
+    app.buttons["Slideshow"].tap()
+    XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 5))
+    XCTAssertFalse(app.buttons["slideshowNext"].exists)
+    XCTAssertFalse(app.buttons["slideshowPrevious"].exists)
+    XCTAssertFalse(app.otherElements["slideshowPagination"].exists)
+    XCTAssertTrue(app.buttons["slideshowDone"].exists)
+    app.buttons["slideshowDone"].tap()
+    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
   }
 
   @MainActor

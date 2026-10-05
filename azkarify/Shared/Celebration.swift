@@ -1,14 +1,18 @@
-enum Celebration {
-  static func slideshowFinished(page: Int, entryCount: Int, alreadyCelebrated: Bool) -> Bool {
-    !alreadyCelebrated && entryCount > 0 && page == entryCount - 1
-  }
+import SwiftUI
 
+enum Celebration {
   static func showsSlideshowProgress(entryCount: Int) -> Bool {
     entryCount > 3
   }
+}
 
-  static func celebratesSlideshow(page: Int, entryCount: Int, alreadyCelebrated: Bool) -> Bool {
-    showsSlideshowProgress(entryCount: entryCount)
-      && slideshowFinished(page: page, entryCount: entryCount, alreadyCelebrated: alreadyCelebrated)
+private struct CelebrateKey: EnvironmentKey {
+  static let defaultValue: (CGPoint) -> Void = { _ in }
+}
+
+extension EnvironmentValues {
+  var celebrate: (CGPoint) -> Void {
+    get { self[CelebrateKey.self] }
+    set { self[CelebrateKey.self] = newValue }
   }
 }

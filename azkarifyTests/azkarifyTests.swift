@@ -98,20 +98,11 @@ struct azkarifyTests {
     }
   }
 
-  @Test func slideshowFinishedOnlyOnLastUnreadPage() {
-    #expect(Celebration.slideshowFinished(page: 0, entryCount: 24, alreadyCelebrated: false) == false)
-    #expect(Celebration.slideshowFinished(page: 23, entryCount: 24, alreadyCelebrated: false))
-    #expect(Celebration.slideshowFinished(page: 23, entryCount: 24, alreadyCelebrated: true) == false)
-    #expect(Celebration.slideshowFinished(page: 0, entryCount: 1, alreadyCelebrated: false))
-    #expect(Celebration.slideshowFinished(page: 0, entryCount: 0, alreadyCelebrated: false) == false)
-  }
-
-  @Test func slideshowProgressAndConfettiOnlyForSetsLargerThanThree() {
+  @Test func slideshowProgressOnlyForSetsLargerThanThree() {
     #expect(Celebration.showsSlideshowProgress(entryCount: 0) == false)
+    #expect(Celebration.showsSlideshowProgress(entryCount: 1) == false)
+    #expect(Celebration.showsSlideshowProgress(entryCount: 2) == false)
     #expect(Celebration.showsSlideshowProgress(entryCount: 3) == false)
     #expect(Celebration.showsSlideshowProgress(entryCount: 4))
-    #expect(Celebration.celebratesSlideshow(page: 2, entryCount: 3, alreadyCelebrated: false) == false)
-    #expect(Celebration.celebratesSlideshow(page: 3, entryCount: 4, alreadyCelebrated: false))
-    #expect(Celebration.celebratesSlideshow(page: 0, entryCount: 4, alreadyCelebrated: false) == false)
   }
 }
