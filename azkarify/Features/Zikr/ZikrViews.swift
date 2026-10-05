@@ -155,6 +155,7 @@ struct SlideshowView: View {
       }
       .sheet(isPresented: $showCounter) {
         CounterView(initialCount: currentEntry?.repeat ?? 0, title: currentText)
+          .id(currentEntry?.id)
       }
     }
   }
