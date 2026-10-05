@@ -17,6 +17,7 @@ enum JourneyStepUpdate: Equatable {
 final class JourneyProgressStore: ObservableObject {
   static let stepPoints = 10
   static let journeyCompletionPoints = 25
+  static let slideshowCompletionPoints = 30
 
   @Published private var payload: StoredPayload
   private let defaults: UserDefaults
@@ -66,8 +67,8 @@ final class JourneyProgressStore: ObservableObject {
     updatedPayload.counterTapRemainder = taps % 33
     if taps == 33 {
       let id = "counter|\(UUID().uuidString)"
-      updatedPayload.awards[id] = JourneyAward(
-        id: id, dayKey: dayKey(date), journeyID: "counter", stepID: nil,
+      updatedPayload.awards[id] = PointsAward(
+        id: id, dayKey: dayKey(date), sourceID: "counter", stepID: nil,
         timestamp: date, amount: 1, reason: "counter-33-completed")
     }
     save(updatedPayload)
@@ -135,10 +136,10 @@ final class JourneyProgressStore: ObservableObject {
     let stepAwardID = Self.stepAwardID(
       dateKey: dateKey, journeyID: journey.id, stepID: step.id)
     if updatedPayload.awards[stepAwardID] == nil {
-      let award = JourneyAward(
+      let award = PointsAward(
         id: stepAwardID,
         dayKey: dateKey,
-        journeyID: journey.id,
+        sourceID: journey.id,
         stepID: step.id,
         timestamp: date,
         amount: Self.stepPoints,
@@ -149,10 +150,10 @@ final class JourneyProgressStore: ObservableObject {
     if !wasJourneyComplete && isJourneyComplete {
       let bonusAwardID = Self.bonusAwardID(dateKey: dateKey, journeyID: journey.id)
       if updatedPayload.awards[bonusAwardID] == nil {
-        let award = JourneyAward(
+        let award = PointsAward(
           id: bonusAwardID,
           dayKey: dateKey,
-          journeyID: journey.id,
+          sourceID: journey.id,
           stepID: nil,
           timestamp: date,
           amount: Self.journeyCompletionPoints,
@@ -184,6 +185,25 @@ final class JourneyProgressStore: ObservableObject {
     progress.choices[step.id] = option.id
     updatedPayload.records[dayKey(date), default: [:]][journey.id] = progress
     save(updatedPayload)
+  }
+
+  @discardableResult
+  func completeSlideshow(categoryID: Int, on date: Date = Date()) -> Bool {
+    let dateKey = dayKey(date)
+    let awardID = "slideshow|\(dateKey)|\(categoryID)"
+    guard payload.awards[awardID] == nil else { return false }
+
+    var updatedPayload = payload
+    updatedPayload.awards[awardID] = PointsAward(
+      id: awardID,
+      dayKey: dateKey,
+      sourceID: "slideshow|\(categoryID)",
+      stepID: nil,
+      timestamp: date,
+      amount: Self.slideshowCompletionPoints,
+      reason: "slideshow-completed")
+    save(updatedPayload)
+    return true
   }
 
   private func save(_ updatedPayload: StoredPayload) {
@@ -219,9 +239,9 @@ final class JourneyProgressStore: ObservableObject {
   }
 
   private static func legacyAwards(
-    for records: [String: [String: JourneyProgress]]) -> [String: JourneyAward]
+    for records: [String: [String: JourneyProgress]]) -> [String: PointsAward]
   {
-    var result: [String: JourneyAward] = [:]
+    var result: [String: PointsAward] = [:]
     let timestamp = Date(timeIntervalSince1970: 0)
 
     for (dateKey, journeys) in records {
@@ -232,10 +252,10 @@ final class JourneyProgressStore: ObservableObject {
 
         for step in journey.steps where isComplete(step, in: progress) {
           let id = stepAwardID(dateKey: dateKey, journeyID: journey.id, stepID: step.id)
-          result[id] = JourneyAward(
+          result[id] = PointsAward(
             id: id,
             dayKey: dateKey,
-            journeyID: journey.id,
+            sourceID: journey.id,
             stepID: step.id,
             timestamp: timestamp,
             amount: 0,
@@ -244,10 +264,10 @@ final class JourneyProgressStore: ObservableObject {
 
         if isComplete(journey, in: progress) {
           let id = bonusAwardID(dateKey: dateKey, journeyID: journey.id)
-          result[id] = JourneyAward(
+          result[id] = PointsAward(
             id: id,
             dayKey: dateKey,
-            journeyID: journey.id,
+            sourceID: journey.id,
             stepID: nil,
             timestamp: timestamp,
             amount: 0,
@@ -260,19 +280,24 @@ final class JourneyProgressStore: ObservableObject {
   }
 }
 
-private struct JourneyAward: Codable, Equatable {
+private struct PointsAward: Codable, Equatable {
   let id: String
   let dayKey: String
-  let journeyID: String
+  let sourceID: String
   let stepID: String?
   let timestamp: Date
   let amount: Int
   let reason: String
+
+  private enum CodingKeys: String, CodingKey {
+    case id, dayKey, stepID, timestamp, amount, reason
+    case sourceID = "journeyID"
+  }
 }
 
 private struct StoredPayload: Codable {
   let version: Int
   var records: [String: [String: JourneyProgress]]
-  var awards: [String: JourneyAward]
+  var awards: [String: PointsAward]
   var counterTapRemainder: Int?
 }

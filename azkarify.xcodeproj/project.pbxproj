@@ -14,6 +14,7 @@
 		A30000000000000000000002 /* content in Resources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000001 /* content */; };
 		A40000000000000000000002 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = A40000000000000000000005 /* Adhan */; };
 		A50000000000000000000002 /* CountryKit in Frameworks */ = {isa = PBXBuildFile; productRef = A50000000000000000000005 /* CountryKit */; };
+		A60000000000000000000002 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = A60000000000000000000005 /* ConfettiSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 				A20000000000000000000002 /* SPIndicator in Frameworks */,
 				A40000000000000000000002 /* Adhan in Frameworks */,
 				A50000000000000000000002 /* CountryKit in Frameworks */,
+				A60000000000000000000002 /* ConfettiSwiftUI in Frameworks */,
 			);
 		};
 		30855975306BED6B007AE219 /* Frameworks */ = {
@@ -128,6 +130,7 @@
 				A20000000000000000000005 /* SPIndicator */,
 				A40000000000000000000005 /* Adhan */,
 				A50000000000000000000005 /* CountryKit */,
+				A60000000000000000000005 /* ConfettiSwiftUI */,
 			);
 			productName = azkarify;
 			productReference = 30855969306BED6A007AE219 /* azkarify.app */;
@@ -217,6 +220,7 @@
 				A20000000000000000000007 /* XCRemoteSwiftPackageReference "SPIndicator" */,
 				A40000000000000000000007 /* XCRemoteSwiftPackageReference "adhan-swift" */,
 				A50000000000000000000007 /* XCRemoteSwiftPackageReference "countrykit" */,
+				A60000000000000000000007 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3085596A306BED6A007AE219 /* Products */;
@@ -639,6 +643,14 @@
 				revision = 2d61cc9137bca33b8942bb58ab96edd52ad94b60;
 			};
 		};
+		A60000000000000000000007 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -666,6 +678,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A50000000000000000000007 /* XCRemoteSwiftPackageReference "countrykit" */;
 			productName = CountryKit;
+		};
+		A60000000000000000000005 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A60000000000000000000007 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

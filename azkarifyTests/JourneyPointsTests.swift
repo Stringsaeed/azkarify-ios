@@ -203,4 +203,57 @@ struct JourneyPointsTests {
     #expect(store.toggle(prayer, in: journey, on: today) == .completedJourney)
     #expect(store.totalPoints == 65)
   }
+  @MainActor
+  @Test func slideshowAwardsThirtyPointsOncePerCategoryPerDay() {
+    let (store, defaults, suite) = makeStore()
+    defer { defaults.removePersistentDomain(forName: suite) }
+    let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
+
+    #expect(store.completeSlideshow(categoryID: 9, on: today))
+    #expect(store.totalPoints == 30)
+    #expect(store.completeSlideshow(categoryID: 9, on: today) == false)
+    #expect(store.totalPoints == 30)
+    #expect(store.completeSlideshow(categoryID: 20, on: today))
+    #expect(store.pointsEarned(on: today) == 60)
+    #expect(store.completeSlideshow(categoryID: 9, on: tomorrow))
+    #expect(store.pointsEarned(on: tomorrow) == 30)
+    #expect(store.totalPoints == 90)
+    #expect(store.completedJourneyCount(on: today) == 0)
+    #expect(store.dayProgress(on: today) == 0)
+  }
+
+  @MainActor
+  @Test func slideshowPointsAndDuplicateProtectionSurviveRelaunch() {
+    let (store, defaults, suite) = makeStore()
+    defer { defaults.removePersistentDomain(forName: suite) }
+    store.completeSlideshow(categoryID: 9, on: today)
+
+    let reloaded = JourneyProgressStore(defaults: defaults, calendar: calendar)
+    #expect(reloaded.totalPoints == 30)
+    #expect(reloaded.pointsEarned(on: today) == 30)
+    #expect(reloaded.completeSlideshow(categoryID: 9, on: today) == false)
+    #expect(reloaded.totalPoints == 30)
+  }
+
+  @MainActor
+  @Test func existingV2PointsSurviveSlideshowRewards() throws {
+    let (_, defaults, suite) = makeStore()
+    defer { defaults.removePersistentDomain(forName: suite) }
+    let existing = """
+      {"version":2,"records":{},"awards":{"existing":{
+        "id":"existing","dayKey":"1-2026-10-1","journeyID":"morning",
+        "stepID":"wake","timestamp":0,"amount":10,"reason":"journey-step-completed"
+      }}}
+      """
+    defaults.set(try #require(existing.data(using: .utf8)), forKey: "journey-progress.v2")
+    let store = JourneyProgressStore(defaults: defaults, calendar: calendar)
+    #expect(store.totalPoints == 10)
+    store.completeSlideshow(categoryID: 9, on: today)
+    #expect(store.totalPoints == 40)
+
+    let reloaded = JourneyProgressStore(defaults: defaults, calendar: calendar)
+    #expect(reloaded.totalPoints == 40)
+    #expect(reloaded.pointsEarned(on: today) == 40)
+  }
+
 }

@@ -97,4 +97,12 @@ struct azkarifyTests {
       try AzkarRepository().categories(language: "missing")
     }
   }
+
+  @Test func slideshowProgressOnlyForSetsLargerThanThree() {
+    #expect(Celebration.showsSlideshowProgress(entryCount: 0) == false)
+    #expect(Celebration.showsSlideshowProgress(entryCount: 1) == false)
+    #expect(Celebration.showsSlideshowProgress(entryCount: 2) == false)
+    #expect(Celebration.showsSlideshowProgress(entryCount: 3) == false)
+    #expect(Celebration.showsSlideshowProgress(entryCount: 4))
+  }
 }

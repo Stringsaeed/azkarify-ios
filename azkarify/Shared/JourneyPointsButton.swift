@@ -57,8 +57,8 @@ private struct JourneyPointsDetails: View {
             .font(AppAppearance.font(size: 17, bold: true))
             .accessibilityIdentifier("points.today")
           Text(text(
-            "\(JourneyProgressStore.stepPoints) points per step, plus \(JourneyProgressStore.journeyCompletionPoints) per journey. Each reward is earned once a day. Earned points stay yours if you undo a step.",
-            "\(JourneyProgressStore.stepPoints) نقاط لكل خطوة، و\(JourneyProgressStore.journeyCompletionPoints) نقطة إضافية لكل رحلة. تُكتسب كل مكافأة مرة واحدة يومياً، وتبقى نقاطك إذا ألغيت إكمال خطوة."))
+            "\(JourneyProgressStore.stepPoints) points per step, plus \(JourneyProgressStore.journeyCompletionPoints) per journey and \(JourneyProgressStore.slideshowCompletionPoints) per completed slideshow. Each step, journey, and slideshow category earns its reward once a day. Earned points stay yours if you undo a step.",
+            "\(JourneyProgressStore.stepPoints) نقاط لكل خطوة، و\(JourneyProgressStore.journeyCompletionPoints) نقطة إضافية لكل رحلة، و\(JourneyProgressStore.slideshowCompletionPoints) نقطة عند إكمال عرض الشرائح. تُكتسب مكافأة كل خطوة ورحلة وفئة في عرض الشرائح مرة واحدة يومياً، وتبقى نقاطك إذا ألغيت إكمال خطوة."))
             .font(AppAppearance.font(size: 15))
           Text(text("Saved on this device only. Future syncing will require your agreement.",
                     "محفوظة على هذا الجهاز فقط. لن تتم المزامنة مستقبلاً إلا بموافقتك."))
