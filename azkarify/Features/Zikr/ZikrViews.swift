@@ -104,6 +104,8 @@ struct SlideshowView: View {
   let title: String
   @State private var page = 0
   @State private var showCounter = false
+  @State private var confettiToken = 0
+  @State private var celebratedSlideshow = false
 
   private var currentEntry: ZikrEntry? {
     entries.indices.contains(page) ? entries[page] : nil
@@ -157,6 +159,14 @@ struct SlideshowView: View {
         CounterView(initialCount: currentEntry?.repeat ?? 0, title: currentText)
           .id(currentEntry?.id)
       }
+      .onChange(of: page, initial: true) { _, newPage in
+        guard Celebration.slideshowFinished(
+          page: newPage, entryCount: entries.count, alreadyCelebrated: celebratedSlideshow)
+        else { return }
+        celebratedSlideshow = true
+        confettiToken += 1
+      }
+      .confettiBurst(token: $confettiToken, accent: accent)
     }
   }
 

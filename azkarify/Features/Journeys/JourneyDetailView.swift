@@ -6,6 +6,7 @@ struct JourneyDetailView: View {
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   @AppStorage("accent") private var accent = "brown"
   @State private var audio = CounterAudio()
+  @State private var confettiToken = 0
   let journey: JourneyDefinition
   @ObservedObject var progress: JourneyProgressStore
 
@@ -35,6 +36,7 @@ struct JourneyDetailView: View {
     .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
     .onAppear { audio.prepare() }
     .onDisappear { audio.stop() }
+    .confettiBurst(token: $confettiToken, accent: accent)
   }
 
   private func header(on date: Date) -> some View {
@@ -94,6 +96,7 @@ struct JourneyDetailView: View {
             audio.play(.tick)
           case .completedJourney:
             audio.play(.completion)
+            confettiToken += 1
           }
         } label: {
           ZStack {

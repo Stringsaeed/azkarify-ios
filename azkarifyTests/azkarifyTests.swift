@@ -97,4 +97,12 @@ struct azkarifyTests {
       try AzkarRepository().categories(language: "missing")
     }
   }
+
+  @Test func slideshowFinishedOnlyOnLastUnreadPage() {
+    #expect(Celebration.slideshowFinished(page: 0, entryCount: 24, alreadyCelebrated: false) == false)
+    #expect(Celebration.slideshowFinished(page: 23, entryCount: 24, alreadyCelebrated: false))
+    #expect(Celebration.slideshowFinished(page: 23, entryCount: 24, alreadyCelebrated: true) == false)
+    #expect(Celebration.slideshowFinished(page: 0, entryCount: 1, alreadyCelebrated: false))
+    #expect(Celebration.slideshowFinished(page: 0, entryCount: 0, alreadyCelebrated: false) == false)
+  }
 }
