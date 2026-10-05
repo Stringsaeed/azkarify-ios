@@ -70,10 +70,42 @@ final class azkarifyUITests: XCTestCase {
     app.navigationBars["الإعدادات"].buttons.firstMatch.tap()
     app.buttons["أذكار الصباح والمساء"].firstMatch.tap()
     app.buttons["عرض الشرائح"].tap()
+    XCTAssertTrue(app.staticTexts["slideshowProgress"].waitForExistence(timeout: 5))
     let slideshowImage = XCTAttachment(screenshot: app.screenshot())
     slideshowImage.name = "Arabic slideshow first page"
     slideshowImage.lifetime = .keepAlways
     add(slideshowImage)
+  }
+
+  @MainActor
+  func testSlideshowProgressAndCounterSheet() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
+    app.launch()
+    XCTAssertTrue(
+      app.buttons["Words of remembrance for morning and evening"].firstMatch.waitForExistence(
+        timeout: 15))
+    app.buttons["Words of remembrance for morning and evening"].firstMatch.tap()
+    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+    app.buttons["Slideshow"].tap()
+
+    let progress = app.staticTexts["slideshowProgress"]
+    XCTAssertTrue(progress.waitForExistence(timeout: 5))
+    XCTAssertEqual(progress.label, "Zikr 1 of 24")
+    XCTAssertFalse(app.buttons["slideshowCounter"].exists)
+
+    app.swipeLeft()
+    XCTAssertTrue(progress.waitForExistence(timeout: 5))
+    XCTAssertEqual(progress.label, "Zikr 2 of 24")
+    let counter = app.buttons["slideshowCounter"]
+    XCTAssertTrue(counter.waitForExistence(timeout: 5))
+    counter.tap()
+    XCTAssertTrue(app.scrollViews["counterZikrScroll"].waitForExistence(timeout: 5))
+    XCTAssertTrue(app.buttons["Count: 3"].waitForExistence(timeout: 5))
+    let image = XCTAttachment(screenshot: app.screenshot())
+    image.name = "Slideshow counter sheet"
+    image.lifetime = .keepAlways
+    add(image)
   }
 
   @MainActor
