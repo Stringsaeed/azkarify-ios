@@ -22,6 +22,39 @@ struct JourneyPointsTests {
   }
 
   @MainActor
+  @Test func every33CounterTapsAwardsOnePointAndPreservesProgressAcrossRelaunch() {
+    let (store, defaults, suite) = makeStore()
+    defer { defaults.removePersistentDomain(forName: suite) }
+    for _ in 0..<32 { store.recordCounterTap(on: today) }
+    #expect(store.totalPoints == 0)
+
+    let reloaded = JourneyProgressStore(defaults: defaults, calendar: calendar)
+    reloaded.recordCounterTap(on: today)
+    #expect(reloaded.totalPoints == 1)
+    #expect(reloaded.pointsEarned(on: today) == 1)
+    for _ in 0..<32 { reloaded.recordCounterTap(on: today) }
+    #expect(reloaded.totalPoints == 1)
+    let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
+    reloaded.recordCounterTap(on: tomorrow)
+    #expect(reloaded.totalPoints == 2)
+    #expect(reloaded.pointsEarned(on: today) == 1)
+    #expect(reloaded.pointsEarned(on: tomorrow) == 1)
+    let final = JourneyProgressStore(defaults: defaults, calendar: calendar)
+    #expect(final.totalPoints == 2)
+  }
+
+  @MainActor
+  @Test func counterRewardsPreserveExistingJourneyAwards() {
+    let (store, defaults, suite) = makeStore()
+    defer { defaults.removePersistentDomain(forName: suite) }
+    let journey = JourneyCatalog.evening
+    store.toggle(journey.steps[0], in: journey, on: today)
+    for _ in 0..<33 { store.recordCounterTap(on: today) }
+    #expect(store.totalPoints == 36)
+    #expect(store.isComplete(journey, on: today))
+  }
+
+  @MainActor
   @Test func newlyCompletedStepsAndJourneyBonusAreAwardedOnlyOnce() {
     let (store, defaults, suite) = makeStore()
     defer { defaults.removePersistentDomain(forName: suite) }

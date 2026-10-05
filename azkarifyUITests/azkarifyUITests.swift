@@ -51,6 +51,7 @@ final class azkarifyUITests: XCTestCase {
     app.launch()
     XCTAssertTrue(app.staticTexts["حصن المسلم"].waitForExistence(timeout: 15))
 
+    app.buttons["القائمة"].tap()
     app.buttons["الإعدادات"].tap()
     XCTAssertTrue(app.staticTexts["الإعدادات"].waitForExistence(timeout: 5))
     let settingsImage = XCTAttachment(screenshot: app.screenshot())
@@ -81,6 +82,7 @@ final class azkarifyUITests: XCTestCase {
     let app = XCUIApplication()
     app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
     app.launch()
+    app.buttons["القائمة"].tap()
     app.buttons["الإعدادات"].tap()
     app.buttons["لون التمييز"].tap()
     app.buttons["أزرق"].tap()
@@ -93,7 +95,31 @@ final class azkarifyUITests: XCTestCase {
   }
 
   @MainActor
-  func testArabicMenuUsesBeadsIcon() throws {
+  func testHomeCounterSheetAwardsPointsAndResetDoesNotAward() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
+    app.launch()
+    let homePoints = app.buttons["journey-total-points"]
+    XCTAssertTrue(homePoints.waitForExistence(timeout: 15))
+    let initialPoints = try XCTUnwrap(Int(homePoints.value as? String ?? ""))
+    app.buttons["Menu"].tap()
+    app.buttons["Counter"].tap()
+    let close = app.buttons["counter.close"]
+    XCTAssertTrue(close.waitForExistence(timeout: 5))
+    let counter = app.buttons["counter.count"]
+    for _ in 0..<33 { counter.tap() }
+    let points = app.descendants(matching: .any)["counter.points"].firstMatch
+    XCTAssertEqual(points.value as? String, String(initialPoints + 1))
+    app.buttons["Reset"].tap()
+    XCTAssertEqual(counter.label, "Count: 0")
+    XCTAssertEqual(points.value as? String, String(initialPoints + 1))
+    close.tap()
+    XCTAssertTrue(homePoints.waitForExistence(timeout: 5))
+    XCTAssertEqual(homePoints.value as? String, String(initialPoints + 1))
+  }
+
+  @MainActor
+  func testArabicMenuOpensCounter() throws {
     let app = XCUIApplication()
     app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
     app.launch()
