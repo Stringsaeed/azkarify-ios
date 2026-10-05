@@ -139,7 +139,7 @@ struct SlideshowView: View {
         }
       }
       .tabViewStyle(
-        .page(indexDisplayMode: Celebration.showsSlideshowChrome(entryCount: entries.count) ? .never : .automatic)
+        .page(indexDisplayMode: showsProgress ? .never : .automatic)
       )
       .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
       .background(AppAppearance.background(accent))
@@ -155,7 +155,7 @@ struct SlideshowView: View {
         }
       }
       .safeAreaInset(edge: .bottom) {
-        if Celebration.showsSlideshowChrome(entryCount: entries.count) {
+        if showsProgress || showsCounter {
           slideshowChrome
         }
       }
@@ -164,7 +164,7 @@ struct SlideshowView: View {
           .id(currentEntry?.id)
       }
       .onChange(of: page, initial: true) { _, newPage in
-        guard Celebration.slideshowFinished(
+        guard Celebration.celebratesSlideshow(
           page: newPage, entryCount: entries.count, alreadyCelebrated: celebratedSlideshow)
         else { return }
         celebratedSlideshow = true
@@ -174,30 +174,43 @@ struct SlideshowView: View {
     }
   }
 
+  private var showsProgress: Bool {
+    Celebration.showsSlideshowProgress(entryCount: entries.count)
+  }
+
+  private var showsCounter: Bool {
+    (currentEntry?.repeat ?? 0) > 1
+  }
+
   private var slideshowChrome: some View {
     VStack(spacing: 12) {
-      ProgressView(value: Double(page + 1), total: Double(max(entries.count, 1)))
-        .tint(AppAppearance.accent(accent))
-        .accessibilityHidden(true)
+      if showsProgress {
+        ProgressView(value: Double(page + 1), total: Double(max(entries.count, 1)))
+          .tint(AppAppearance.accent(accent))
+          .accessibilityHidden(true)
+      }
       HStack(spacing: 12) {
-        Text(AppCopy.format("Zikr %lld of %lld", page + 1, entries.count))
-          .font(AppAppearance.font(size: 17, relativeTo: .headline, bold: true))
-          .foregroundStyle(AppAppearance.accent(accent))
-          .accessibilityIdentifier("slideshowProgress")
+        if showsProgress {
+          Text(AppCopy.format("Zikr %lld of %lld", page + 1, entries.count))
+            .font(AppAppearance.font(size: 17, relativeTo: .headline, bold: true))
+            .foregroundStyle(AppAppearance.accent(accent))
+            .accessibilityIdentifier("slideshowProgress")
+        }
         Spacer(minLength: 0)
-        if let entry = currentEntry, entry.repeat > 1 {
+        if showsCounter {
           Button {
             showCounter = true
           } label: {
             Label {
-              Text("\(entry.repeat)")
+              Text("\(currentEntry?.repeat ?? 0)")
             } icon: {
               Text("📿")
             }
             .font(AppAppearance.font(size: 21, relativeTo: .title3))
             .frame(minHeight: 44)
           }
-          .accessibilityLabel(AppCopy.format("Count down from %lld", entry.repeat))
+          .accessibilityLabel(
+            AppCopy.format("Count down from %lld", currentEntry?.repeat ?? 0))
           .accessibilityIdentifier("slideshowCounter")
         }
       }

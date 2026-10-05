@@ -106,11 +106,12 @@ struct azkarifyTests {
     #expect(Celebration.slideshowFinished(page: 0, entryCount: 0, alreadyCelebrated: false) == false)
   }
 
-  @Test func slideshowChromeOnlyForSetsLargerThanThree() {
-    #expect(Celebration.showsSlideshowChrome(entryCount: 0) == false)
-    #expect(Celebration.showsSlideshowChrome(entryCount: 1) == false)
-    #expect(Celebration.showsSlideshowChrome(entryCount: 3) == false)
-    #expect(Celebration.showsSlideshowChrome(entryCount: 4))
-    #expect(Celebration.showsSlideshowChrome(entryCount: 24))
+  @Test func slideshowProgressAndConfettiOnlyForSetsLargerThanThree() {
+    #expect(Celebration.showsSlideshowProgress(entryCount: 0) == false)
+    #expect(Celebration.showsSlideshowProgress(entryCount: 3) == false)
+    #expect(Celebration.showsSlideshowProgress(entryCount: 4))
+    #expect(Celebration.celebratesSlideshow(page: 2, entryCount: 3, alreadyCelebrated: false) == false)
+    #expect(Celebration.celebratesSlideshow(page: 3, entryCount: 4, alreadyCelebrated: false))
+    #expect(Celebration.celebratesSlideshow(page: 0, entryCount: 4, alreadyCelebrated: false) == false)
   }
 }

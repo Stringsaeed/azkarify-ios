@@ -124,12 +124,38 @@ final class azkarifyUITests: XCTestCase {
     app.buttons["Slideshow"].tap()
     XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 5))
     XCTAssertFalse(app.staticTexts["slideshowProgress"].exists)
-    XCTAssertFalse(app.buttons["slideshowCounter"].exists)
     let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = "Short slideshow without chrome"
+    image.name = "Short slideshow without progress"
     image.lifetime = .keepAlways
     add(image)
   }
+
+  @MainActor
+  func testShortSlideshowKeepsCounterWithoutProgress() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
+    app.launch()
+    let search = app.searchFields.firstMatch
+    XCTAssertTrue(search.waitForExistence(timeout: 15))
+    search.tap()
+    search.typeText("الرؤيا")
+    let category = app.buttons["ما يفعل من رأى الرؤيا أو الحلم"].firstMatch
+    XCTAssertTrue(category.waitForExistence(timeout: 15))
+    category.tap()
+    XCTAssertTrue(app.buttons["عرض الشرائح"].waitForExistence(timeout: 5))
+    app.buttons["عرض الشرائح"].tap()
+    XCTAssertTrue(app.buttons["slideshowCounter"].waitForExistence(timeout: 5))
+    XCTAssertFalse(app.staticTexts["slideshowProgress"].exists)
+    app.buttons["slideshowCounter"].tap()
+    XCTAssertTrue(app.scrollViews["counterZikrScroll"].waitForExistence(timeout: 5))
+    let image = XCTAttachment(screenshot: app.screenshot())
+    image.name = "Short slideshow keeps counter"
+    image.lifetime = .keepAlways
+    add(image)
+  }
+
+  @MainActor
+  func testAccentSelectionUpdatesSettings() throws {
     let app = XCUIApplication()
     app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
     app.launch()
