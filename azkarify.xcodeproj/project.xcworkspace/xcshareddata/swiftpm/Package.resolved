@@ -1,5 +1,5 @@
 {
-  "originHash" : "d5871140d018cc04df1b44d0e34895d79e977d17fea85e08c758985a3f82531b",
+  "originHash" : "e01a9d3105f3162da2e0457530eecaa7cfe6853a0e1838cca8ba6e895f3e6ab7",
   "pins" : [
     {
       "identity" : "adhan-swift",
@@ -24,7 +24,6 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/frederik-jacques/countrykit.git",
       "state" : {
-        "branch" : "main",
         "revision" : "2d61cc9137bca33b8942bb58ab96edd52ad94b60"
       }
     },
