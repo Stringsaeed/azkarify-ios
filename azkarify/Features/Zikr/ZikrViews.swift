@@ -138,7 +138,9 @@ struct SlideshowView: View {
             AppCopy.format("Zikr %lld of %lld", index + 1, entries.count))
         }
       }
-      .tabViewStyle(.page(indexDisplayMode: .never))
+      .tabViewStyle(
+        .page(indexDisplayMode: Celebration.showsSlideshowChrome(entryCount: entries.count) ? .never : .automatic)
+      )
       .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
       .background(AppAppearance.background(accent))
       .appNavigationTitle(title, language: store.language)
@@ -153,7 +155,9 @@ struct SlideshowView: View {
         }
       }
       .safeAreaInset(edge: .bottom) {
-        slideshowChrome
+        if Celebration.showsSlideshowChrome(entryCount: entries.count) {
+          slideshowChrome
+        }
       }
       .sheet(isPresented: $showCounter) {
         CounterView(initialCount: currentEntry?.repeat ?? 0, title: currentText)

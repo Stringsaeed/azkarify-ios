@@ -105,4 +105,12 @@ struct azkarifyTests {
     #expect(Celebration.slideshowFinished(page: 0, entryCount: 1, alreadyCelebrated: false))
     #expect(Celebration.slideshowFinished(page: 0, entryCount: 0, alreadyCelebrated: false) == false)
   }
+
+  @Test func slideshowChromeOnlyForSetsLargerThanThree() {
+    #expect(Celebration.showsSlideshowChrome(entryCount: 0) == false)
+    #expect(Celebration.showsSlideshowChrome(entryCount: 1) == false)
+    #expect(Celebration.showsSlideshowChrome(entryCount: 3) == false)
+    #expect(Celebration.showsSlideshowChrome(entryCount: 4))
+    #expect(Celebration.showsSlideshowChrome(entryCount: 24))
+  }
 }

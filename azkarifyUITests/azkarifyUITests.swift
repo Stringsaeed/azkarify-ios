@@ -109,7 +109,27 @@ final class azkarifyUITests: XCTestCase {
   }
 
   @MainActor
-  func testAccentSelectionUpdatesSettings() throws {
+  func testSlideshowHidesChromeForShortSets() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
+    app.launch()
+    let search = app.searchFields.firstMatch
+    XCTAssertTrue(search.waitForExistence(timeout: 15))
+    search.tap()
+    search.typeText("completing ablution")
+    let category = app.buttons["What to say upon completing ablution"].firstMatch
+    XCTAssertTrue(category.waitForExistence(timeout: 15))
+    category.tap()
+    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+    app.buttons["Slideshow"].tap()
+    XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 5))
+    XCTAssertFalse(app.staticTexts["slideshowProgress"].exists)
+    XCTAssertFalse(app.buttons["slideshowCounter"].exists)
+    let image = XCTAttachment(screenshot: app.screenshot())
+    image.name = "Short slideshow without chrome"
+    image.lifetime = .keepAlways
+    add(image)
+  }
     let app = XCUIApplication()
     app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
     app.launch()
