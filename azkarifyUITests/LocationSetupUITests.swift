@@ -4,6 +4,18 @@ final class LocationSetupUITests: XCTestCase {
   override func setUpWithError() throws { continueAfterFailure = false }
 
   @MainActor
+  func testLocationSheetClosesFromTopLeft() {
+    let app = launchUnconfiguredHome(language: "ar")
+    let close = app.buttons["location.close"]
+    XCTAssertTrue(close.waitForExistence(timeout: 5))
+    XCTAssertLessThan(close.frame.midX, app.frame.midX)
+    XCTAssertFalse(app.buttons["location.notNow"].exists)
+    close.tap()
+    XCTAssertFalse(app.buttons["location.useDevice"].exists)
+    XCTAssertTrue(app.buttons["home.prayerLocation"].waitForExistence(timeout: 5))
+  }
+
+  @MainActor
   func testDeniedLocationOffersCityAndRemembersSelection() {
     let app = launchUnconfiguredHome()
     app.buttons["location.useDevice"].tap()
@@ -42,6 +54,7 @@ final class LocationSetupUITests: XCTestCase {
       predicate: NSPredicate(format: "exists == false"), object: app.buttons["location.useDevice"])
     XCTAssertEqual(XCTWaiter.wait(for: [sheetGone], timeout: 20), .completed)
     XCTAssertTrue(homeLocation.label.contains("Current location"))
+    app.buttons["Menu"].tap()
     app.buttons["Settings"].tap()
     app.buttons["Prayer times"].firstMatch.tap()
     XCTAssertTrue(app.textFields["prayer.locationName"].waitForExistence(timeout: 5))

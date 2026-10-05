@@ -61,6 +61,19 @@ final class JourneyProgressStore: ObservableObject {
       .reduce(0) { $0 + $1.amount }
   }
 
+  func recordCounterTap(on date: Date = Date()) {
+    var updatedPayload = payload
+    let taps = (updatedPayload.counterTapRemainder ?? 0) + 1
+    updatedPayload.counterTapRemainder = taps % 33
+    if taps == 33 {
+      let id = "counter|\(UUID().uuidString)"
+      updatedPayload.awards[id] = PointsAward(
+        id: id, dayKey: dayKey(date), sourceID: "counter", stepID: nil,
+        timestamp: date, amount: 1, reason: "counter-33-completed")
+    }
+    save(updatedPayload)
+  }
+
   func progress(for journey: JourneyDefinition, on date: Date = Date()) -> JourneyProgress {
     payload.records[dayKey(date)]?[journey.id] ?? JourneyProgress()
   }
@@ -286,4 +299,5 @@ private struct StoredPayload: Codable {
   let version: Int
   var records: [String: [String: JourneyProgress]]
   var awards: [String: PointsAward]
+  var counterTapRemainder: Int?
 }

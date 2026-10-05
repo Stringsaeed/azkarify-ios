@@ -65,6 +65,16 @@ struct PrayerLocationSheet: View {
   var body: some View {
     ScrollView {
       VStack(alignment: .leading, spacing: 20) {
+        HStack {
+          Spacer()
+          Button(action: onFinish) {
+            Image(systemName: "xmark")
+          }
+          .buttonStyle(.bordered)
+          .buttonBorderShape(.circle)
+          .accessibilityLabel(text("Close", "إغلاق"))
+          .accessibilityIdentifier("location.close")
+        }
         if showingCities {
           cityPicker
         } else {
@@ -80,7 +90,7 @@ struct PrayerLocationSheet: View {
       .sheetContentHeight()
     }
     .scrollDismissesKeyboard(.interactively)
-    .background { BotanicalBackground(accent: accent, variant: 2) }
+    .background(Color(.systemBackground))
     .font(AppAppearance.font(size: 17))
     .tint(AppAppearance.accent(accent))
     .environment(\.layoutDirection, arabic ? .rightToLeft : .leftToRight)
@@ -154,9 +164,10 @@ struct PrayerLocationSheet: View {
             Image(systemName: "location.fill")
           }
         }
-        .frame(maxWidth: .infinity, minHeight: 48)
+        .frame(maxWidth: .infinity)
       }
       .buttonStyle(.borderedProminent)
+      .controlSize(.large)
       .accessibilityIdentifier("location.useDevice")
       .disabled(locationRequestIsActive)
 
@@ -165,14 +176,11 @@ struct PrayerLocationSheet: View {
         withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { showingCities = true }
       } label: {
         Label(text("Choose a city", "اختر مدينة"), systemImage: "building.2")
-          .frame(maxWidth: .infinity, minHeight: 48)
+          .frame(maxWidth: .infinity)
       }
       .buttonStyle(.bordered)
+      .controlSize(.large)
       .accessibilityIdentifier("location.chooseCity")
-
-      Button(text("Not now", "ليس الآن"), action: onFinish)
-        .frame(maxWidth: .infinity, minHeight: 44)
-        .accessibilityIdentifier("location.notNow")
     }
   }
 
@@ -201,7 +209,7 @@ struct PrayerLocationSheet: View {
         } label: {
           Label(text("Back", "رجوع"), systemImage: "chevron.backward")
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.bordered)
         .foregroundStyle(AppAppearance.accent(accent))
         .frame(minHeight: 44)
         .contentShape(Rectangle())
@@ -223,7 +231,7 @@ struct PrayerLocationSheet: View {
         .frame(maxWidth: .infinity, minHeight: 52, alignment: .leading)
         .contentShape(Rectangle())
       }
-      .buttonStyle(.plain)
+      .buttonStyle(.bordered)
       .accessibilityIdentifier("location.country")
 
       TextField(text("Search cities", "ابحث عن مدينة"), text: $search)
@@ -296,7 +304,7 @@ struct PrayerLocationSheet: View {
               .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
               .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.bordered)
             .accessibilityIdentifier("location.city.\(city.id)")
           }
         }
@@ -323,7 +331,7 @@ struct PrayerLocationSheet: View {
         )
         .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
       }
-      .buttonStyle(.plain)
+      .buttonStyle(.bordered)
       .foregroundStyle(AppAppearance.accent(accent))
       .accessibilityIdentifier("location.openSettings")
     }

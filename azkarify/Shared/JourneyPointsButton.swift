@@ -64,6 +64,9 @@ private struct JourneyPointsDetails: View {
                     "محفوظة على هذا الجهاز فقط. لن تتم المزامنة مستقبلاً إلا بموافقتك."))
             .font(AppAppearance.font(size: 14))
             .foregroundStyle(.secondary)
+          Text(text("Earn 1 point for every 33 counts in the counter. Progress toward the next point is saved between sessions.",
+                    "اكسب نقطة واحدة لكل ٣٣ تسبيحة في السبحة. يُحفظ تقدمك نحو النقطة التالية بين الجلسات."))
+            .font(AppAppearance.font(size: 15))
         }
         .padding(24)
       }

@@ -6,7 +6,6 @@ private enum HomeRoute: Hashable {
   case category(Int)
   case settings
   case favorites
-  case counter
   case quickMode
   case journeys
   case prayerSettings
@@ -32,8 +31,8 @@ struct ContentView: View {
   @State private var selection: HomeRoute?
   @State private var detailPath = NavigationPath()
   @State private var preferredColumn: NavigationSplitViewColumn = .sidebar
-  @State private var showMenu = false
   @State private var showLocationSetup = false
+  @State private var showCounter = false
   @State private var openPrayerSettingsAfterDismiss = false
 
   private var results: [ZikrCategory] {
@@ -144,39 +143,25 @@ struct ContentView: View {
         }
         ToolbarItem(placement: store.language == "ar" ? .topBarLeading : .topBarTrailing) { JourneyPointsButton() }
         ToolbarItem(placement: store.language == "ar" ? .topBarTrailing : .topBarLeading) {
-          Button {
-            showMenu = true
+          Menu {
+            menuButton(
+              AppCopy.text("Favorites"),
+              systemImage: "star", route: .favorites)
+            Button { showCounter = true } label: {
+              Label(AppCopy.text("Counter"), systemImage: "digitalcrown")
+            }
+            menuButton(
+              AppCopy.text("Quick Mode"),
+              systemImage: "bolt", route: .quickMode)
+            Divider()
+            menuButton(
+              AppCopy.text("Settings"),
+              systemImage: "gearshape", route: .settings)
           } label: {
             Image(systemName: "line.3.horizontal")
           }
-          .popover(isPresented: $showMenu) {
-            VStack(alignment: .leading, spacing: 4) {
-              menuButton(
-                AppCopy.text("Favorites"),
-                emoji: "⭐", route: .favorites)
-              menuButton(
-                AppCopy.text("Counter"),
-                emoji: "📿", route: .counter)
-              menuButton(
-                AppCopy.text("Quick Mode"),
-                emoji: "⚡", route: .quickMode)
-            }
-            .padding(12)
-            .frame(minWidth: 220)
-            .background(AppAppearance.background(accent))
-            .presentationCompactAdaptation(.popover)
-          }
           .foregroundStyle(AppAppearance.accent(accent))
           .accessibilityLabel(AppCopy.text("Menu"))
-        }
-        ToolbarItem(placement: .topBarTrailing) {
-          Button {
-            select(.settings)
-          } label: {
-            Image(systemName: "gearshape")
-          }
-          .foregroundStyle(AppAppearance.accent(accent))
-          .accessibilityLabel(AppCopy.text("Settings"))
         }
       }
       .navigationSplitViewColumnWidth(min: 320, ideal: 400, max: 440)
@@ -220,6 +205,10 @@ struct ContentView: View {
         .presentationDragIndicator(.visible)
         .onAppear { hasPresentedLocationSetup = true }
     }
+    .sheet(isPresented: $showCounter) {
+      CounterView()
+        .presentationDragIndicator(.visible)
+    }
     .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
   }
 
@@ -233,7 +222,6 @@ struct ContentView: View {
       }
     case .settings: SettingsView()
     case .favorites: FavoritesView()
-    case .counter: CounterView()
     case .quickMode: QuickModeView()
     case .journeys: JourneysView()
     case .prayerSettings: PrayerScheduleSettingsView()
@@ -261,23 +249,13 @@ struct ContentView: View {
   }
 
   private func menuButton(
-    _ title: String, emoji: String, route: HomeRoute
+    _ title: String, systemImage: String, route: HomeRoute
   ) -> some View {
     Button {
-      showMenu = false
       select(route)
     } label: {
-      HStack(spacing: 12) {
-        Text(emoji).frame(width: 26).accessibilityHidden(true)
-        Text(title)
-          .font(AppAppearance.font(size: 17))
-        Spacer(minLength: 0)
-      }
-      .frame(minHeight: 44)
-      .contentShape(Rectangle())
+      Label(title, systemImage: systemImage)
     }
-    .buttonStyle(.plain)
-    .foregroundStyle(AppAppearance.accent(accent))
   }
 }
 

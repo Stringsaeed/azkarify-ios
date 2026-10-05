@@ -2,6 +2,8 @@ import SwiftUI
 
 struct CounterView: View {
   @EnvironmentObject private var store: AzkarStore
+  @EnvironmentObject private var journeyProgress: JourneyProgressStore
+  @Environment(\.dismiss) private var dismiss
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   var initialCount = 0
   var title = ""
@@ -14,6 +16,24 @@ struct CounterView: View {
   var body: some View {
     ScrollView {
       VStack(spacing: 24) {
+        HStack {
+          HStack(spacing: 6) {
+            PointsCurrencyIcon().frame(width: 24, height: 24)
+            Text(journeyProgress.totalPoints.formatted())
+          }
+          .accessibilityElement(children: .ignore)
+          .accessibilityLabel(store.language == "ar" ? "نقاطك" : "Your points")
+          .accessibilityValue(String(journeyProgress.totalPoints))
+          .accessibilityIdentifier("counter.points")
+          Spacer()
+          Button { dismiss() } label: {
+            Image(systemName: "xmark")
+          }
+          .buttonStyle(.bordered)
+          .buttonBorderShape(.circle)
+          .accessibilityLabel(store.language == "ar" ? "إغلاق" : "Close")
+          .accessibilityIdentifier("counter.close")
+        }
         if !title.isEmpty {
           Text(title)
             .textSelection(.enabled)
@@ -63,6 +83,9 @@ struct CounterView: View {
       .font(
         AppAppearance.font(
           size: 15, relativeTo: .subheadline))
+      Text(store.language == "ar" ? "نقطة واحدة لكل ٣٣ تسبيحة" : "1 point for every 33 counts")
+        .font(AppAppearance.font(size: 13))
+        .foregroundStyle(.secondary)
       Button {
         changeCount(by: initialCount > 0 ? -1 : 1)
       } label: {
@@ -93,6 +116,7 @@ struct CounterView: View {
       .accessibilityLabel(
         AppCopy.format("Count: %lld", count)
       )
+      .accessibilityIdentifier("counter.count")
       .accessibilityHint(
         AppCopy.text("Double tap to change the count")
       )
@@ -112,8 +136,12 @@ struct CounterView: View {
 
   private func changeCount(by value: Int) {
     let next = max(0, count + value)
-    let value = initialCount > 0 ? min(initialCount, next) : next
-    changeCount(to: value, cue: initialCount > 0 && value == 0 ? .completion : .tick)
+    let nextCount = initialCount > 0 ? min(initialCount, next) : next
+    guard nextCount != count else { return }
+    if initialCount > 0 ? value < 0 : value > 0 {
+      journeyProgress.recordCounterTap()
+    }
+    changeCount(to: nextCount, cue: initialCount > 0 && nextCount == 0 ? .completion : .tick)
   }
   private func changeCount(to value: Int, cue: CounterAudio.Cue) {
     guard value != count else { return }
