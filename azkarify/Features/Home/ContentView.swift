@@ -11,8 +11,6 @@ private enum HomeRoute: Hashable {
   case prayerSettings
 }
 
-/// Screens pushed inside the detail column. Pushing by value keeps them in
-/// `detailPath`, so choosing a new sidebar item can pop them.
 enum DetailRoute: Hashable {
   case journey(JourneyDefinition)
   case category(ZikrCategory)
