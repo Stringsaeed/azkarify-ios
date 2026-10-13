@@ -1,0 +1,257 @@
+#!/usr/bin/env bash
+# Drives a dedicated azkarify-verify simulator. Never touches other simulators.
+set -euo pipefail
+
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+ROOT=$(cd "$SCRIPT_DIR/../../../.." && pwd)
+BUNDLE_ID="com.stringsaeed.azkarify"
+SIM_NAME="azkarify-verify"
+DEVICE_TYPE="com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro"
+RUNTIME="com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+EVIDENCE="$ROOT/artifacts/verify-azkarify"
+STATE="$EVIDENCE/instance.env"
+LOCK="$EVIDENCE/lock"
+DERIVED="/tmp/azkarify-verify-derived"
+
+cd "$ROOT"
+
+die() {
+  echo "azkarify-verify: $*" >&2
+  exit 1
+}
+
+screenshot_shows_home() {
+  python3 - "$1" <<'PY'
+import struct, subprocess, sys, tempfile, os
+src = sys.argv[1]
+fd, bmp = tempfile.mkstemp(suffix=".bmp")
+os.close(fd)
+subprocess.check_call(["sips", "-s", "format", "bmp", src, "--out", bmp], stdout=subprocess.DEVNULL)
+data = open(bmp, "rb").read()
+os.remove(bmp)
+offset = struct.unpack_from("<I", data, 10)[0]
+width = struct.unpack_from("<i", data, 18)[0]
+height = abs(struct.unpack_from("<i", data, 22)[0])
+bpp = struct.unpack_from("<H", data, 28)[0]
+channels = bpp // 8
+stride = ((width * channels + 3) // 4) * 4
+total = 0
+count = 0
+spread = 0
+step_x = max(1, width // 24)
+step_y = max(1, height // 48)
+for y in range(0, height, step_y):
+    row = offset + y * stride
+    for x in range(0, width, step_x):
+        i = row + x * channels
+        b, g, r = data[i], data[i + 1], data[i + 2]
+        total += r + g + b
+        spread += abs(r - g) + abs(g - b) + abs(b - r)
+        count += 1
+avg = total / (3 * count)
+# A launch frame is flat white. Home has type, cards, and the crescent.
+sys.exit(0 if avg < 248 and spread / count > 8 else 1)
+PY
+}
+
+sim_json() {
+  python3 - "$1" <<'PY'
+import json, subprocess, sys
+mode = sys.argv[1]
+raw = subprocess.check_output(["xcrun", "simctl", "list", "devices", "-j"], text=True)
+devices = []
+for group in json.loads(raw)["devices"].values():
+    devices.extend(group)
+named = [d for d in devices if d.get("name") == "azkarify-verify" and d.get("isAvailable", True)]
+if mode == "count":
+    print(len(named))
+elif mode == "one":
+    if len(named) != 1:
+        sys.exit(2)
+    d = named[0]
+    print(f"{d['udid']}\t{d['state']}")
+PY
+}
+
+read_state() {
+  [[ -f "$STATE" ]] || die "no instance state at $STATE"
+  # shellcheck disable=SC1090
+  source "$STATE"
+  [[ -n "${UDID:-}" ]] || die "instance state has no UDID"
+}
+
+app_container() {
+  xcrun simctl get_app_container "$1" "$BUNDLE_ID" data 2>/dev/null || true
+}
+
+cmd_doctor() {
+  command -v xcodebuild >/dev/null || die "xcodebuild is missing"
+  command -v xcrun >/dev/null || die "xcrun is missing"
+  command -v python3 >/dev/null || die "python3 is missing"
+  read_state
+  local count listed udid state
+  count=$(sim_json count)
+  [[ "$count" == "1" ]] || die "expected one $SIM_NAME simulator, found $count"
+  listed=$(sim_json one) || die "could not read $SIM_NAME"
+  udid=${listed%%$'\t'*}
+  state=${listed#*$'\t'}
+  [[ "$udid" == "$UDID" ]] || die "state UDID $UDID does not match $SIM_NAME ($udid)"
+  [[ "$state" == "Booted" ]] || die "$SIM_NAME is $state, not Booted"
+  local container
+  container=$(app_container "$UDID")
+  [[ -n "$container" ]] || die "$BUNDLE_ID is not installed on $UDID"
+  local pid_line
+  pid_line=$(xcrun simctl spawn "$UDID" launchctl print system 2>/dev/null | grep -F "$BUNDLE_ID" || true)
+  echo "worth_driving=yes"
+  echo "udid=$UDID"
+  echo "simulator=$SIM_NAME"
+  echo "state=$state"
+  echo "bundle=$BUNDLE_ID"
+  echo "container=$container"
+  echo "xcode=$(xcodebuild -version | head -n 1)"
+  if [[ -n "$pid_line" ]]; then
+    echo "process=present"
+  else
+    echo "process=absent"
+  fi
+}
+
+acquire_lock() {
+  mkdir -p "$EVIDENCE"
+  if ! mkdir "$LOCK" 2>/dev/null; then
+    die "another run holds $LOCK. Run cleanup only if that run is dead."
+  fi
+}
+
+release_lock() {
+  rm -rf "$LOCK"
+}
+
+cmd_launch() {
+  [[ ! -f "$STATE" ]] || die "instance already recorded. Run cleanup before launching another."
+  acquire_lock
+  trap 'release_lock' EXIT
+  local count udid
+  count=$(sim_json count)
+  if [[ "$count" == "0" ]]; then
+    udid=$(xcrun simctl create "$SIM_NAME" "$DEVICE_TYPE" "$RUNTIME")
+  elif [[ "$count" == "1" ]]; then
+    local listed
+    listed=$(sim_json one)
+    udid=${listed%%$'\t'*}
+  else
+    die "expected one $SIM_NAME simulator, found $count"
+  fi
+  xcrun simctl boot "$udid" 2>/dev/null || true
+  xcrun simctl bootstatus "$udid" -b >/dev/null
+  cat >"$STATE" <<EOF
+UDID=$udid
+PID=
+DERIVED=$DERIVED
+EOF
+  xcodebuild \
+    -project "$ROOT/azkarify.xcodeproj" \
+    -scheme azkarify \
+    -configuration Debug \
+    -destination "platform=iOS Simulator,id=$udid" \
+    -derivedDataPath "$DERIVED" \
+    build
+  local app
+  app=$(find "$DERIVED/Build/Products/Debug-iphonesimulator" -maxdepth 1 -type d -name 'azkarify.app' -print -quit)
+  [[ -n "$app" ]] || die "build finished without azkarify.app"
+  xcrun simctl uninstall "$udid" "$BUNDLE_ID" >/dev/null 2>&1 || true
+  xcrun simctl install "$udid" "$app"
+  local pid
+  pid=$(xcrun simctl launch "$udid" "$BUNDLE_ID" \
+    -AppleLanguages "(en)" \
+    -AppleLocale "en_AE" \
+    -hasSeenIntro YES \
+    -hasPresentedPrayerLocationSetup YES)
+  pid=${pid##* }
+  mkdir -p "$EVIDENCE/evidence"
+  local shot="$EVIDENCE/evidence/launch.png"
+  local attempt
+  for attempt in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+    sleep 1
+    xcrun simctl io "$udid" screenshot "$shot" >/dev/null
+    if screenshot_shows_home "$shot"; then
+      break
+    fi
+    if [[ "$attempt" == "15" ]]; then
+      die "home screen did not appear within 15s. Screenshot stayed blank at $shot"
+    fi
+  done
+  cat >"$STATE" <<EOF
+UDID=$udid
+PID=$pid
+DERIVED=$DERIVED
+EOF
+  echo "ready=yes"
+  echo "udid=$udid"
+  echo "pid=$pid"
+  echo "screenshot=$EVIDENCE/evidence/launch.png"
+}
+
+cmd_drive() {
+  local only=${1:-}
+  [[ -n "$only" ]] || die "usage: azkarify-verify drive <only-testing identifier>"
+  cmd_doctor >/dev/null
+  read_state
+  mkdir -p "$EVIDENCE/evidence"
+  local slug result
+  slug=$(echo "$only" | tr '/ ' '--')
+  result="$EVIDENCE/evidence/${slug}.xcresult"
+  rm -rf "$result"
+  xcodebuild \
+    -project "$ROOT/azkarify.xcodeproj" \
+    -scheme azkarify \
+    -configuration Debug \
+    -destination "platform=iOS Simulator,id=$UDID" \
+    -derivedDataPath "$DERIVED" \
+    -only-testing:"$only" \
+    -resultBundlePath "$result" \
+    test
+  [[ -d "$result" ]] || die "test finished without $result"
+  echo "proved=$only"
+  echo "xcresult=$result"
+}
+
+cmd_cleanup() {
+  if [[ -f "$STATE" ]]; then
+    # shellcheck disable=SC1090
+    source "$STATE"
+    if [[ -n "${UDID:-}" ]]; then
+      local name
+      name=$(xcrun simctl list devices | grep -F "$UDID" || true)
+      if [[ "$name" == *"$SIM_NAME"* ]]; then
+        xcrun simctl terminate "$UDID" "$BUNDLE_ID" >/dev/null 2>&1 || true
+        xcrun simctl uninstall "$UDID" "$BUNDLE_ID" >/dev/null 2>&1 || true
+        xcrun simctl shutdown "$UDID" >/dev/null 2>&1 || true
+      fi
+    fi
+    if [[ -n "${DERIVED:-}" && "$DERIVED" == /tmp/azkarify-verify-derived* ]]; then
+      rm -rf "$DERIVED"
+    fi
+    rm -f "$STATE"
+  fi
+  release_lock
+  echo "cleaned=yes"
+  echo "evidence=$EVIDENCE/evidence"
+}
+
+usage() {
+  die "usage: azkarify-verify doctor|launch|drive <id>|cleanup"
+}
+
+main() {
+  local cmd=${1:-}
+  case "$cmd" in
+    doctor) cmd_doctor ;;
+    launch) cmd_launch ;;
+    drive) shift; cmd_drive "${1:-}" ;;
+    cleanup) cmd_cleanup ;;
+    *) usage ;;
+  esac
+}
+
+main "$@"
