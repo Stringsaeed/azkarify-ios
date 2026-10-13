@@ -8,7 +8,7 @@ struct GuideCatalogTests {
   @Test func chaptersSkipCategory21() throws {
     for language in ["en", "ar"] {
       let chapters = try GuideCatalog.load(language: language, repository: AzkarRepository())
-      #expect(chapters.count == 9)
+      #expect(chapters.map(\.categoryID) == [16, 17, 18, 19, 20, 22, 23, 24, 25])
       #expect(!chapters.contains { $0.categoryID == 21 })
       let first = try #require(chapters.first?.lines.first)
       let last = try #require(chapters.last?.lines.last)
