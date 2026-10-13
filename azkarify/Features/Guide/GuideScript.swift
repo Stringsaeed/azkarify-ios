@@ -69,6 +69,7 @@ enum GuideScript {
     let chapters = try GuideCatalog.load(language: language, repository: repository)
     let isEnglish = language != "ar"
     var raw: [GuideStep] = []
+    var firstInstructions: [Int: JourneyText] = [:]
 
     func chapter(_ id: Int) throws -> GuideChapter {
       guard let found = chapters.first(where: { $0.categoryID == id }) else {
@@ -109,12 +110,15 @@ enum GuideScript {
 
     func addLines(
       _ category: Int, prefix: String, _ section: GuideSection, _ posture: GuidePosture,
-      first: JourneyText, rest: JourneyText = JourneyText("Or say", "أو قل"),
+      first: JourneyText, rest: JourneyText? = nil,
       essential: (Int) -> Bool
     ) throws {
+      let alternative = rest ?? JourneyText("Or say", "أو قل")
+      firstInstructions[category] = first
       for (index, source) in try chapter(category).lines.enumerated() {
         addLine(
-          "\(prefix)-\(category)-\(source.id)", section, posture, index == 0 ? first : rest,
+          "\(prefix)-\(category)-\(source.id)", section, posture,
+          index == 0 ? first : alternative,
           source, category: category, essential: essential(source.id))
       }
     }
@@ -248,6 +252,7 @@ enum GuideScript {
     let chosen = kids ? raw.filter(\.isEssential) : raw
     var result: [GuideStep] = []
     var previous: GuidePosture?
+    var seenCategories: Set<Int> = []
     for step in chosen {
       let clips: [GuideClip]
       if let previous, previous != step.posture {
@@ -255,10 +260,20 @@ enum GuideScript {
       } else {
         clips = []
       }
+      // The first line kept from a chapter carries that chapter's instruction,
+      // so kids mode never opens a chapter with "Or say".
+      var instruction = step.instruction
+      if let category = step.sourceCategoryID, step.sourceLineID != nil,
+        !seenCategories.contains(category), step.id.hasPrefix("r1-") || step.id.hasPrefix("closing-")
+          || step.id.hasPrefix("after-")
+      {
+        seenCategories.insert(category)
+        if let first = firstInstructions[category] { instruction = first }
+      }
       result.append(
         GuideStep(
           id: step.id, section: step.section, posture: step.posture, enterClips: clips,
-          instruction: step.instruction, arabic: step.arabic, translated: step.translated,
+          instruction: instruction, arabic: step.arabic, translated: step.translated,
           transliteration: step.transliteration, repeatCount: step.repeatCount,
           isEssential: step.isEssential, sourceCategoryID: step.sourceCategoryID,
           sourceLineID: step.sourceLineID))

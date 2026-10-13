@@ -300,10 +300,11 @@ final class GuidePlayerLayerView: UIView {
     isUserInteractionEnabled = false
     backgroundColor = .clear
     playerLayer.videoGravity = .resizeAspectFill
+    weak let weakSelf = self
     readyObservation = playerLayer.observe(\.isReadyForDisplay, options: [.initial, .new]) {
-      @Sendable [weak self] layer, _ in
+      layer, _ in
       guard layer.isReadyForDisplay else { return }
-      Task { @MainActor in self?.onReadyForDisplay?() }
+      Task { @MainActor in weakSelf?.onReadyForDisplay?() }
     }
   }
 

@@ -103,4 +103,16 @@ struct GuideScriptTests {
       #expect(Set(ids).count == ids.count)
     }
   }
+
+  @MainActor
+  @Test func kidsModeOpensEachChapterWithItsInstruction() throws {
+    let kids = try steps("en", kids: true)
+    let opening = try #require(kids.first { $0.id == "r1-opening-16-28" })
+    #expect(opening.instruction.english.hasPrefix("Place your right hand"))
+    let full = try steps("en", kids: false)
+    let secondOpening = try #require(full.first { $0.id == "r1-opening-16-28" })
+    #expect(secondOpening.instruction.english == "Or say")
+    let afterTasbih = try #require(kids.first { $0.id == "after-25-69" })
+    #expect(afterTasbih.instruction.english == "Then say")
+  }
 }
