@@ -27,6 +27,7 @@ struct ContentView: View {
   @Environment(\.scenePhase) private var scenePhase
   @AppStorage("accent") private var accent = "brown"
   @AppStorage("hasPresentedPrayerLocationSetup") private var hasPresentedLocationSetup = false
+  @AppStorage("showGuide") private var showGuide = false
   @State private var search = ""
   @State private var selection: HomeRoute?
   @State private var detailPath = NavigationPath()
@@ -208,6 +209,10 @@ struct ContentView: View {
     .sheet(isPresented: $showCounter) {
       CounterView()
         .presentationDragIndicator(.visible)
+    }
+    .fullScreenCover(isPresented: $showGuide) {
+      GuideView()
+        .environmentObject(store)
     }
     .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
   }
