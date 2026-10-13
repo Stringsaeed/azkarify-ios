@@ -9,7 +9,6 @@ struct JourneysView: View {
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   @State private var showPrayerSettings = false
   @State private var showLocationSetup = false
-  @State private var openSettingsAfterLocation = false
 
   var body: some View {
     TimelineView(.periodic(from: .now, by: 60)) { context in
@@ -73,17 +72,8 @@ struct JourneysView: View {
     .sheet(isPresented: $showPrayerSettings, onDismiss: { schedule.refresh() }) {
       NavigationStack { PrayerScheduleSettingsView() }
     }
-    .sheet(isPresented: $showLocationSetup, onDismiss: {
-      if openSettingsAfterLocation {
-        openSettingsAfterLocation = false
-        showPrayerSettings = true
-      }
-    }) {
-      PrayerLocationSheet(onFinish: { showLocationSetup = false }, onOpenSettings: {
-        openSettingsAfterLocation = true
-        showLocationSetup = false
-      })
-
+    .sheet(isPresented: $showLocationSetup) {
+      PrayerLocationSheet(onFinish: { showLocationSetup = false })
       .presentationDragIndicator(.visible)
     }
     .onChange(of: scenePhase) { _, phase in

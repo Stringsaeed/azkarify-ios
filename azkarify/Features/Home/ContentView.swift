@@ -33,7 +33,6 @@ struct ContentView: View {
   @State private var preferredColumn: NavigationSplitViewColumn = .sidebar
   @State private var showLocationSetup = false
   @State private var showCounter = false
-  @State private var openPrayerSettingsAfterDismiss = false
 
   private var results: [ZikrCategory] {
     guard !search.isEmpty else { return store.categories }
@@ -189,19 +188,8 @@ struct ContentView: View {
     .onChange(of: scenePhase) { _, phase in
       if phase == .active { presentLocationSetupIfNeeded() }
     }
-    .sheet(isPresented: $showLocationSetup, onDismiss: {
-      if openPrayerSettingsAfterDismiss {
-        openPrayerSettingsAfterDismiss = false
-        select(.prayerSettings)
-      }
-    }) {
-      PrayerLocationSheet(
-        onFinish: { showLocationSetup = false },
-        onOpenSettings: {
-          openPrayerSettingsAfterDismiss = true
-          showLocationSetup = false
-        })
-
+    .sheet(isPresented: $showLocationSetup) {
+      PrayerLocationSheet(onFinish: { showLocationSetup = false })
         .presentationDragIndicator(.visible)
         .onAppear { hasPresentedLocationSetup = true }
     }

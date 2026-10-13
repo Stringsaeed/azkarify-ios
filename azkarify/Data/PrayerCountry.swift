@@ -40,6 +40,15 @@ struct PrayerCountry: Identifiable, Equatable, Codable {
   func name(language: String) -> String {
     language.hasPrefix("ar") && !arabicName.isEmpty ? arabicName : englishName
   }
+
+  var flagEmoji: String? {
+    if let flag, !flag.isEmpty { return flag }
+    guard PrayerCountryCatalog.isAlpha2Code(code) else { return nil }
+    let scalars = code.unicodeScalars.compactMap {
+      UnicodeScalar(0x1F1E6 + Int($0.value) - 65)
+    }
+    return String(String.UnicodeScalarView(scalars))
+  }
 }
 
 enum PrayerCountryCatalog {

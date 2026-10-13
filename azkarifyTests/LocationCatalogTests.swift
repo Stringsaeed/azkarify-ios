@@ -6,6 +6,15 @@ import Testing
 @Suite(.serialized)
 @MainActor
 struct LocationCatalogTests {
+  @Test func countryRowsUseAPIFlagsAndOfflineISOFlags() {
+    let offline = PrayerCountry(code: "AE", englishName: "United Arab Emirates",
+                                arabicName: "الإمارات")
+    let server = PrayerCountry(code: "AE", englishName: "United Arab Emirates",
+                               arabicName: "الإمارات", flag: "🇦🇪")
+    #expect(offline.flagEmoji == "🇦🇪")
+    #expect(server.flagEmoji == server.flag)
+  }
+
   @Test func disabledNetworkUsesBundledCountriesAndCities() async {
     let store = LocationCatalogStore(
       baseURL: nil,
