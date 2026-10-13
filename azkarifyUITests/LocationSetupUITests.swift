@@ -4,11 +4,10 @@ final class LocationSetupUITests: XCTestCase {
   override func setUpWithError() throws { continueAfterFailure = false }
 
   @MainActor
-  func testLocationSheetClosesFromTopLeft() {
+  func testLocationSheetClosesFromHeader() {
     let app = launchUnconfiguredHome(language: "ar")
     let close = app.buttons["location.close"]
     XCTAssertTrue(close.waitForExistence(timeout: 5))
-    XCTAssertLessThan(close.frame.midX, app.frame.midX)
     XCTAssertFalse(app.buttons["location.notNow"].exists)
     close.tap()
     XCTAssertFalse(app.buttons["location.useDevice"].exists)
@@ -26,7 +25,7 @@ final class LocationSetupUITests: XCTestCase {
     deny.tap()
     let dubai = app.buttons["location.city.Dubai"]
     XCTAssertTrue(dubai.waitForExistence(timeout: 10))
-    XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Settings")).firstMatch.isHittable)
+    XCTAssertFalse(app.buttons["location.openSettings"].exists)
     screenshot(app, "City fallback after denying location")
     dubai.tap()
     let location = app.buttons["home.prayerLocation"]
@@ -68,7 +67,6 @@ final class LocationSetupUITests: XCTestCase {
   @MainActor
   func testArabicCityChoiceWithoutLocationPermission() {
     let app = launchUnconfiguredHome(language: "ar")
-    app.buttons["location.chooseCity"].tap()
     let country = app.buttons["location.country"]
     XCTAssertTrue(country.waitForExistence(timeout: 5))
     XCTAssertTrue((country.label + " " + (country.value as? String ?? "")).contains("الإمارات"))
@@ -78,13 +76,14 @@ final class LocationSetupUITests: XCTestCase {
     countrySearch.tap()
     countrySearch.typeText("Egypt")
     app.buttons["country.EG"].tap()
-    let search = app.textFields["location.search"]
+    app.buttons["location.chooseCity"].tap()
+    let search = app.searchFields.firstMatch
     search.tap()
     search.typeText("Cairo")
     let cairo = app.buttons["location.city.Cairo"]
     XCTAssertTrue(cairo.waitForExistence(timeout: 5))
     XCTAssertFalse(XCUIApplication(bundleIdentifier: "com.apple.springboard").alerts.firstMatch.exists)
-    screenshot(app, "Arabic manual city selection")
+    screenshot(app, "Arabic city selection")
     cairo.tap()
     let location = app.buttons["home.prayerLocation"]
     XCTAssertTrue(location.waitForExistence(timeout: 5))
@@ -92,21 +91,12 @@ final class LocationSetupUITests: XCTestCase {
   }
 
   @MainActor
-  func testLocationSheetFitsContentAndCitySearchStaysInCountry() {
+  func testLocationSheetNavigationAndCitySearchStaysInCountry() {
     let app = launchUnconfiguredHome()
     let sheet = app.descendants(matching: .any)["prayerLocationSheet"].firstMatch
     XCTAssertTrue(sheet.exists)
     XCTAssertLessThan(sheet.frame.height, app.frame.height * 0.7)
-    app.buttons["location.chooseCity"].tap()
-    let back = app.buttons["location.back"]
-    XCTAssertTrue(back.waitForExistence(timeout: 5))
-    back.tap()
-    XCTAssertTrue(app.buttons["location.useDevice"].waitForExistence(timeout: 5))
-    app.buttons["location.chooseCity"].tap()
-    let citySearch = app.textFields["location.search"]
-    citySearch.tap()
-    citySearch.typeText("Cairo")
-    XCTAssertFalse(app.buttons["location.city.Cairo"].exists)
+    XCTAssertFalse(app.buttons["location.openSettings"].exists)
     app.buttons["location.country"].tap()
     let countrySearch = app.searchFields.firstMatch
     XCTAssertTrue(countrySearch.waitForExistence(timeout: 5))
@@ -114,6 +104,10 @@ final class LocationSetupUITests: XCTestCase {
     countrySearch.typeText("Egypt")
     screenshot(app, "Searchable country sheet")
     app.buttons["country.EG"].tap()
+    app.buttons["location.chooseCity"].tap()
+    let citySearch = app.searchFields.firstMatch
+    citySearch.tap()
+    citySearch.typeText("Cairo")
     XCTAssertTrue(app.buttons["location.city.Cairo"].waitForExistence(timeout: 5))
     XCTAssertFalse(app.buttons["location.city.Dubai"].exists)
     screenshot(app, "Cities scoped to Egypt")

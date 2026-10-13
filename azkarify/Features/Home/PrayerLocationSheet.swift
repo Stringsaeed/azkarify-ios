@@ -1,407 +1,364 @@
 import SwiftUI
 
+private struct LocationChoiceHeightKey: PreferenceKey {
+  static var defaultValue: CGFloat = 0
+
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = max(value, nextValue())
+  }
+}
+
 struct PrayerLocationSheet: View {
   @EnvironmentObject private var store: AzkarStore
   @EnvironmentObject private var prayerSchedule: PrayerScheduleStore
   @EnvironmentObject private var locationCatalog: LocationCatalogStore
   @AppStorage("accent") private var accent = "brown"
   @StateObject private var locationProvider = PrayerLocationProvider()
-  @State private var showingCities = false
-  @State private var showingCountrySelection = false
-  @State private var search = ""
+  @State private var path: [Route] = []
+  @State private var navigationID = UUID()
+  @State private var choiceHeight: CGFloat = 312
+  @State private var citySearch = ""
+  @State private var countrySearch = ""
+  @State private var countrySearchIsPresented = false
   @State private var selectedCountryCode = PrayerCountryCatalog.defaultCountryCode()
+  @State private var restoredCountry = false
   @State private var locationRequestIsActive = false
   @State private var errorMessage: String?
-  @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   let onFinish: () -> Void
-  let onOpenSettings: () -> Void
 
+  private enum Route: Hashable { case countries, cities }
   private var arabic: Bool { store.language == "ar" }
-
   private func text(_ english: String, _ arabic: String) -> String {
     self.arabic ? arabic : english
   }
-
-  private var selectedCountryIsAvailable: Bool {
-    !selectedCountryCode.isEmpty
-      && locationCatalog.countries.contains { $0.code == selectedCountryCode }
+  private var country: PrayerCountry? {
+    locationCatalog.countries.first { $0.code == selectedCountryCode }
   }
-
-  private var citySearchIsValid: Bool {
-    LocationCatalogStore.normalizedQuery(search) != nil
+  private var countryName: String {
+    country?.name(language: store.language) ?? text("Choose a country", "اختر دولة")
   }
-
-  private var cityRequestKey: String { "\(selectedCountryCode)|\(store.language)|\(search)" }
-
-  private var filteredCities: [PrayerCity] {
-    guard selectedCountryIsAvailable, citySearchIsValid else { return [] }
-    return locationCatalog.cities(for: selectedCountryCode, query: search, language: store.language)
+  private var cityQueryIsValid: Bool {
+    LocationCatalogStore.normalizedQuery(citySearch) != nil
   }
-
+  private var cities: [PrayerCity] {
+    guard country != nil, cityQueryIsValid else { return [] }
+    return locationCatalog.cities(for: selectedCountryCode, query: citySearch, language: store.language)
+  }
   private var cityError: String? {
-    locationCatalog.cityError(countryCode: selectedCountryCode, query: search, language: store.language)
+    locationCatalog.cityError(countryCode: selectedCountryCode, query: citySearch, language: store.language)
   }
-
   private var citiesAreLoading: Bool {
-    locationCatalog.isLoadingCities(countryCode: selectedCountryCode, query: search, language: store.language)
+    locationCatalog.isLoadingCities(countryCode: selectedCountryCode, query: citySearch, language: store.language)
   }
-
-  private var selectedCountryName: String {
-    guard selectedCountryIsAvailable else {
-      return text("Choose a country", "اختر دولة")
+  private var countries: [PrayerCountry] {
+    let query = countrySearch.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !query.isEmpty else { return locationCatalog.countries }
+    return locationCatalog.countries.filter {
+      $0.code.localizedCaseInsensitiveContains(query)
+        || $0.englishName.localizedCaseInsensitiveContains(query)
+        || $0.arabicName.localizedCaseInsensitiveContains(query)
     }
-    return locationCatalog.countries.first { $0.code == selectedCountryCode }?
-      .name(language: store.language)
-      ?? selectedCountryCode
-  }
-
-  private var countryIsLoading: Bool {
-    selectedCountryIsAvailable
-      && citiesAreLoading
-      && filteredCities.isEmpty
   }
 
   var body: some View {
-    ScrollView {
-      VStack(alignment: .leading, spacing: 20) {
-        HStack {
-          Spacer()
-          Button(action: onFinish) {
-            Image(systemName: "xmark")
+    NavigationStack(path: $path) {
+      choiceScreen
+        .navigationDestination(for: Route.self) { route in
+          switch route {
+          case .countries: countryScreen
+          case .cities: cityScreen
           }
-          .buttonStyle(.bordered)
-          .buttonBorderShape(.circle)
-          .accessibilityLabel(text("Close", "إغلاق"))
-          .accessibilityIdentifier("location.close")
         }
-        if showingCities {
-          cityPicker
-        } else {
-          introduction
-          actions
-          settingsNote
-        }
-      }
-      .padding(.horizontal, 20)
-      .padding(.vertical, 20)
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .fixedSize(horizontal: false, vertical: true)
-      .sheetContentHeight()
     }
-    .scrollDismissesKeyboard(.interactively)
-    .background(Color(.systemBackground))
+    .background(AppAppearance.background(accent))
+    .id(navigationID)
     .font(AppAppearance.font(size: 17))
     .tint(AppAppearance.accent(accent))
     .environment(\.layoutDirection, arabic ? .rightToLeft : .leftToRight)
-    .contentSizedSheet(maximumHeightFraction: 0.85, minimumHeight: 280)
-    .sheet(isPresented: $showingCountrySelection) {
-      CountrySelectionSheet(
-        selectedCountryCode: selectedCountryCode,
-        onSelect: selectCountry)
-      .presentationDetents([.large])
-      .presentationDragIndicator(.visible)
+    .presentationDetents(path.isEmpty ? [.height(choiceHeight)] : [.large])
+    .presentationDragIndicator(.visible)
+    .onPreferenceChange(LocationChoiceHeightKey.self) { height in
+      guard height > 0 else { return }
+      choiceHeight = max(height, 280)
     }
     .onAppear(perform: restoreCountrySelection)
-    .onChange(of: locationProvider.state) { _, state in
-      handleLocationState(state)
-    }
-    .task {
-      await locationCatalog.loadCountries(language: store.language)
-    }
-    .task(id: cityRequestKey) {
-      guard selectedCountryIsAvailable, citySearchIsValid else { return }
-      if !search.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+    .onChange(of: locationProvider.state) { _, state in handleLocationState(state) }
+    .task { await locationCatalog.loadCountries(language: store.language) }
+    .task(id: "\(selectedCountryCode)|\(store.language)|\(citySearch)") {
+      guard country != nil, cityQueryIsValid else { return }
+      if !citySearch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
         do { try await Task.sleep(for: .milliseconds(300)) } catch { return }
       }
       guard !Task.isCancelled else { return }
-      await locationCatalog.loadCities(countryCode: selectedCountryCode, query: search, language: store.language)
+      await locationCatalog.loadCities(countryCode: selectedCountryCode, query: citySearch,
+                                      language: store.language)
     }
-    .onDisappear {
-      locationRequestIsActive = false
-      locationProvider.cancel()
-    }
-    .alert(
-      text("Prayer times unavailable", "مواقيت الصلاة غير متاحة"),
-      isPresented: Binding(
-        get: { errorMessage != nil },
-        set: { if !$0 { errorMessage = nil } }
-      )
-    ) {
+    .onDisappear { stopLocationRequest() }
+    .alert(text("Prayer times unavailable", "مواقيت الصلاة غير متاحة"),
+           isPresented: Binding(get: { errorMessage != nil },
+                                set: { if !$0 { errorMessage = nil } })) {
       Button(text("OK", "حسناً")) { errorMessage = nil }
-    } message: {
-      Text(errorMessage ?? "")
-    }
+    } message: { Text(errorMessage ?? "") }
     .accessibilityIdentifier("prayerLocationSheet")
   }
 
-  private var introduction: some View {
-    VStack(alignment: .leading, spacing: 8) {
-      Text(text("Set your prayer location", "حدد موقع الصلاة"))
-        .font(AppAppearance.font(size: 27, relativeTo: .title2, bold: true))
-      Text(text(
-        "Prayer times use your city or device location. Your coordinates are used on this device and are not uploaded.",
-        "تستخدم مواقيت الصلاة مدينتك أو موقع جهازك. تُستخدم إحداثياتك على هذا الجهاز ولا تُرفع إلى أي جهة."))
-        .font(AppAppearance.font(size: 15))
-        .foregroundStyle(.secondary)
-        .fixedSize(horizontal: false, vertical: true)
-    }
-  }
+  private var choiceScreen: some View {
+    VStack(spacing: 18) {
+      HStack {
+        Text(text("Prayer location", "موقع الصلاة"))
+          .font(AppAppearance.font(size: 24, relativeTo: .title2, bold: true))
+        Spacer(minLength: 12)
+        Button(action: onFinish) {
+          Image(systemName: "xmark")
+        }
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.circle)
+        .accessibilityLabel(text("Close", "إغلاق"))
+        .accessibilityIdentifier("location.close")
+      }
 
-  @ViewBuilder
-  private var actions: some View {
-    VStack(spacing: 10) {
       Button(action: requestLocation) {
-        Label {
-          Text(locationRequestIsActive
-            ? text("Finding your location…", "جارٍ تحديد موقعك…")
-            : text("Use my location", "استخدم موقعي"))
-        } icon: {
+        HStack(spacing: 10) {
           if locationRequestIsActive {
-            ProgressView()
-              .controlSize(.small)
+            ProgressView().tint(Color(.systemBackground))
           } else {
             Image(systemName: "location.fill")
           }
+          Text(locationRequestIsActive
+               ? text("Finding your location…", "جارٍ تحديد موقعك…")
+               : text("Use current location", "استخدم موقعي الحالي"))
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, minHeight: 32)
+        .foregroundStyle(Color(.systemBackground))
       }
       .buttonStyle(.borderedProminent)
-      .controlSize(.large)
-      .accessibilityIdentifier("location.useDevice")
       .disabled(locationRequestIsActive)
+      .accessibilityIdentifier("location.useDevice")
 
-      Button {
-        stopLocationRequest()
-        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { showingCities = true }
-      } label: {
-        Label(text("Choose a city", "اختر مدينة"), systemImage: "building.2")
-          .frame(maxWidth: .infinity)
+      HStack(spacing: 12) {
+        Rectangle().frame(height: 1)
+        Text(text("or", "أو"))
+          .font(AppAppearance.font(size: 16, relativeTo: .subheadline, bold: true))
+          .fixedSize()
+        Rectangle().frame(height: 1)
       }
-      .buttonStyle(.bordered)
-      .controlSize(.large)
-      .accessibilityIdentifier("location.chooseCity")
-    }
-  }
-
-  private var settingsNote: some View {
-    Text(text(
-      "You can change your city anytime in Settings → Prayer times.",
-      "يمكنك تغيير مدينتك في أي وقت من الإعدادات ← مواقيت الصلاة."))
-      .font(AppAppearance.font(size: 13))
       .foregroundStyle(.secondary)
-      .fixedSize(horizontal: false, vertical: true)
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .padding(.top, 4)
+      .accessibilityHidden(true)
+
+      VStack(spacing: 0) {
+        NavigationLink(value: Route.countries) {
+          HStack(spacing: 12) {
+            if let flag = country?.flagEmoji {
+              Text(flag)
+                .font(.system(size: 24))
+                .frame(width: 24)
+                .accessibilityHidden(true)
+            } else {
+              Image(systemName: "globe")
+                .frame(width: 24)
+            }
+            Text(text("Country", "الدولة"))
+            Spacer(minLength: 8)
+            Text(countryName)
+              .foregroundStyle(.secondary)
+              .lineLimit(1)
+            Image(systemName: "chevron.forward")
+              .font(.caption)
+              .foregroundStyle(.secondary)
+              .accessibilityHidden(true)
+          }
+          .frame(minHeight: 54)
+          .contentShape(Rectangle())
+        }
+        .accessibilityIdentifier("location.country")
+
+        Divider()
+
+        NavigationLink(value: Route.cities) {
+          HStack(spacing: 12) {
+            Image(systemName: "building.2")
+              .frame(width: 24)
+            Text(text("Choose a city", "اختر مدينة"))
+            Spacer(minLength: 8)
+            Image(systemName: "chevron.forward")
+              .font(.caption)
+              .foregroundStyle(.secondary)
+              .accessibilityHidden(true)
+          }
+          .frame(minHeight: 54)
+          .contentShape(Rectangle())
+        }
+        .accessibilityIdentifier("location.chooseCity")
+      }
+      .padding(.horizontal, 16)
+      .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
+      .buttonStyle(.plain)
+    }
+    .padding(.horizontal, 20)
+    .padding(.top, 18)
+    .fixedSize(horizontal: false, vertical: true)
+    .background {
+      GeometryReader { proxy in
+        Color.clear.preference(key: LocationChoiceHeightKey.self, value: proxy.size.height)
+      }
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    .background(AppAppearance.background(accent))
+    .toolbar(.hidden, for: .navigationBar)
   }
 
-  private var cityPicker: some View {
-    VStack(alignment: .leading, spacing: 14) {
-      HStack(alignment: .firstTextBaseline) {
-        Text(text("Choose your city", "اختر مدينتك"))
-          .font(AppAppearance.font(size: 25, relativeTo: .title2, bold: true))
-        Spacer(minLength: 0)
-        Button {
-          stopLocationRequest()
-          withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
-            showingCities = false
+  private var cityScreen: some View {
+    List {
+      Section {
+        if country == nil {
+          NavigationLink(value: Route.countries) {
+            Label(text("Choose a country first", "اختر دولة أولاً"), systemImage: "globe")
           }
-        } label: {
-          Label(text("Back", "رجوع"), systemImage: "chevron.backward")
-        }
-        .buttonStyle(.bordered)
-        .foregroundStyle(AppAppearance.accent(accent))
-        .frame(minHeight: 44)
-        .contentShape(Rectangle())
-        .accessibilityIdentifier("location.back")
-      }
-
-      Button { showingCountrySelection = true } label: {
-        HStack(spacing: 12) {
-          Label(text("Country", "الدولة"), systemImage: "globe")
-          Spacer(minLength: 8)
-          Text(selectedCountryName)
-            .foregroundStyle(.secondary)
-            .lineLimit(1)
-          Image(systemName: "chevron.forward")
-            .font(.caption)
-            .foregroundStyle(.secondary)
-            .accessibilityHidden(true)
-        }
-        .frame(maxWidth: .infinity, minHeight: 52, alignment: .leading)
-        .contentShape(Rectangle())
-      }
-      .buttonStyle(.bordered)
-      .accessibilityIdentifier("location.country")
-
-      TextField(text("Search cities", "ابحث عن مدينة"), text: $search)
-        .textFieldStyle(.roundedBorder)
-        .accessibilityIdentifier("location.search")
-      Text(text("Online city searches send search terms, never your GPS coordinates.",
-                "يرسل البحث عبر الإنترنت أسماء المدن فقط، ولا يرسل إحداثيات موقعك."))
-        .font(AppAppearance.font(size: 12))
-        .foregroundStyle(.secondary)
-
-      Text(text(
-        "You can change your city anytime in Settings → Prayer times.",
-        "يمكنك تغيير مدينتك في أي وقت من الإعدادات ← مواقيت الصلاة."))
-        .font(AppAppearance.font(size: 13))
-        .foregroundStyle(.secondary)
-        .fixedSize(horizontal: false, vertical: true)
-
-      if countryIsLoading {
-        ProgressView(text("Loading cities…", "جارٍ تحميل المدن…"))
-          .frame(maxWidth: .infinity, alignment: .center)
-          .padding(.vertical, 14)
-      } else if cityError != nil,
-        filteredCities.isEmpty
-      {
-        VStack(spacing: 8) {
-          Text(text(
-            "Cities are unavailable right now. Try again.",
-            "المدن غير متاحة حالياً. حاول مرة أخرى."))
-            .font(AppAppearance.font(size: 14))
-            .foregroundStyle(.secondary)
-            .multilineTextAlignment(.center)
-          Button(text("Retry", "إعادة المحاولة")) {
-            Task {
-              await locationCatalog.loadCities(
-                countryCode: selectedCountryCode, query: search, language: store.language,
-                forceRefresh: true)
-            }
-          }
-          .buttonStyle(.bordered)
-          .accessibilityIdentifier("location.retryCities")
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 14)
-      } else {
-        if cityError != nil {
-          cityCatalogRetryRow
-        }
-
-        LazyVStack(spacing: 8) {
-          ForEach(filteredCities) { city in
-            Button {
-              select(city)
-            } label: {
-              HStack(spacing: 12) {
-                Image(systemName: "mappin.and.ellipse")
-                  .foregroundStyle(AppAppearance.accent(accent))
-                  .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 3) {
-                  Text(city.name(language: store.language))
-                  if let region = city.region, !region.isEmpty {
-                    Text(region).font(AppAppearance.font(size: 12)).foregroundStyle(.secondary)
-                  }
+        } else if citiesAreLoading && cities.isEmpty {
+          ProgressView(text("Loading cities…", "جارٍ تحميل المدن…"))
+            .frame(maxWidth: .infinity, minHeight: 72)
+        } else if cityError != nil && cities.isEmpty {
+          ContentUnavailableView(text("Cities are unavailable", "المدن غير متاحة"),
+                                 systemImage: "wifi.slash",
+                                 description: Text(text("Pull down to refresh.",
+                                                        "اسحب للأسفل للتحديث.")))
+        } else {
+          ForEach(cities) { city in
+            Button { select(city) } label: {
+              VStack(alignment: .leading, spacing: 3) {
+                Text(city.name(language: store.language)).foregroundStyle(.primary)
+                if let region = city.region, !region.isEmpty {
+                  Text(region).font(AppAppearance.font(size: 13)).foregroundStyle(.secondary)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                Image(systemName: "chevron.forward")
-                  .font(.caption)
-                  .foregroundStyle(.secondary)
-                  .accessibilityHidden(true)
               }
-              .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+              .frame(maxWidth: .infinity, minHeight: 36, alignment: .leading)
               .contentShape(Rectangle())
             }
-            .buttonStyle(.bordered)
+            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
             .accessibilityIdentifier("location.city.\(city.id)")
           }
-        }
-
-        loadMoreCities
-
-        if filteredCities.isEmpty {
-          Text(emptyCitiesMessage)
-            .foregroundStyle(.secondary)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.vertical, 14)
+          if cities.isEmpty {
+            ContentUnavailableView(emptyCitiesMessage, systemImage: "magnifyingglass")
+          }
+          if cityQueryIsValid && locationCatalog.hasMoreCities(
+            countryCode: selectedCountryCode, query: citySearch, language: store.language) {
+            Button(text("Load more cities", "تحميل المزيد من المدن")) {
+              Task { await locationCatalog.loadMoreCities(
+                countryCode: selectedCountryCode, query: citySearch, language: store.language) }
+            }
+            .disabled(citiesAreLoading)
+            .accessibilityIdentifier("location.loadMoreCities")
+          }
         }
       }
-
-      Divider()
-
-      Button {
-        stopLocationRequest()
-        onOpenSettings()
-      } label: {
-        Label(
-          text("Other city / Set manually", "مدينة أخرى / إدخال يدوي"),
-          systemImage: "slider.horizontal.3"
-        )
-        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+    }
+    .listStyle(.insetGrouped)
+    .scrollContentBackground(.hidden)
+    .background(AppAppearance.background(accent))
+    .listSectionSpacing(.compact)
+    .refreshable { await locationCatalog.loadCities(
+      countryCode: selectedCountryCode, query: citySearch,
+      language: store.language, forceRefresh: true) }
+    .scrollDismissesKeyboard(.interactively)
+    .searchable(text: $citySearch, placement: .navigationBarDrawer(displayMode: .always),
+                prompt: text("Search cities", "ابحث عن مدينة"))
+    .navigationTitle(text("Choose a city", "اختر مدينة"))
+    .navigationBarTitleDisplayMode(.inline)
+    .toolbar(.visible, for: .navigationBar)
+    .toolbar {
+      ToolbarItem(placement: .principal) {
+        Text(text("Choose a city", "اختر مدينة"))
+          .font(AppAppearance.font(size: 21, relativeTo: .headline, bold: true))
       }
-      .buttonStyle(.bordered)
-      .foregroundStyle(AppAppearance.accent(accent))
-      .accessibilityIdentifier("location.openSettings")
     }
   }
 
-  private var cityCatalogRetryRow: some View {
-    HStack(spacing: 10) {
-      Text(text(
-        "Some cities may be unavailable. Try again to refresh.",
-        "قد لا تتوفر بعض المدن. حاول مرة أخرى للتحديث."))
-        .font(AppAppearance.font(size: 13))
-        .foregroundStyle(.secondary)
-      Spacer(minLength: 8)
-      Button(text("Retry", "إعادة المحاولة")) {
-        Task {
-          await locationCatalog.loadCities(
-            countryCode: selectedCountryCode, query: search, language: store.language,
-            forceRefresh: true)
+  private var countryScreen: some View {
+    List {
+      if locationCatalog.countriesLoading && locationCatalog.countries.isEmpty {
+        ProgressView(text("Loading countries…", "جارٍ تحميل الدول…"))
+          .frame(maxWidth: .infinity, minHeight: 72)
+      } else if locationCatalog.countriesError != nil && locationCatalog.countries.isEmpty {
+        ContentUnavailableView(text("Countries are unavailable", "الدول غير متاحة"),
+                               systemImage: "globe",
+                               description: Text(text("Pull down to refresh.",
+                                                      "اسحب للأسفل للتحديث.")))
+      } else {
+        ForEach(countries) { item in
+          Button {
+            selectedCountryCode = item.code
+            citySearch = ""
+            countrySearch = ""
+            if countrySearchIsPresented {
+              countrySearchIsPresented = false
+              Task {
+                try? await Task.sleep(for: .milliseconds(250))
+                path = []
+                navigationID = UUID()
+              }
+            } else {
+              path = []
+              navigationID = UUID()
+            }
+          } label: {
+            HStack(spacing: 12) {
+              if let flag = item.flagEmoji {
+                Text(flag)
+                  .font(.system(size: 26))
+                  .accessibilityHidden(true)
+              }
+              Text(item.name(language: store.language))
+                .foregroundStyle(.primary)
+                .frame(maxWidth: .infinity, minHeight: 36, alignment: .leading)
+              if selectedCountryCode == item.code {
+                Image(systemName: "checkmark").fontWeight(.semibold)
+                  .accessibilityLabel(text("Selected", "محدد"))
+              }
+            }
+            .contentShape(Rectangle())
+          }
+          .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+          .accessibilityIdentifier("country.\(item.code)")
+        }
+        if countries.isEmpty {
+          ContentUnavailableView(text("No matching countries", "لا توجد دول مطابقة"),
+                                 systemImage: "magnifyingglass")
         }
       }
-      .buttonStyle(.bordered)
-      .controlSize(.small)
-      .accessibilityIdentifier("location.retryCities")
     }
-  }
-
-  @ViewBuilder
-  private var loadMoreCities: some View {
-    if citySearchIsValid && locationCatalog.hasMoreCities(
-      countryCode: selectedCountryCode, query: search, language: store.language)
-    {
-      Button(text("Load more cities", "تحميل المزيد من المدن")) {
-        Task {
-          await locationCatalog.loadMoreCities(
-            countryCode: selectedCountryCode, query: search, language: store.language)
-        }
+    .listStyle(.insetGrouped)
+    .scrollContentBackground(.hidden)
+    .background(AppAppearance.background(accent))
+    .refreshable { await locationCatalog.loadCountries(
+      language: store.language, forceRefresh: true) }
+    .scrollDismissesKeyboard(.interactively)
+    .searchable(text: $countrySearch, isPresented: $countrySearchIsPresented,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: text("Search countries", "ابحث عن دولة"))
+    .navigationTitle(text("Country", "الدولة"))
+    .navigationBarTitleDisplayMode(.inline)
+    .toolbar(.visible, for: .navigationBar)
+    .toolbar {
+      ToolbarItem(placement: .principal) {
+        Text(text("Country", "الدولة"))
+          .font(AppAppearance.font(size: 21, relativeTo: .headline, bold: true))
       }
-      .disabled(citiesAreLoading)
-      .frame(minHeight: 44)
-      .accessibilityIdentifier("location.loadMoreCities")
     }
   }
 
   private var emptyCitiesMessage: String {
-    let query = search.trimmingCharacters(in: .whitespacesAndNewlines)
-    if !citySearchIsValid {
-      return text("Search with 2–64 characters and up to 5 words.",
-                  "ابحث باستخدام حرفين إلى ٦٤ حرفاً، وبحد أقصى ٥ كلمات.")
+    if !cityQueryIsValid {
+      return text("Use 2–64 characters and up to 5 words.",
+                  "استخدم حرفين إلى ٦٤ حرفاً، وبحد أقصى ٥ كلمات.")
     }
-    if !query.isEmpty {
+    if !citySearch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
       return text("No matching cities", "لا توجد مدن مطابقة")
     }
-    if selectedCountryCode.isEmpty {
-      return text("Choose a country to browse cities.", "اختر دولة لتصفح المدن.")
-    }
-    let countryName = selectedCountryName
-    return text(
-      "No cities for \(countryName). Set a city manually in Settings.",
-      "لا توجد مدن في \(countryName). أدخل مدينة يدوياً من الإعدادات.")
-  }
-
-  private func selectCountry(_ country: PrayerCountry) {
-    selectedCountryCode = country.code
-    search = ""
-    showingCountrySelection = false
+    return text("No cities found", "لم يُعثر على مدن")
   }
 
   private func requestLocation() {
-    search = ""
-    showingCities = false
     locationRequestIsActive = true
     locationProvider.requestLocation()
   }
@@ -414,11 +371,10 @@ struct PrayerLocationSheet: View {
   private func handleLocationState(_ state: PrayerLocationProvider.State) {
     guard locationRequestIsActive else { return }
     switch state {
-    case .idle, .requesting:
-      break
+    case .idle, .requesting: break
     case .unavailable:
       locationRequestIsActive = false
-      withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { showingCities = true }
+      path = [.cities]
     case .located(let latitude, let longitude):
       locationRequestIsActive = false
       saveLocalLocation(latitude: latitude, longitude: longitude)
@@ -456,6 +412,8 @@ struct PrayerLocationSheet: View {
   }
 
   private func restoreCountrySelection() {
+    guard !restoredCountry else { return }
+    restoredCountry = true
     guard let configuration = prayerSchedule.configuration else { return }
     selectedCountryCode = configuration.countryCode
       ?? PrayerCountryCatalog.countryCode(for: configuration.locationName)

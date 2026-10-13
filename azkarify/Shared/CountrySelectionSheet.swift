@@ -73,6 +73,11 @@ struct CountrySelectionSheet: View {
                 dismiss()
               } label: {
                 HStack(spacing: 12) {
+                  if let flag = country.flagEmoji {
+                    Text(flag)
+                      .font(.system(size: 26))
+                      .accessibilityHidden(true)
+                  }
                   VStack(alignment: .leading, spacing: 2) {
                     Text(country.name(language: store.language))
                     Text(country.code)
