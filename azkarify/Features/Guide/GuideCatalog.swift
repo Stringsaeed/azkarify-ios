@@ -5,6 +5,7 @@ struct GuideLine {
   let repeatCount: Int
   let arabic: String
   let translated: String
+  let transliteration: String
 }
 
 struct GuideChapter {
@@ -46,7 +47,8 @@ enum GuideCatalog {
           id: entry.id,
           repeatCount: entry.repeat,
           arabic: entry.text.arabic,
-          translated: entry.text.translated
+          translated: entry.text.translated,
+          transliteration: entry.text.arabicTranslated
         )
       }
       return GuideChapter(
