@@ -1,12 +1,12 @@
 import RevenueCat
-import RevenueCatUI
 import SwiftUI
 
 struct SettingsView: View {
   @EnvironmentObject private var store: AzkarStore
   @AppStorage("theme") private var theme = "system"
   @AppStorage("accent") private var accent = "brown"
-  @State private var showPaywall = false
+  @State private var supportOffer: SupportOffer?
+  @State private var isLoadingSupport = false
   @State private var paywallError: String?
   @State private var showIntro = false
   @State private var showAccentPicker = false
@@ -45,10 +45,18 @@ struct SettingsView: View {
       Button(AppCopy.text("View introduction")) {
         showIntro = true
       }
-      Button(AppCopy.text("Support the developer")) {
+      Button {
         Task { await openPaywall() }
+      } label: {
+        HStack {
+          Text(AppCopy.text("Support the developer"))
+          if isLoadingSupport {
+            Spacer()
+            ProgressView()
+          }
+        }
       }
-      .disabled(!RevenueCatService.isConfigured)
+      .disabled(!RevenueCatService.isConfigured || isLoadingSupport)
     }
     .scrollContentBackground(.hidden)
     .background(AppAppearance.background(accent))
@@ -60,7 +68,11 @@ struct SettingsView: View {
     .sheet(isPresented: $showAccentPicker) {
       AccentPickerView(selection: $accent, language: store.language)
     }
-    .sheet(isPresented: $showPaywall) { PaywallView() }
+    .sheet(item: $supportOffer) { offer in
+      SupportTipView(
+        offering: offer.offering, package: offer.package,
+        language: store.language, accent: accent)
+    }
     .fullScreenCover(isPresented: $showIntro) {
       IntroView { showIntro = false }.environmentObject(store)
     }
@@ -78,14 +90,29 @@ struct SettingsView: View {
   }
 
   private func openPaywall() async {
+    isLoadingSupport = true
+    defer { isLoadingSupport = false }
     do {
-      guard try await Purchases.shared.offerings().current != nil else {
+      guard let offering = try await Purchases.shared.offerings().current else {
         paywallError = AppCopy.text("No support offering is available yet.")
         return
       }
-      showPaywall = true
+      let tipPackages = offering.availablePackages.filter {
+        $0.storeProduct.productType == .consumable
+      }
+      guard tipPackages.count == 1, let package = tipPackages.first else {
+        paywallError = AppCopy.text("No support offering is available yet.")
+        return
+      }
+      supportOffer = SupportOffer(offering: offering, package: package)
     } catch {
       paywallError = error.localizedDescription
     }
   }
+}
+
+private struct SupportOffer: Identifiable {
+  let offering: Offering
+  let package: Package
+  var id: String { package.identifier }
 }

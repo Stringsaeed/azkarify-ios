@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180" fill="none" role="img" aria-labelledby="title">
+  <title id="title">A crescent above a botanical sprig inside a simple arch</title>
+  <g stroke="#4C6B5E" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M143 166V69c0-6 3-11 9-14 4-26 22-43 48-51 26 8 44 25 48 51 6 3 9 8 9 14v97" stroke-width="2.2"/>
+    <path d="M150 166V70c0-5 3-8 9-10 3-24 18-39 41-47 23 8 38 23 41 47 6 2 9 5 9 10v96" stroke-width="0.9" opacity=".62"/>
+    <path d="M143 166h22m70 0h22" stroke-width="1.2" opacity=".7"/>
+    <path d="M157 163c27 1 51-3 74-12 10-4 18-9 27-15" stroke-width="1.5"/>
+    <path d="M174 164c-4-8-4-15-1-20 5 3 8 9 8 18m6-2c-3-10-1-18 4-23 5 5 6 13 3 21m7-2c0-11 4-19 11-23 3 7 2 14-3 20m8-4c3-9 9-15 17-17 1 7-3 13-10 18m-45 13c-8-5-15-5-21-2 6 5 13 7 21 7m25-7c-5-6-12-8-20-7 4 6 11 9 20 9m21-9c-3-6-9-9-17-10 3 6 9 10 17 11" stroke-width="1.15"/>
+  </g>
+  <path d="M211.5 45.5a13.5 13.5 0 1 1-13-19.2 11.2 11.2 0 1 0 13 19.2Z" fill="#B79761"/>
+</svg>
