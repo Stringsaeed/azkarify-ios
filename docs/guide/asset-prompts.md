@@ -93,6 +93,7 @@ Same children's book illustration, static camera, no camera movement, no zoom, t
 | `guide-clip-tashahhud-to-salam-right.mp4` | tashahhud | salam-right | The boy lowers his index finger and slowly turns his head to look over his right shoulder. |
 | `guide-clip-salam-right-to-salam-left.mp4` | salam-right | salam-left | The boy turns his head from the right shoulder across to look over his left shoulder. |
 | `guide-clip-salam-left-to-after.mp4` | salam-left | after | The boy turns his head back to face forward, shifts to sit cross-legged, and raises his open palms in front of his chest. |
+| `guide-clip-sitting-to-standing.mp4` | sitting | standing | The boy pushes up from sitting, rises to his feet and folds his right hand over his left on his chest (used to stand up for the second rak'ah). |
 
 Tips:
 
@@ -116,6 +117,10 @@ Tips:
 | salam (no Hisn text) | salam-left | tashahhud-to-salam-right, then salam-right-to-salam-left |
 | 25 after the prayer | after | salam-left-to-after |
 
-## 6. Delivery
+## 6. What was actually used (2026-10-13)
+
+The set was generated in Google Flow (project "Azkarify prayer guide") with Nano Banana 2.1 for the keyframes and Veo 3.1 Quality with first and last frames for the clips, driven from the browser pane. Turn on "Return silent videos" in Flow's settings first, or Veo fails with an audio error. Masters live in `~/projects/azkarify-guide-assets`; the app carries 1232 x 2208 JPEGs in the asset catalog and HEVC clips under `azkarify/GuideClips`.
+
+## 7. Delivery
 
 Put the finished files in a folder named `guide-assets` anywhere and tell me the path. I will resize, re-encode, add the PNGs to the asset catalog, bundle the MP4s, and wire the names into the scene catalog. Size budget is about 1.5 MB per clip and under 400 KB per PNG, which HandBrake and a PNG optimizer will reach.
