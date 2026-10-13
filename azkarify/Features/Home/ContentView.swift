@@ -26,6 +26,7 @@ struct ContentView: View {
   @AppStorage("accent") private var accent = "brown"
   @AppStorage("hasPresentedPrayerLocationSetup") private var hasPresentedLocationSetup = false
   @AppStorage("showGuide") private var showGuide = false
+  @State private var isGuidePresented = UserDefaults.standard.bool(forKey: "showGuide")
   @State private var search = ""
   @State private var selection: HomeRoute?
   @State private var detailPath = NavigationPath()
@@ -208,7 +209,7 @@ struct ContentView: View {
       CounterView()
         .presentationDragIndicator(.visible)
     }
-    .fullScreenCover(isPresented: $showGuide) {
+    .fullScreenCover(isPresented: $isGuidePresented) {
       GuideView()
         .environmentObject(store)
     }
