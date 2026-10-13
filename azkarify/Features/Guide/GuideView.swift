@@ -12,11 +12,13 @@ private struct StandingCursor {
   var accessibilityValue: String { "\(categoryID)-\(line.id)" }
 
   mutating func goBack() {
-    if canBack { index -= 1 }
+    guard canBack else { return }
+    index -= 1
   }
 
   mutating func goNext() {
-    if canNext { index += 1 }
+    guard canNext else { return }
+    index += 1
   }
 
   @MainActor
@@ -49,80 +51,110 @@ struct GuideView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipped()
         .ignoresSafeArea()
+        .accessibilityAddTraits(.isImage)
         .accessibilityIdentifier("guide.posture.standing")
-    }
-    .overlay {
-      GeometryReader { geometry in
-        if let cursor {
-          Text(store.language == "ar" ? cursor.line.arabic : cursor.line.translated)
-            .font(AppAppearance.font(size: 17))
-            .multilineTextAlignment(.center)
-            .lineLimit(4)
-            .padding(16)
-            .frame(width: min(geometry.size.width * 0.86, 420))
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .position(x: geometry.size.width / 2, y: geometry.size.height * 0.72)
-            .accessibilityIdentifier("guide.bubble")
-            .accessibilityValue(cursor.accessibilityValue)
-        }
-      }
-      .allowsHitTesting(false)
     }
     .overlay(alignment: .bottom) {
       if let cursor {
-        HStack(spacing: 16) {
-          Button(text("Back", "رجوع")) { goBack() }
-            .frame(minWidth: 44, minHeight: 44)
-            .disabled(!cursor.canBack)
-            .accessibilityIdentifier("guide.back")
-          Button(text("Open", "افتح")) { showSheet = true }
-            .frame(minWidth: 44, minHeight: 44)
-            .accessibilityIdentifier("guide.expand")
-          Button(AppCopy.text("Next")) { goNext() }
-            .frame(minWidth: 44, minHeight: 44)
-            .disabled(!cursor.canNext)
-            .accessibilityIdentifier("guide.next")
-        }
-        .font(AppAppearance.font(size: 17, bold: true))
-        .padding(.horizontal, 24)
-        .padding(.bottom, 20)
+        Text(store.language == "ar" ? cursor.line.arabic : cursor.line.translated)
+          .font(AppAppearance.font(size: 17))
+          .foregroundStyle(.primary)
+          .multilineTextAlignment(.center)
+          .lineLimit(4)
+          .padding(16)
+          .frame(maxWidth: .infinity)
+          .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+          .accessibilityIdentifier("guide.bubble")
+          .accessibilityValue(cursor.accessibilityValue)
+          .padding(.horizontal, 20)
+          .padding(.bottom, 88)
+          .allowsHitTesting(false)
       }
     }
-    .overlay(alignment: .topLeading) {
-      Button(AppCopy.text("Close")) { dismiss() }
-        .font(AppAppearance.font(size: 17, bold: true))
-        .frame(minWidth: 44, minHeight: 44)
-        .padding(20)
-        .accessibilityIdentifier("guide.close")
+    .overlay(alignment: .bottom) {
+      if let cursor {
+        HStack {
+          guideButton(text("Back", "رجوع"), identifier: "guide.back", enabled: cursor.canBack) {
+            goBack()
+          }
+          Spacer()
+          guideButton(AppCopy.text("Next"), identifier: "guide.next", enabled: cursor.canNext) {
+            goNext()
+          }
+        }
+        .padding(.horizontal, 24)
+        .padding(.bottom, 12)
+      }
+    }
+    .overlay(alignment: .top) {
+      HStack {
+        guideButton(AppCopy.text("Close"), identifier: "guide.close") {
+          dismiss()
+        }
+        Spacer()
+        if cursor != nil {
+          guideButton(text("Open", "افتح"), identifier: "guide.expand") {
+            showSheet = true
+          }
+        }
+      }
+      .padding(.horizontal, 20)
+      .padding(.top, 8)
     }
     .sheet(isPresented: $showSheet) {
-      if let cursor {
-        VStack(alignment: .leading, spacing: 16) {
-          Text(text("Hisn line", "حصن"))
-            .font(AppAppearance.font(size: 15, bold: true))
-            .foregroundStyle(.secondary)
-            .accessibilityIdentifier("guide.sheet")
-          Text(cursor.line.arabic)
-            .font(AppAppearance.font(size: 20))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .accessibilityIdentifier("guide.sheet.arabic")
-          Text(cursor.line.translated)
-            .font(AppAppearance.font(size: 17))
-            .foregroundStyle(.secondary)
-          Text("\(cursor.line.repeatCount)")
-            .font(AppAppearance.font(size: 17, bold: true))
-            .accessibilityIdentifier("guide.sheet.repeat")
-        }
-        .padding(24)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .presentationDragIndicator(.visible)
-      }
+      sheet
     }
     .tint(AppAppearance.accent(accent))
     .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
     .task {
+      guard cursor == nil else { return }
       cursor = try? StandingCursor.load(language: store.language, repository: store.repository)
     }
+  }
+
+  private var sheet: some View {
+    ZStack(alignment: .topLeading) {
+      AppAppearance.background(accent)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(cursor?.accessibilityValue ?? " ")
+        .accessibilityIdentifier("guide.sheet")
+      if let cursor {
+        ScrollView {
+          VStack(alignment: .leading, spacing: 16) {
+            Text(cursor.line.arabic)
+              .font(AppAppearance.font(size: 20))
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .accessibilityIdentifier("guide.sheet.arabic")
+            Text(cursor.line.translated)
+              .font(AppAppearance.font(size: 17))
+              .foregroundStyle(.secondary)
+              .frame(maxWidth: .infinity, alignment: .leading)
+            Text("\(cursor.line.repeatCount)")
+              .font(AppAppearance.font(size: 17, bold: true))
+              .accessibilityIdentifier("guide.sheet.repeat")
+          }
+          .padding(24)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+      }
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .accessibilityElement(children: .contain)
+    .presentationDragIndicator(.visible)
+  }
+
+  private func guideButton(
+    _ title: String, identifier: String, enabled: Bool = true, action: @escaping () -> Void
+  ) -> some View {
+    Button(action: action) {
+      Text(title)
+        .font(AppAppearance.font(size: 17, bold: true))
+        .frame(minWidth: 44, minHeight: 44)
+    }
+    .buttonStyle(.bordered)
+    .disabled(!enabled)
+    .accessibilityIdentifier(identifier)
   }
 
   private func goBack() {
