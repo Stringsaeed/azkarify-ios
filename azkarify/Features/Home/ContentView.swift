@@ -33,6 +33,8 @@ struct ContentView: View {
   @State private var preferredColumn: NavigationSplitViewColumn = .sidebar
   @State private var showLocationSetup = false
   @State private var showCounter = false
+  /// The `-showGuide YES` launch argument opens the prayer guide on launch.
+  @State private var isGuidePresented = UserDefaults.standard.bool(forKey: "showGuide")
 
   private var results: [ZikrCategory] {
     guard !search.isEmpty else { return store.categories }
@@ -71,6 +73,8 @@ struct ContentView: View {
             .accessibilityIdentifier("dailyJourneys")
             .padding(.bottom, 12)
 
+            LearnToPrayCard(language: store.language, accent: accent) { isGuidePresented = true }
+              .padding(.bottom, 12)
           }
           Text(
             AppCopy.text("Find the right zikr faster")
@@ -197,6 +201,10 @@ struct ContentView: View {
       CounterView()
         .presentationDragIndicator(.visible)
     }
+    .fullScreenCover(isPresented: $isGuidePresented) {
+      GuideView(onClose: { isGuidePresented = false })
+        .environmentObject(store)
+    }
     .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
   }
 
@@ -243,6 +251,57 @@ struct ContentView: View {
       select(route)
     } label: {
       Label(title, systemImage: systemImage)
+    }
+  }
+}
+
+/// The home entry to the "How to pray" guide, styled like the daily journeys card.
+private struct LearnToPrayCard: View {
+  let language: String
+  let accent: String
+  let action: () -> Void
+
+  var body: some View {
+    Button(action: action) {
+      HStack(spacing: 16) {
+        VStack(alignment: .leading, spacing: 6) {
+          Text(language == "ar" ? "تعلّم كيف تصلي" : "Learn how to pray")
+            .font(AppAppearance.font(size: 24, relativeTo: .title2, bold: true))
+          Text(language == "ar" ? "خطوة بخطوة، بالصور" : "Step by step, with pictures")
+            .font(AppAppearance.font(size: 15))
+            .foregroundStyle(.secondary)
+          Label(language == "ar" ? "ابدأ" : "Start", systemImage: "arrow.forward")
+            .font(AppAppearance.font(size: 15, bold: true))
+            .foregroundStyle(AppAppearance.accent(accent))
+            .padding(.top, 6)
+        }
+        Spacer(minLength: 0)
+        thumbnail
+          .frame(width: 68, height: 92)
+          .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+          .accessibilityHidden(true)
+      }
+      .padding(20)
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .background(AppAppearance.background(accent).opacity(0.9), in: RoundedRectangle(cornerRadius: 24))
+      .overlay(RoundedRectangle(cornerRadius: 24).strokeBorder(AppAppearance.accent(accent).opacity(0.18)))
+      .contentShape(RoundedRectangle(cornerRadius: 24))
+    }
+    .buttonStyle(.plain)
+    .accessibilityIdentifier("learnToPray")
+  }
+
+  @ViewBuilder private var thumbnail: some View {
+    if UIImage(named: GuidePosture.standing.keyframeName) != nil {
+      Image(GuidePosture.standing.keyframeName)
+        .resizable()
+        .scaledToFill()
+    } else {
+      Image(systemName: "figure.stand")
+        .font(.system(size: 40, weight: .regular))
+        .foregroundStyle(AppAppearance.accent(accent))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(AppAppearance.accent(accent).opacity(0.12))
     }
   }
 }
