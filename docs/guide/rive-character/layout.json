@@ -1,0 +1,1890 @@
+{
+  "schemaVersion": 1,
+  "status": "implemented-and-render-checked",
+  "artboard": {
+    "name": "PrayerGuide",
+    "width": 1080,
+    "height": 1920,
+    "background": "transparent"
+  },
+  "coordinates": {
+    "origin": "top-left",
+    "x": "right",
+    "y": "down",
+    "units": "1x artboard units",
+    "pngScale": 2,
+    "fullCanvasImport": "Import at scale 0.5 with top-left at 0,0. Rive image center is 540,960."
+  },
+  "view": {
+    "facing": "left",
+    "near": "left side of boy",
+    "far": "right side of boy"
+  },
+  "room": {
+    "file": "room.jpg",
+    "width": 1232,
+    "height": 2208,
+    "reference": "guide-pose-standing.jpg",
+    "approvedAdjustment": "Floor and mat raised so near foot bottom is y=1560",
+    "displayRect": {
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920
+    }
+  },
+  "standing": {
+    "headTopY": 560,
+    "nearFootBottomY": 1560,
+    "farFootBottomY": 1531,
+    "handOrder": "right/far over left/near"
+  },
+  "trousers": "Included in thigh and shin artwork; no separate trousers images needed.",
+  "parts": [
+    {
+      "name": "foot_far",
+      "file": "parts/foot_far.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 657,
+        "y": 1459
+      },
+      "bounds": {
+        "x": 657,
+        "y": 1459,
+        "width": 131,
+        "height": 72
+      },
+      "pivot": {
+        "x": 755,
+        "y": 1476
+      },
+      "pivotPixels": {
+        "x": 1510,
+        "y": 2952
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 196,
+        "y": 34
+      },
+      "zOrder": 0,
+      "bone": "foot_far",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/foot_far.png",
+      "drawGroup": "foot_far"
+    },
+    {
+      "name": "thigh_far",
+      "file": "parts/thigh_far.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 697,
+        "y": 1063
+      },
+      "bounds": {
+        "x": 697,
+        "y": 1063,
+        "width": 105,
+        "height": 259
+      },
+      "pivot": {
+        "x": 750,
+        "y": 1085
+      },
+      "pivotPixels": {
+        "x": 1500,
+        "y": 2170
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 106,
+        "y": 44
+      },
+      "zOrder": 10,
+      "bone": "thigh_far",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/thigh_far.png",
+      "drawGroup": "thigh_far"
+    },
+    {
+      "name": "shin_far",
+      "file": "parts/shin_far.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 708,
+        "y": 1280
+      },
+      "bounds": {
+        "x": 708,
+        "y": 1280,
+        "width": 90,
+        "height": 210
+      },
+      "pivot": {
+        "x": 755,
+        "y": 1293
+      },
+      "pivotPixels": {
+        "x": 1510,
+        "y": 2586
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 94,
+        "y": 26
+      },
+      "zOrder": 20,
+      "bone": "shin_far",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/shin_far.png",
+      "drawGroup": "shin_far"
+    },
+    {
+      "name": "foot_near",
+      "file": "parts/foot_near.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 725,
+        "y": 1478
+      },
+      "bounds": {
+        "x": 725,
+        "y": 1478,
+        "width": 132,
+        "height": 82
+      },
+      "pivot": {
+        "x": 825,
+        "y": 1497
+      },
+      "pivotPixels": {
+        "x": 1650,
+        "y": 2994
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 200,
+        "y": 38
+      },
+      "zOrder": 30,
+      "bone": "foot_near",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/foot_near.png",
+      "drawGroup": "foot_near"
+    },
+    {
+      "name": "thigh_near",
+      "file": "parts/thigh_near.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 757,
+        "y": 1070
+      },
+      "bounds": {
+        "x": 757,
+        "y": 1070,
+        "width": 119,
+        "height": 240
+      },
+      "pivot": {
+        "x": 814,
+        "y": 1090
+      },
+      "pivotPixels": {
+        "x": 1628,
+        "y": 2180
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 114,
+        "y": 40
+      },
+      "zOrder": 40,
+      "bone": "thigh_near",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/thigh_near.png",
+      "drawGroup": "thigh_near"
+    },
+    {
+      "name": "shin_near",
+      "file": "parts/shin_near.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 767,
+        "y": 1285
+      },
+      "bounds": {
+        "x": 767,
+        "y": 1285,
+        "width": 103,
+        "height": 223
+      },
+      "pivot": {
+        "x": 820,
+        "y": 1305
+      },
+      "pivotPixels": {
+        "x": 1640,
+        "y": 2610
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 106,
+        "y": 40
+      },
+      "zOrder": 50,
+      "bone": "shin_near",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/shin_near.png",
+      "drawGroup": "shin_near"
+    },
+    {
+      "name": "upper_arm_far",
+      "file": "parts/upper_arm_far.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 715,
+        "y": 832
+      },
+      "bounds": {
+        "x": 715,
+        "y": 832,
+        "width": 76,
+        "height": 193
+      },
+      "pivot": {
+        "x": 753,
+        "y": 851
+      },
+      "pivotPixels": {
+        "x": 1506,
+        "y": 1702
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 76,
+        "y": 38
+      },
+      "zOrder": 60,
+      "bone": "upper_arm_far",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/upper_arm_far.png",
+      "drawGroup": "upper_arm_far"
+    },
+    {
+      "name": "neck",
+      "file": "parts/neck.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 749,
+        "y": 765
+      },
+      "bounds": {
+        "x": 749,
+        "y": 765,
+        "width": 73,
+        "height": 83
+      },
+      "pivot": {
+        "x": 785,
+        "y": 816
+      },
+      "pivotPixels": {
+        "x": 1570,
+        "y": 1632
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 72,
+        "y": 102
+      },
+      "zOrder": 70,
+      "bone": "neck",
+      "visibleInStanding": true,
+      "binding": "mesh",
+      "croppedFile": "editor/neck.png",
+      "drawGroup": "neck"
+    },
+    {
+      "name": "skirt_thobe",
+      "file": "parts/skirt_thobe.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 656,
+        "y": 1000
+      },
+      "bounds": {
+        "x": 656,
+        "y": 1000,
+        "width": 245,
+        "height": 308
+      },
+      "pivot": {
+        "x": 792,
+        "y": 1060
+      },
+      "pivotPixels": {
+        "x": 1584,
+        "y": 2120
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 272,
+        "y": 120
+      },
+      "zOrder": 80,
+      "bone": "hips",
+      "visibleInStanding": true,
+      "binding": "mesh",
+      "croppedFile": "editor/skirt_thobe.png",
+      "sourceArtwork": "source/whole_thobe.png",
+      "completeOverlap": "Shared continuous painted garment, 120 artboard units of overlap from y=1000 to 1120",
+      "drawGroup": "skirt_thobe"
+    },
+    {
+      "name": "torso_thobe",
+      "file": "parts/torso_thobe.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 656,
+        "y": 804
+      },
+      "bounds": {
+        "x": 656,
+        "y": 804,
+        "width": 245,
+        "height": 316
+      },
+      "pivot": {
+        "x": 792,
+        "y": 1060
+      },
+      "pivotPixels": {
+        "x": 1584,
+        "y": 2120
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 272,
+        "y": 512
+      },
+      "zOrder": 90,
+      "bone": "chest",
+      "visibleInStanding": true,
+      "binding": "mesh",
+      "croppedFile": "editor/torso_thobe.png",
+      "sourceArtwork": "source/whole_thobe.png",
+      "completeOverlap": "Shared continuous painted garment, 120 artboard units of overlap from y=1000 to 1120",
+      "drawGroup": "torso_thobe"
+    },
+    {
+      "name": "head",
+      "file": "parts/head.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 643,
+        "y": 611
+      },
+      "bounds": {
+        "x": 643,
+        "y": 611,
+        "width": 193,
+        "height": 199
+      },
+      "pivot": {
+        "x": 777,
+        "y": 787
+      },
+      "pivotPixels": {
+        "x": 1554,
+        "y": 1574
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 268,
+        "y": 352
+      },
+      "zOrder": 100,
+      "bone": "head",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/head.png",
+      "drawGroup": "head"
+    },
+    {
+      "name": "hair",
+      "file": "parts/hair.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 623,
+        "y": 605
+      },
+      "bounds": {
+        "x": 623,
+        "y": 605,
+        "width": 221,
+        "height": 164
+      },
+      "pivot": {
+        "x": 777,
+        "y": 787
+      },
+      "pivotPixels": {
+        "x": 1554,
+        "y": 1574
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 308,
+        "y": 364
+      },
+      "zOrder": 101,
+      "bone": "head",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/hair.png",
+      "drawGroup": "hair"
+    },
+    {
+      "name": "ear_near",
+      "file": "parts/ear_near.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 791,
+        "y": 712
+      },
+      "bounds": {
+        "x": 791,
+        "y": 712,
+        "width": 33,
+        "height": 53
+      },
+      "pivot": {
+        "x": 777,
+        "y": 787
+      },
+      "pivotPixels": {
+        "x": 1554,
+        "y": 1574
+      },
+      "pivotInCroppedImagePixels": {
+        "x": -28,
+        "y": 150
+      },
+      "zOrder": 102,
+      "bone": "head",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/ear_near.png",
+      "drawGroup": "ear_near"
+    },
+    {
+      "name": "kufi",
+      "file": "parts/kufi.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 631,
+        "y": 560
+      },
+      "bounds": {
+        "x": 631,
+        "y": 560,
+        "width": 217,
+        "height": 134
+      },
+      "pivot": {
+        "x": 777,
+        "y": 787
+      },
+      "pivotPixels": {
+        "x": 1554,
+        "y": 1574
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 292,
+        "y": 454
+      },
+      "zOrder": 103,
+      "bone": "head",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/kufi.png",
+      "drawGroup": "kufi"
+    },
+    {
+      "name": "forearm_far",
+      "file": "parts/forearm_far.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 670,
+        "y": 967
+      },
+      "bounds": {
+        "x": 670,
+        "y": 967,
+        "width": 126,
+        "height": 75
+      },
+      "pivot": {
+        "x": 765,
+        "y": 995
+      },
+      "pivotPixels": {
+        "x": 1530,
+        "y": 1990
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 190,
+        "y": 56
+      },
+      "zOrder": 150,
+      "bone": "forearm_far",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/forearm_far.png",
+      "drawGroup": "forearm_far"
+    },
+    {
+      "name": "upper_arm_near",
+      "file": "parts/upper_arm_near.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 808,
+        "y": 831
+      },
+      "bounds": {
+        "x": 808,
+        "y": 831,
+        "width": 83,
+        "height": 207
+      },
+      "pivot": {
+        "x": 850,
+        "y": 851
+      },
+      "pivotPixels": {
+        "x": 1700,
+        "y": 1702
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 84,
+        "y": 40
+      },
+      "zOrder": 110,
+      "bone": "upper_arm_near",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/upper_arm_near.png",
+      "sourceArtworkReusedFrom": "upper_arm_far",
+      "drawGroup": "upper_arm_near"
+    },
+    {
+      "name": "hand_near",
+      "file": "parts/hand_near.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 681,
+        "y": 973
+      },
+      "bounds": {
+        "x": 681,
+        "y": 973,
+        "width": 100,
+        "height": 60
+      },
+      "pivot": {
+        "x": 753,
+        "y": 1005
+      },
+      "pivotPixels": {
+        "x": 1506,
+        "y": 2010
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 144,
+        "y": 64
+      },
+      "zOrder": 120,
+      "bone": "hand_near",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/hand_near.png",
+      "drawGroup": "hand_near"
+    },
+    {
+      "name": "forearm_near",
+      "file": "parts/forearm_near.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 744,
+        "y": 974
+      },
+      "bounds": {
+        "x": 744,
+        "y": 974,
+        "width": 142,
+        "height": 79
+      },
+      "pivot": {
+        "x": 850,
+        "y": 1007
+      },
+      "pivotPixels": {
+        "x": 1700,
+        "y": 2014
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 212,
+        "y": 66
+      },
+      "zOrder": 130,
+      "bone": "forearm_near",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/forearm_near.png",
+      "drawGroup": "forearm_near"
+    },
+    {
+      "name": "hand_far",
+      "file": "parts/hand_far.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 666,
+        "y": 957
+      },
+      "bounds": {
+        "x": 666,
+        "y": 957,
+        "width": 99,
+        "height": 59
+      },
+      "pivot": {
+        "x": 690,
+        "y": 988
+      },
+      "pivotPixels": {
+        "x": 1380,
+        "y": 1976
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 48,
+        "y": 62
+      },
+      "zOrder": 140,
+      "bone": "hand_far",
+      "visibleInStanding": true,
+      "binding": "rigid",
+      "croppedFile": "editor/hand_far.png",
+      "drawGroup": "hand_far"
+    },
+    {
+      "name": "hand_near_pointing",
+      "file": "parts/hand_near_pointing.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 675,
+        "y": 974
+      },
+      "bounds": {
+        "x": 675,
+        "y": 974,
+        "width": 106,
+        "height": 59
+      },
+      "pivot": {
+        "x": 753,
+        "y": 1005
+      },
+      "pivotPixels": {
+        "x": 1506,
+        "y": 2010
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 156,
+        "y": 62
+      },
+      "zOrder": 120,
+      "bone": "hand_near",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "croppedFile": "editor/hand_near_pointing.png",
+      "drawGroup": "hand_near"
+    },
+    {
+      "name": "head_salamRight",
+      "file": "parts/head_salamRight.png",
+      "croppedFile": "editor/head_salamRight.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 623,
+        "y": 560
+      },
+      "bounds": {
+        "x": 623,
+        "y": 560,
+        "width": 225,
+        "height": 249
+      },
+      "pivot": {
+        "x": 777,
+        "y": 787
+      },
+      "pivotPixels": {
+        "x": 1554,
+        "y": 1574
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 308,
+        "y": 454
+      },
+      "zOrder": 100,
+      "bone": "head",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "head"
+    },
+    {
+      "name": "head_salamLeft",
+      "file": "parts/head_salamLeft.png",
+      "croppedFile": "editor/head_salamLeft.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 623,
+        "y": 560
+      },
+      "bounds": {
+        "x": 623,
+        "y": 560,
+        "width": 225,
+        "height": 249
+      },
+      "pivot": {
+        "x": 777,
+        "y": 787
+      },
+      "pivotPixels": {
+        "x": 1554,
+        "y": 1574
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 308,
+        "y": 454
+      },
+      "zOrder": 100,
+      "bone": "head",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "head"
+    },
+    {
+      "name": "hand_near_palm",
+      "file": "parts/hand_near_palm.png",
+      "croppedFile": "editor/hand_near_palm.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 722,
+        "y": 899
+      },
+      "bounds": {
+        "x": 722,
+        "y": 899,
+        "width": 65,
+        "height": 117
+      },
+      "pivot": {
+        "x": 753,
+        "y": 1005
+      },
+      "pivotPixels": {
+        "x": 1506,
+        "y": 2010
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 62,
+        "y": 212
+      },
+      "zOrder": 120,
+      "bone": "hand_near",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "hand_near"
+    },
+    {
+      "name": "hand_far_palm",
+      "file": "parts/hand_far_palm.png",
+      "croppedFile": "editor/hand_far_palm.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 659,
+        "y": 882
+      },
+      "bounds": {
+        "x": 659,
+        "y": 882,
+        "width": 65,
+        "height": 117
+      },
+      "pivot": {
+        "x": 690,
+        "y": 988
+      },
+      "pivotPixels": {
+        "x": 1380,
+        "y": 1976
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 62,
+        "y": 212
+      },
+      "zOrder": 140,
+      "bone": "hand_far",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "hand_far"
+    },
+    {
+      "name": "hand_near_cupped",
+      "file": "parts/hand_near_cupped.png",
+      "croppedFile": "editor/hand_near_cupped.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 675,
+        "y": 918
+      },
+      "bounds": {
+        "x": 675,
+        "y": 918,
+        "width": 108,
+        "height": 100
+      },
+      "pivot": {
+        "x": 753,
+        "y": 1005
+      },
+      "pivotPixels": {
+        "x": 1506,
+        "y": 2010
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 156,
+        "y": 174
+      },
+      "zOrder": 120,
+      "bone": "hand_near",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "hand_near"
+    },
+    {
+      "name": "hand_far_cupped",
+      "file": "parts/hand_far_cupped.png",
+      "croppedFile": "editor/hand_far_cupped.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 612,
+        "y": 901
+      },
+      "bounds": {
+        "x": 612,
+        "y": 901,
+        "width": 108,
+        "height": 100
+      },
+      "pivot": {
+        "x": 690,
+        "y": 988
+      },
+      "pivotPixels": {
+        "x": 1380,
+        "y": 1976
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 156,
+        "y": 174
+      },
+      "zOrder": 140,
+      "bone": "hand_far",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "hand_far"
+    },
+    {
+      "name": "foot_near_tucked",
+      "file": "parts/foot_near_tucked.png",
+      "croppedFile": "editor/foot_near_tucked.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 778,
+        "y": 1465
+      },
+      "bounds": {
+        "x": 778,
+        "y": 1465,
+        "width": 83,
+        "height": 130
+      },
+      "pivot": {
+        "x": 825,
+        "y": 1497
+      },
+      "pivotPixels": {
+        "x": 1650,
+        "y": 2994
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 94,
+        "y": 64
+      },
+      "zOrder": 30,
+      "bone": "foot_near",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "foot_near"
+    },
+    {
+      "name": "foot_far_tucked",
+      "file": "parts/foot_far_tucked.png",
+      "croppedFile": "editor/foot_far_tucked.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 708,
+        "y": 1444
+      },
+      "bounds": {
+        "x": 708,
+        "y": 1444,
+        "width": 83,
+        "height": 130
+      },
+      "pivot": {
+        "x": 755,
+        "y": 1476
+      },
+      "pivotPixels": {
+        "x": 1510,
+        "y": 2952
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 94,
+        "y": 64
+      },
+      "zOrder": 0,
+      "bone": "foot_far",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "foot_far"
+    },
+    {
+      "name": "skirt_thobe_folded",
+      "file": "parts/skirt_thobe_folded.png",
+      "croppedFile": "editor/skirt_thobe_folded.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 502,
+        "y": 990
+      },
+      "bounds": {
+        "x": 502,
+        "y": 990,
+        "width": 375,
+        "height": 200
+      },
+      "pivot": {
+        "x": 792,
+        "y": 1060
+      },
+      "pivotPixels": {
+        "x": 1584,
+        "y": 2120
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 580,
+        "y": 140
+      },
+      "zOrder": 80,
+      "bone": "hips",
+      "visibleInStanding": false,
+      "binding": "mesh",
+      "variant": true,
+      "drawGroup": "skirt_thobe"
+    },
+    {
+      "name": "skirt_thobe_crossed",
+      "file": "parts/skirt_thobe_crossed.png",
+      "croppedFile": "editor/skirt_thobe_crossed.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 472,
+        "y": 1000
+      },
+      "bounds": {
+        "x": 472,
+        "y": 1000,
+        "width": 430,
+        "height": 235
+      },
+      "pivot": {
+        "x": 792,
+        "y": 1060
+      },
+      "pivotPixels": {
+        "x": 1584,
+        "y": 2120
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 640,
+        "y": 120
+      },
+      "zOrder": 80,
+      "bone": "hips",
+      "visibleInStanding": false,
+      "binding": "mesh",
+      "variant": true,
+      "drawGroup": "skirt_thobe"
+    },
+    {
+      "name": "hand_near_flat",
+      "file": "parts/hand_near_flat.png",
+      "croppedFile": "editor/hand_near_flat.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 681,
+        "y": 993
+      },
+      "bounds": {
+        "x": 681,
+        "y": 993,
+        "width": 100,
+        "height": 28
+      },
+      "pivot": {
+        "x": 753,
+        "y": 1005
+      },
+      "pivotPixels": {
+        "x": 1506,
+        "y": 2010
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 144,
+        "y": 24
+      },
+      "zOrder": 120,
+      "bone": "hand_near",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "hand_near"
+    },
+    {
+      "name": "hand_far_flat",
+      "file": "parts/hand_far_flat.png",
+      "croppedFile": "editor/hand_far_flat.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 618,
+        "y": 976
+      },
+      "bounds": {
+        "x": 618,
+        "y": 976,
+        "width": 100,
+        "height": 28
+      },
+      "pivot": {
+        "x": 690,
+        "y": 988
+      },
+      "pivotPixels": {
+        "x": 1380,
+        "y": 1976
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 144,
+        "y": 24
+      },
+      "zOrder": 140,
+      "bone": "hand_far",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "hand_far"
+    },
+    {
+      "name": "foot_near_seated",
+      "file": "parts/foot_near_seated.png",
+      "croppedFile": "editor/foot_near_seated.png",
+      "pixelSize": [
+        2160,
+        3840
+      ],
+      "imagePosition": {
+        "x": 0,
+        "y": 0
+      },
+      "imageScale": 0.5,
+      "position": {
+        "x": 800,
+        "y": 1480
+      },
+      "bounds": {
+        "x": 800,
+        "y": 1480,
+        "width": 150,
+        "height": 80
+      },
+      "pivot": {
+        "x": 825,
+        "y": 1497
+      },
+      "pivotPixels": {
+        "x": 1650,
+        "y": 2994
+      },
+      "pivotInCroppedImagePixels": {
+        "x": 50,
+        "y": 34
+      },
+      "zOrder": 30,
+      "bone": "foot_near",
+      "visibleInStanding": false,
+      "binding": "rigid",
+      "variant": true,
+      "drawGroup": "foot_near"
+    }
+  ],
+  "bones": [
+    {
+      "name": "hips",
+      "parent": null,
+      "x": 792,
+      "y": 1060,
+      "angle": -1.5707963267948966,
+      "length": 50,
+      "id": "1:1",
+      "rotationDegrees": -90,
+      "rotationRadians": -1.570796,
+      "localTransform": {
+        "x": 792,
+        "y": 1060,
+        "rotation": -1.5707963267948966
+      }
+    },
+    {
+      "name": "spine",
+      "parent": "hips",
+      "x": 792,
+      "y": 1010,
+      "angle": -1.5707963267948966,
+      "length": 70,
+      "id": "1:2",
+      "rotationDegrees": -90,
+      "rotationRadians": -1.570796,
+      "localTransform": {
+        "x": 50,
+        "y": -3.061616997868383e-15,
+        "rotation": 0
+      }
+    },
+    {
+      "name": "chest",
+      "parent": "spine",
+      "x": 792,
+      "y": 940,
+      "angle": -1.6271704616343134,
+      "length": 124,
+      "id": "1:3",
+      "rotationDegrees": -93.23,
+      "rotationRadians": -1.62717,
+      "localTransform": {
+        "x": 70,
+        "y": -4.2862637970157365e-15,
+        "rotation": -0.05637413483941689
+      }
+    },
+    {
+      "name": "neck",
+      "parent": "chest",
+      "x": 785,
+      "y": 816,
+      "angle": -1.839926097452422,
+      "length": 30,
+      "id": "1:4",
+      "rotationDegrees": -105.42,
+      "rotationRadians": -1.839926,
+      "localTransform": {
+        "x": 124.19742346444944,
+        "y": -0.002189114534560055,
+        "rotation": -0.21275563581810863
+      }
+    },
+    {
+      "name": "head",
+      "parent": "neck",
+      "x": 777,
+      "y": 787,
+      "angle": -1.8325957145940461,
+      "length": 175,
+      "id": "1:5",
+      "rotationDegrees": -105,
+      "rotationRadians": -1.832596,
+      "localTransform": {
+        "x": 30.083217891579057,
+        "y": -0.0011348030017606092,
+        "rotation": 0.00733038285837595
+      }
+    },
+    {
+      "name": "upper_arm_far",
+      "parent": "chest",
+      "x": 753,
+      "y": 851,
+      "angle": 1.4877186543999663,
+      "length": 144.5,
+      "id": "1:6",
+      "rotationDegrees": 85.24,
+      "rotationRadians": 1.487719,
+      "localTransform": {
+        "x": 91.05604144051377,
+        "y": -33.92340367922184,
+        "rotation": 3.1148891160342798
+      }
+    },
+    {
+      "name": "forearm_far",
+      "parent": "upper_arm_far",
+      "x": 765,
+      "y": 995,
+      "angle": -3.0485666044584954,
+      "length": 75.33,
+      "id": "1:7",
+      "rotationDegrees": -174.67,
+      "rotationRadians": -3.048567,
+      "localTransform": {
+        "x": 144.49913465363306,
+        "y": -0.009184291823718382,
+        "rotation": -4.536285258858461
+      }
+    },
+    {
+      "name": "hand_far",
+      "parent": "forearm_far",
+      "x": 690,
+      "y": 988,
+      "angle": 0,
+      "length": 65,
+      "id": "1:8",
+      "rotationDegrees": 0,
+      "rotationRadians": 0,
+      "localTransform": {
+        "x": 75.32595828759385,
+        "y": 0.0028382514609992526,
+        "rotation": 3.0485666044584954
+      }
+    },
+    {
+      "name": "upper_arm_near",
+      "parent": "chest",
+      "x": 850,
+      "y": 851,
+      "angle": 1.5707963267948966,
+      "length": 156,
+      "id": "1:9",
+      "rotationDegrees": 90,
+      "rotationRadians": 1.570796,
+      "localTransform": {
+        "x": 85.59064631164897,
+        "y": 62.9225020477906,
+        "rotation": 3.19796678842921
+      }
+    },
+    {
+      "name": "forearm_near",
+      "parent": "upper_arm_near",
+      "x": 850,
+      "y": 1007,
+      "angle": -3.12099776841626,
+      "length": 97.02,
+      "id": "1:10",
+      "rotationDegrees": -178.82,
+      "rotationRadians": -3.120998,
+      "localTransform": {
+        "x": 156,
+        "y": 9.552245033349356e-15,
+        "rotation": -4.691794095211156
+      }
+    },
+    {
+      "name": "hand_near",
+      "parent": "forearm_near",
+      "x": 753,
+      "y": 1005,
+      "angle": 3.141592653589793,
+      "length": 70,
+      "id": "1:11",
+      "rotationDegrees": 180,
+      "rotationRadians": 3.141593,
+      "localTransform": {
+        "x": 97.02061634491372,
+        "y": 0.0020132216496042687,
+        "rotation": 6.262590422006053
+      }
+    },
+    {
+      "name": "thigh_far",
+      "parent": "hips",
+      "x": 750,
+      "y": 1085,
+      "angle": 1.546710783117375,
+      "length": 208.06,
+      "id": "1:12",
+      "rotationDegrees": 88.62,
+      "rotationRadians": 1.546711,
+      "localTransform": {
+        "x": -25.000000000000004,
+        "y": -42,
+        "rotation": 3.1175071099122715
+      }
+    },
+    {
+      "name": "shin_far",
+      "parent": "thigh_far",
+      "x": 755,
+      "y": 1293,
+      "angle": 1.5707963267948966,
+      "length": 183,
+      "id": "1:13",
+      "rotationDegrees": 90,
+      "rotationRadians": 1.570796,
+      "localTransform": {
+        "x": 208.06008719657228,
+        "y": 0.010758937704946625,
+        "rotation": 0.02408554367752158
+      }
+    },
+    {
+      "name": "foot_far",
+      "parent": "shin_far",
+      "x": 755,
+      "y": 1476,
+      "angle": 3.141592653589793,
+      "length": 90,
+      "id": "1:14",
+      "rotationDegrees": 180,
+      "rotationRadians": 3.141593,
+      "localTransform": {
+        "x": 183,
+        "y": 1.1205518212198282e-14,
+        "rotation": 1.5707963267948966
+      }
+    },
+    {
+      "name": "thigh_near",
+      "parent": "hips",
+      "x": 814,
+      "y": 1090,
+      "angle": 1.5428710587629875,
+      "length": 215.08,
+      "id": "1:15",
+      "rotationDegrees": 88.4,
+      "rotationRadians": 1.542871,
+      "localTransform": {
+        "x": -30,
+        "y": 22.000000000000004,
+        "rotation": 3.113667385557884
+      }
+    },
+    {
+      "name": "shin_near",
+      "parent": "thigh_near",
+      "x": 820,
+      "y": 1305,
+      "angle": 1.5447909209401811,
+      "length": 192.07,
+      "id": "1:16",
+      "rotationDegrees": 88.51,
+      "rotationRadians": 1.544791,
+      "localTransform": {
+        "x": 215.0837045660176,
+        "y": 0.005491635325157063,
+        "rotation": 0.001919862177193643
+      }
+    },
+    {
+      "name": "foot_near",
+      "parent": "shin_near",
+      "x": 825,
+      "y": 1497,
+      "angle": 3.141592653589793,
+      "length": 90,
+      "id": "1:17",
+      "rotationDegrees": 180,
+      "rotationRadians": 3.141593,
+      "localTransform": {
+        "x": 192.06509304389942,
+        "y": -0.005834232202467149,
+        "rotation": 1.596801732649612
+      }
+    }
+  ],
+  "meshes": {
+    "torso_thobe": {
+      "grid": [
+        7,
+        13
+      ],
+      "bones": [
+        "neck",
+        "chest",
+        "spine",
+        "hips"
+      ],
+      "uvBottom": 1,
+      "sharedWaistOverlap": [
+        1000,
+        1120
+      ]
+    },
+    "skirt_thobe": {
+      "grid": [
+        7,
+        13
+      ],
+      "bones": [
+        "spine",
+        "hips",
+        "thigh_near",
+        "shin_near"
+      ],
+      "correctivePose": "prostrating"
+    },
+    "skirt_thobe_folded": {
+      "grid": [
+        7,
+        13
+      ],
+      "bones": [
+        "hips",
+        "thigh_near"
+      ],
+      "correctivePose": "sitting"
+    },
+    "skirt_thobe_crossed": {
+      "grid": [
+        7,
+        13
+      ],
+      "bones": [
+        "hips",
+        "thigh_near"
+      ],
+      "correctivePose": "after"
+    },
+    "neck": {
+      "grid": [
+        7,
+        13
+      ],
+      "bones": [
+        "head",
+        "neck"
+      ]
+    }
+  },
+  "runtimeStatus": "Guide has pose 0..9, ten frame-zero postures, 1200 ms eased Any State transitions and an independent idle layer.",
+  "poseNames": [
+    "standing",
+    "takbir",
+    "bowing",
+    "rising",
+    "prostrating",
+    "sitting",
+    "tashahhud",
+    "salamRight",
+    "salamLeft",
+    "after"
+  ],
+  "variants": {
+    "head": {
+      "id": "5:1",
+      "options": [
+        "base",
+        "head_salamRight",
+        "head_salamLeft"
+      ]
+    },
+    "nearHand": {
+      "id": "5:2",
+      "options": [
+        "hand_near",
+        "hand_near_pointing",
+        "hand_near_palm",
+        "hand_near_cupped",
+        "hand_near_flat"
+      ]
+    },
+    "farHand": {
+      "id": "5:3",
+      "options": [
+        "hand_far",
+        "hand_far_palm",
+        "hand_far_cupped",
+        "hand_far_flat"
+      ]
+    },
+    "nearFoot": {
+      "id": "5:4",
+      "options": [
+        "foot_near",
+        "foot_near_tucked",
+        "foot_near_seated"
+      ]
+    },
+    "farFoot": {
+      "id": "5:5",
+      "options": [
+        "foot_far",
+        "foot_far_tucked"
+      ]
+    },
+    "skirt": {
+      "id": "5:6",
+      "options": [
+        "skirt_thobe",
+        "skirt_thobe_folded",
+        "skirt_thobe_crossed"
+      ]
+    }
+  },
+  "stateMachine": {
+    "name": "Guide",
+    "input": {
+      "name": "pose",
+      "type": "Number",
+      "default": 0
+    },
+    "poses": [
+      "standing",
+      "takbir",
+      "bowing",
+      "rising",
+      "prostrating",
+      "sitting",
+      "tashahhud",
+      "salamRight",
+      "salamLeft",
+      "after"
+    ],
+    "transitionMs": 1200,
+    "ease": [
+      0.42,
+      0,
+      0.58,
+      1
+    ],
+    "idleSeconds": 3
+  },
+  "registration": {
+    "upper_arm": [
+      [
+        0.5,
+        0.1
+      ],
+      [
+        0.5,
+        0.88
+      ]
+    ],
+    "forearm": [
+      [
+        0.84,
+        0.3
+      ],
+      [
+        0.025,
+        0.59
+      ]
+    ],
+    "thigh": [
+      [
+        0.5,
+        0.1
+      ],
+      [
+        0.5,
+        0.9
+      ]
+    ],
+    "shin": [
+      [
+        0.5,
+        0.07
+      ],
+      [
+        0.5,
+        0.95
+      ]
+    ],
+    "meaning": "UV anchors registered to bone origin and tip in the Rive meshes. PNG bounds describe unwarped source artwork."
+  }
+}

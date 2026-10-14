@@ -1,0 +1,16 @@
+{
+  "renderer": "Chromium / WebGL",
+  "samples": 101,
+  "pageErrors": [],
+  "feetPixelsIdentical": true,
+  "maxNearReachExcess": -0.6752463382797487,
+  "maxFarReachExcess": -6.172137408115304,
+  "controls": {
+    "playAdvanced": true,
+    "pauseStable": true,
+    "returnReachedStanding": true,
+    "scrubberAtHalf": true
+  },
+  "scope": "Standing to bowing and back; visual review still required",
+  "mobileNoHorizontalOverflow": true
+}

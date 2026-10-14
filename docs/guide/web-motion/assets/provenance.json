@@ -1,0 +1,8 @@
+{
+  "existingArtwork": "../rive-character/source and editor assets, generated in the earlier rounds",
+  "newArtwork": "sleeve-source.png",
+  "generation": "Built-in image_gen tool, not a separately paid API or contractor",
+  "references": ["../rive-character/source/whole_thobe.png", "../illustrated-pilot/renders/standing.png"],
+  "prompt": "One complete isolated straight long sleeve from rounded shoulder to open cuff; narrow child proportions; match the warm taupe cloth, watercolor paper grain and delicate charcoal pencil edges of the robe and boy references. No hand, skin, torso, text or shadow. Transparent background. Continuous elbow without a seam.",
+  "packaging": "Alpha bounding-box crop and resize with Sharp; original generated sleeve retained. Mesh deformation occurs live in WebGL."
+}

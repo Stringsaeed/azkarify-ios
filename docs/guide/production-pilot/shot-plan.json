@@ -1,0 +1,91 @@
+{
+  "fps": 24,
+  "duration": 8,
+  "kind": "timed-still animatic, not finished character animation",
+  "beats": [
+    {
+      "pose": "standing",
+      "duration": 1.1,
+      "title": "Hold standing",
+      "time": "0.00–1.10 s",
+      "lines": [
+        "Right hand rests over the left.",
+        "Eyes down. Feet planted.",
+        "Keep the original drawing’s proportions."
+      ],
+      "status": "Existing key-pose reference"
+    },
+    {
+      "pose": "rising",
+      "duration": 0.7,
+      "title": "Release the hands",
+      "time": "1.10–1.80 s",
+      "lines": [
+        "Release the fingers first.",
+        "Separate and lower the forearms.",
+        "Keep the torso upright until the hands clear."
+      ],
+      "status": "Endpoint shown · intermediate drawings required"
+    },
+    {
+      "pose": "bowing",
+      "duration": 1.4,
+      "title": "Hinge into the bow",
+      "time": "1.80–3.20 s",
+      "lines": [
+        "Lead from the hips; keep the feet planted.",
+        "Hands travel toward the knees.",
+        "Draw the cloth compression and changing overlaps."
+      ],
+      "status": "Endpoint shown · intermediate drawings required"
+    },
+    {
+      "pose": "bowing",
+      "duration": 1.6,
+      "title": "Hold bowing",
+      "time": "3.20–4.80 s",
+      "lines": [
+        "Back flat and horizontal. Head in line.",
+        "Hands settle onto the knees.",
+        "Correct the back shape in this reference."
+      ],
+      "status": "Key drawing needs flat-back correction"
+    },
+    {
+      "pose": "rising",
+      "duration": 1.4,
+      "title": "Rise with control",
+      "time": "4.80–6.20 s",
+      "lines": [
+        "Release the hands from the knees.",
+        "Bring the torso upright without a body-wide scale.",
+        "Preserve the weight and planted foot contacts."
+      ],
+      "status": "Endpoint shown · intermediate drawings required"
+    },
+    {
+      "pose": "standing",
+      "duration": 0.9,
+      "title": "Replace the hands",
+      "time": "6.20–7.10 s",
+      "lines": [
+        "Place the left hand on the chest.",
+        "Then settle the right hand over it.",
+        "Keep wrist and finger contact readable."
+      ],
+      "status": "Endpoint shown · intermediate drawings required"
+    },
+    {
+      "pose": "standing",
+      "duration": 0.9,
+      "title": "Settle into the hold",
+      "time": "7.10–8.00 s",
+      "lines": [
+        "Return to the opening drawing.",
+        "Allow a small, calm settling movement.",
+        "Review the loop at normal playback speed."
+      ],
+      "status": "Existing key-pose reference"
+    }
+  ]
+}

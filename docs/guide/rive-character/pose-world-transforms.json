@@ -1,0 +1,2842 @@
+[
+  {
+    "name": "standing",
+    "index": 0,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 792,
+        "y": 1060,
+        "angle": -1.570796,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 792,
+        "y": 1010,
+        "angle": -1.570796,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 792,
+        "y": 940,
+        "angle": -1.62717,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 785,
+        "y": 816,
+        "angle": -1.839926,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 777,
+        "y": 787,
+        "angle": -1.832596,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 748,
+        "y": 851,
+        "angle": 1.7919699637366908,
+        "length": 173.21951391226105,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 710,
+        "y": 1020,
+        "angle": -1.6845883339386047,
+        "length": 35.22782990761707,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 706,
+        "y": 985,
+        "angle": 0,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 850,
+        "y": 851,
+        "angle": 1.570796,
+        "length": 156,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 850,
+        "y": 1007,
+        "angle": -3.120998,
+        "length": 97.02,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 753,
+        "y": 1005,
+        "angle": 3.141593,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 750,
+        "y": 1085,
+        "angle": 1.546711,
+        "length": 208.06,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 755,
+        "y": 1293,
+        "angle": 1.570796,
+        "length": 183,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 755,
+        "y": 1476,
+        "angle": 3.141593,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 814,
+        "y": 1090,
+        "angle": 1.542871,
+        "length": 215.08,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 820,
+        "y": 1305,
+        "angle": 1.544791,
+        "length": 192.07,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 825,
+        "y": 1497,
+        "angle": 3.141593,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "base",
+    "nearHand": "hand_near",
+    "farHand": "hand_far",
+    "nearFoot": "foot_near",
+    "farFoot": "foot_far",
+    "skirt": "skirt_thobe"
+  },
+  {
+    "name": "takbir",
+    "index": 1,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 792,
+        "y": 1060,
+        "angle": -1.570796,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 792,
+        "y": 1010,
+        "angle": -1.570796,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 792,
+        "y": 940,
+        "angle": -1.62717,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 785,
+        "y": 816,
+        "angle": -1.839926,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 777,
+        "y": 787,
+        "angle": -1.832596,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 753,
+        "y": 851,
+        "angle": 2.118358562734894,
+        "length": 144.06248644251562,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 678,
+        "y": 974,
+        "angle": -1.6566772778558814,
+        "length": 151.5585695366646,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 665,
+        "y": 823,
+        "angle": 0,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 850,
+        "y": 851,
+        "angle": 1.7267522090347305,
+        "length": 160.9534094078159,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 825,
+        "y": 1010,
+        "angle": -1.740915142210994,
+        "length": 165.38742394752995,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 797,
+        "y": 847,
+        "angle": 3.141592653589793,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 750,
+        "y": 1085,
+        "angle": 1.546711,
+        "length": 208.06,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 755,
+        "y": 1293,
+        "angle": 1.570796,
+        "length": 183,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 755,
+        "y": 1476,
+        "angle": 3.141593,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 814,
+        "y": 1090,
+        "angle": 1.542871,
+        "length": 215.08,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 820,
+        "y": 1305,
+        "angle": 1.544791,
+        "length": 192.07,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 825,
+        "y": 1497,
+        "angle": 3.141593,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "base",
+    "nearHand": "hand_near_palm",
+    "farHand": "hand_far_palm",
+    "nearFoot": "foot_near",
+    "farFoot": "foot_far",
+    "skirt": "skirt_thobe"
+  },
+  {
+    "name": "bowing",
+    "index": 2,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 850,
+        "y": 1060,
+        "angle": -1.570796,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 800,
+        "y": 1060,
+        "angle": -3.141592653589793,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 730,
+        "y": 1060,
+        "angle": -3.141592653589793,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 606,
+        "y": 1060,
+        "angle": -3.141592653589793,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 577,
+        "y": 1060,
+        "angle": -3.141592653589793,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 625,
+        "y": 1070,
+        "angle": 0.83798122500839,
+        "length": 134.5362404707371,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 715,
+        "y": 1170,
+        "angle": 0.8960553845713439,
+        "length": 121.65936051122414,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 791,
+        "y": 1265,
+        "angle": 1.2217304763960306,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 660,
+        "y": 1090,
+        "angle": 0.8110335719191257,
+        "length": 137.9311422413372,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 755,
+        "y": 1190,
+        "angle": 0.8548052123785964,
+        "length": 132.5481044753187,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 842,
+        "y": 1290,
+        "angle": 1.9198621771937625,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 808,
+        "y": 1085,
+        "angle": 1.5804114150945991,
+        "length": 208.00961516237658,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 806,
+        "y": 1293,
+        "angle": 1.532563600359295,
+        "length": 183.13383084509536,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 813,
+        "y": 1476,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 872,
+        "y": 1090,
+        "angle": 1.5800983840700324,
+        "length": 215.00930212434994,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 870,
+        "y": 1305,
+        "angle": 1.503191177562916,
+        "length": 192.43960091415696,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 883,
+        "y": 1497,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "base",
+    "nearHand": "hand_near",
+    "farHand": "hand_far",
+    "nearFoot": "foot_near",
+    "farFoot": "foot_far",
+    "skirt": "skirt_thobe"
+  },
+  {
+    "name": "rising",
+    "index": 3,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 792,
+        "y": 1060,
+        "angle": -1.570796,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 792,
+        "y": 1010,
+        "angle": -1.570796,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 792,
+        "y": 940,
+        "angle": -1.62717,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 785,
+        "y": 816,
+        "angle": -1.839926,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 777,
+        "y": 787,
+        "angle": -1.832596,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 753,
+        "y": 851,
+        "angle": 1.5909278349252993,
+        "length": 149.03019828209315,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 750,
+        "y": 1000,
+        "angle": 2.0701430484750265,
+        "length": 125.29964086141668,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 690,
+        "y": 1110,
+        "angle": 1.5707963267948966,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 850,
+        "y": 851,
+        "angle": 1.5403179628538508,
+        "length": 164.0762018087937,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 855,
+        "y": 1015,
+        "angle": 1.690225252813235,
+        "length": 125.89678312014172,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 840,
+        "y": 1140,
+        "angle": 1.5707963267948966,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 750,
+        "y": 1085,
+        "angle": 1.546711,
+        "length": 208.06,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 755,
+        "y": 1293,
+        "angle": 1.570796,
+        "length": 183,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 755,
+        "y": 1476,
+        "angle": 3.141593,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 814,
+        "y": 1090,
+        "angle": 1.542871,
+        "length": 215.08,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 820,
+        "y": 1305,
+        "angle": 1.544791,
+        "length": 192.07,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 825,
+        "y": 1497,
+        "angle": 3.141593,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "base",
+    "nearHand": "hand_near",
+    "farHand": "hand_far",
+    "nearFoot": "foot_near",
+    "farFoot": "foot_far",
+    "skirt": "skirt_thobe"
+  },
+  {
+    "name": "prostrating",
+    "index": 4,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 825,
+        "y": 1290,
+        "angle": -1.5707963267948966,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 760,
+        "y": 1300,
+        "angle": -2.792526803190927,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 660,
+        "y": 1340,
+        "angle": 2.356194490192345,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 560,
+        "y": 1440,
+        "angle": 2.443460952792061,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 530,
+        "y": 1465,
+        "angle": -3.12413936106985,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 615,
+        "y": 1338,
+        "angle": 1.4625257359344406,
+        "length": 92.54188241007421,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 625,
+        "y": 1430,
+        "angle": 2.1025203940537023,
+        "length": 98.6154146165801,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 575,
+        "y": 1515,
+        "angle": 0,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 660,
+        "y": 1360,
+        "angle": 1.3521273809209546,
+        "length": 92.19544457292888,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 680,
+        "y": 1450,
+        "angle": 2.0596486811226447,
+        "length": 106.47065323364933,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 630,
+        "y": 1544,
+        "angle": 3.141592653589793,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 790,
+        "y": 1300,
+        "angle": 2.108705372088399,
+        "length": 204.9414550548522,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 685,
+        "y": 1476,
+        "angle": -0.21280859740677638,
+        "length": 203.59273071502332,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 884,
+        "y": 1433,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 817,
+        "y": 1307,
+        "angle": 2.0662423590387773,
+        "length": 225.06221362103415,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 710,
+        "y": 1505,
+        "angle": -0.2170393981582582,
+        "length": 199.68475154603067,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 905,
+        "y": 1462,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "base",
+    "nearHand": "hand_near_flat",
+    "farHand": "hand_far_flat",
+    "nearFoot": "foot_near_tucked",
+    "farFoot": "foot_far_tucked",
+    "skirt": "skirt_thobe"
+  },
+  {
+    "name": "sitting",
+    "index": 5,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 825,
+        "y": 1380,
+        "angle": -1.570796,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 825,
+        "y": 1330,
+        "angle": -1.570796,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 825,
+        "y": 1260,
+        "angle": -1.62717,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 818,
+        "y": 1136,
+        "angle": -1.839926,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 810,
+        "y": 1107,
+        "angle": -1.832596,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 786,
+        "y": 1171,
+        "angle": 1.756549463154155,
+        "length": 151.60804727981954,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 758,
+        "y": 1320,
+        "angle": 2.462930162841481,
+        "length": 119.47384651043924,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 665,
+        "y": 1395,
+        "angle": 0,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 883,
+        "y": 1171,
+        "angle": 1.8466022253834191,
+        "length": 165.24527224704494,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 838,
+        "y": 1330,
+        "angle": 2.5213431676069717,
+        "length": 163.44418007380992,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 705,
+        "y": 1425,
+        "angle": 3.141592653589793,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 783,
+        "y": 1405,
+        "angle": 2.7494738952462416,
+        "length": 143.92359083902818,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 650,
+        "y": 1460,
+        "angle": 0.008510432828888926,
+        "length": 235.008510484195,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 885,
+        "y": 1462,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 847,
+        "y": 1410,
+        "angle": 2.802760974802575,
+        "length": 240.68444071023788,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 620,
+        "y": 1490,
+        "angle": 0.03588202835315738,
+        "length": 195.12560057562922,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 815,
+        "y": 1497,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "base",
+    "nearHand": "hand_near_flat",
+    "farHand": "hand_far_flat",
+    "nearFoot": "foot_near_seated",
+    "farFoot": "foot_far_tucked",
+    "skirt": "skirt_thobe_folded"
+  },
+  {
+    "name": "tashahhud",
+    "index": 6,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 825,
+        "y": 1380,
+        "angle": -1.570796,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 825,
+        "y": 1330,
+        "angle": -1.570796,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 825,
+        "y": 1260,
+        "angle": -1.62717,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 818,
+        "y": 1136,
+        "angle": -1.839926,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 810,
+        "y": 1107,
+        "angle": -1.9722223401595462,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 786,
+        "y": 1171,
+        "angle": 1.756549463154155,
+        "length": 151.60804727981954,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 758,
+        "y": 1320,
+        "angle": 2.462930162841481,
+        "length": 119.47384651043924,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 665,
+        "y": 1395,
+        "angle": 0,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 883,
+        "y": 1171,
+        "angle": 1.8466022253834191,
+        "length": 165.24527224704494,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 838,
+        "y": 1330,
+        "angle": 2.5213431676069717,
+        "length": 163.44418007380992,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 705,
+        "y": 1425,
+        "angle": 3.141592653589793,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 783,
+        "y": 1405,
+        "angle": 2.7494738952462416,
+        "length": 143.92359083902818,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 650,
+        "y": 1460,
+        "angle": 0.008510432828888926,
+        "length": 235.008510484195,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 885,
+        "y": 1462,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 847,
+        "y": 1410,
+        "angle": 2.802760974802575,
+        "length": 240.68444071023788,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 620,
+        "y": 1490,
+        "angle": 0.03588202835315738,
+        "length": 195.12560057562922,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 815,
+        "y": 1497,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "base",
+    "nearHand": "hand_near_pointing",
+    "farHand": "hand_far_flat",
+    "nearFoot": "foot_near_seated",
+    "farFoot": "foot_far_tucked",
+    "skirt": "skirt_thobe_folded"
+  },
+  {
+    "name": "salamRight",
+    "index": 7,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 825,
+        "y": 1380,
+        "angle": -1.570796,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 825,
+        "y": 1330,
+        "angle": -1.570796,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 825,
+        "y": 1260,
+        "angle": -1.62717,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 818,
+        "y": 1136,
+        "angle": -1.839926,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 810,
+        "y": 1107,
+        "angle": -1.832596,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 786,
+        "y": 1171,
+        "angle": 1.756549463154155,
+        "length": 151.60804727981954,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 758,
+        "y": 1320,
+        "angle": 2.462930162841481,
+        "length": 119.47384651043924,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 665,
+        "y": 1395,
+        "angle": 0,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 883,
+        "y": 1171,
+        "angle": 1.8466022253834191,
+        "length": 165.24527224704494,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 838,
+        "y": 1330,
+        "angle": 2.5213431676069717,
+        "length": 163.44418007380992,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 705,
+        "y": 1425,
+        "angle": 3.141592653589793,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 783,
+        "y": 1405,
+        "angle": 2.7494738952462416,
+        "length": 143.92359083902818,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 650,
+        "y": 1460,
+        "angle": 0.008510432828888926,
+        "length": 235.008510484195,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 885,
+        "y": 1462,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 847,
+        "y": 1410,
+        "angle": 2.802760974802575,
+        "length": 240.68444071023788,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 620,
+        "y": 1490,
+        "angle": 0.03588202835315738,
+        "length": 195.12560057562922,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 815,
+        "y": 1497,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "head_salamRight",
+    "nearHand": "hand_near_flat",
+    "farHand": "hand_far_flat",
+    "nearFoot": "foot_near_seated",
+    "farFoot": "foot_far_tucked",
+    "skirt": "skirt_thobe_folded"
+  },
+  {
+    "name": "salamLeft",
+    "index": 8,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 825,
+        "y": 1380,
+        "angle": -1.570796,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 825,
+        "y": 1330,
+        "angle": -1.570796,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 825,
+        "y": 1260,
+        "angle": -1.62717,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 818,
+        "y": 1136,
+        "angle": -1.839926,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 810,
+        "y": 1107,
+        "angle": -1.832596,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 786,
+        "y": 1171,
+        "angle": 1.756549463154155,
+        "length": 151.60804727981954,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 758,
+        "y": 1320,
+        "angle": 2.462930162841481,
+        "length": 119.47384651043924,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 665,
+        "y": 1395,
+        "angle": 0,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 883,
+        "y": 1171,
+        "angle": 1.8466022253834191,
+        "length": 165.24527224704494,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 838,
+        "y": 1330,
+        "angle": 2.5213431676069717,
+        "length": 163.44418007380992,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 705,
+        "y": 1425,
+        "angle": 3.141592653589793,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 783,
+        "y": 1405,
+        "angle": 2.7494738952462416,
+        "length": 143.92359083902818,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 650,
+        "y": 1460,
+        "angle": 0.008510432828888926,
+        "length": 235.008510484195,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 885,
+        "y": 1462,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 847,
+        "y": 1410,
+        "angle": 2.802760974802575,
+        "length": 240.68444071023788,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 620,
+        "y": 1490,
+        "angle": 0.03588202835315738,
+        "length": 195.12560057562922,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 815,
+        "y": 1497,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "head_salamLeft",
+    "nearHand": "hand_near_flat",
+    "farHand": "hand_far_flat",
+    "nearFoot": "foot_near_seated",
+    "farFoot": "foot_far_tucked",
+    "skirt": "skirt_thobe_folded"
+  },
+  {
+    "name": "after",
+    "index": 9,
+    "bones": {
+      "hips": {
+        "name": "hips",
+        "parent": null,
+        "x": 800,
+        "y": 1400,
+        "angle": -1.570796,
+        "length": 50,
+        "id": "1:1",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 792,
+          "y": 1060,
+          "rotation": -1.5707963267948966
+        }
+      },
+      "spine": {
+        "name": "spine",
+        "parent": "hips",
+        "x": 800,
+        "y": 1350,
+        "angle": -1.570796,
+        "length": 70,
+        "id": "1:2",
+        "rotationDegrees": -90,
+        "rotationRadians": -1.570796,
+        "localTransform": {
+          "x": 50,
+          "y": -3.061616997868383e-15,
+          "rotation": 0
+        }
+      },
+      "chest": {
+        "name": "chest",
+        "parent": "spine",
+        "x": 800,
+        "y": 1280,
+        "angle": -1.62717,
+        "length": 124,
+        "id": "1:3",
+        "rotationDegrees": -93.23,
+        "rotationRadians": -1.62717,
+        "localTransform": {
+          "x": 70,
+          "y": -4.2862637970157365e-15,
+          "rotation": -0.05637413483941689
+        }
+      },
+      "neck": {
+        "name": "neck",
+        "parent": "chest",
+        "x": 793,
+        "y": 1156,
+        "angle": -1.839926,
+        "length": 30,
+        "id": "1:4",
+        "rotationDegrees": -105.42,
+        "rotationRadians": -1.839926,
+        "localTransform": {
+          "x": 124.19742346444944,
+          "y": -0.002189114534560055,
+          "rotation": -0.21275563581810863
+        }
+      },
+      "head": {
+        "name": "head",
+        "parent": "neck",
+        "x": 785,
+        "y": 1127,
+        "angle": -1.832596,
+        "length": 175,
+        "id": "1:5",
+        "rotationDegrees": -105,
+        "rotationRadians": -1.832596,
+        "localTransform": {
+          "x": 30.083217891579057,
+          "y": -0.0011348030017606092,
+          "rotation": 0.00733038285837595
+        }
+      },
+      "upper_arm_far": {
+        "name": "upper_arm_far",
+        "parent": "chest",
+        "x": 761,
+        "y": 1191,
+        "angle": 1.890125578417293,
+        "length": 130.60245020672468,
+        "id": "1:6",
+        "rotationDegrees": 85.24,
+        "rotationRadians": 1.487719,
+        "localTransform": {
+          "x": 91.05604144051377,
+          "y": -33.92340367922184,
+          "rotation": 3.1148891160342798
+        }
+      },
+      "forearm_far": {
+        "name": "forearm_far",
+        "parent": "upper_arm_far",
+        "x": 720,
+        "y": 1315,
+        "angle": -2.2455372690184494,
+        "length": 108.85311203635844,
+        "id": "1:7",
+        "rotationDegrees": -174.67,
+        "rotationRadians": -3.048567,
+        "localTransform": {
+          "x": 144.49913465363306,
+          "y": -0.009184291823718382,
+          "rotation": -4.536285258858461
+        }
+      },
+      "hand_far": {
+        "name": "hand_far",
+        "parent": "forearm_far",
+        "x": 652,
+        "y": 1230,
+        "angle": 0,
+        "length": 65,
+        "id": "1:8",
+        "rotationDegrees": 0,
+        "rotationRadians": 0,
+        "localTransform": {
+          "x": 75.32595828759385,
+          "y": 0.0028382514609992526,
+          "rotation": 3.0485666044584954
+        }
+      },
+      "upper_arm_near": {
+        "name": "upper_arm_near",
+        "parent": "chest",
+        "x": 858,
+        "y": 1191,
+        "angle": 1.882446214606217,
+        "length": 156.54072952429985,
+        "id": "1:9",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 85.59064631164897,
+          "y": 62.9225020477906,
+          "rotation": 3.19796678842921
+        }
+      },
+      "forearm_near": {
+        "name": "forearm_near",
+        "parent": "upper_arm_near",
+        "x": 810,
+        "y": 1340,
+        "angle": -2.51279636717436,
+        "length": 136.01470508735443,
+        "id": "1:10",
+        "rotationDegrees": -178.82,
+        "rotationRadians": -3.120998,
+        "localTransform": {
+          "x": 156,
+          "y": 9.552245033349356e-15,
+          "rotation": -4.691794095211156
+        }
+      },
+      "hand_near": {
+        "name": "hand_near",
+        "parent": "forearm_near",
+        "x": 700,
+        "y": 1260,
+        "angle": 3.141592653589793,
+        "length": 70,
+        "id": "1:11",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 97.02061634491372,
+          "y": 0.0020132216496042687,
+          "rotation": 6.262590422006053
+        }
+      },
+      "thigh_far": {
+        "name": "thigh_far",
+        "parent": "hips",
+        "x": 758,
+        "y": 1425,
+        "angle": 2.957529637034058,
+        "length": 191.23022773609821,
+        "id": "1:12",
+        "rotationDegrees": 88.62,
+        "rotationRadians": 1.546711,
+        "localTransform": {
+          "x": -25.000000000000004,
+          "y": -42,
+          "rotation": 3.1175071099122715
+        }
+      },
+      "shin_far": {
+        "name": "shin_far",
+        "parent": "thigh_far",
+        "x": 570,
+        "y": 1460,
+        "angle": 0.4124104415973873,
+        "length": 87.3212459828649,
+        "id": "1:13",
+        "rotationDegrees": 90,
+        "rotationRadians": 1.570796,
+        "localTransform": {
+          "x": 208.06008719657228,
+          "y": 0.010758937704946625,
+          "rotation": 0.02408554367752158
+        }
+      },
+      "foot_far": {
+        "name": "foot_far",
+        "parent": "shin_far",
+        "x": 650,
+        "y": 1495,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:14",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 183,
+          "y": 1.1205518212198282e-14,
+          "rotation": 1.5707963267948966
+        }
+      },
+      "thigh_near": {
+        "name": "thigh_near",
+        "parent": "hips",
+        "x": 822,
+        "y": 1430,
+        "angle": 2.805954103262184,
+        "length": 182.16476058777118,
+        "id": "1:15",
+        "rotationDegrees": 88.4,
+        "rotationRadians": 1.542871,
+        "localTransform": {
+          "x": -30,
+          "y": 22.000000000000004,
+          "rotation": 3.113667385557884
+        }
+      },
+      "shin_near": {
+        "name": "shin_near",
+        "parent": "thigh_near",
+        "x": 650,
+        "y": 1490,
+        "angle": 0.05379420352984972,
+        "length": 130.18832512940628,
+        "id": "1:16",
+        "rotationDegrees": 88.51,
+        "rotationRadians": 1.544791,
+        "localTransform": {
+          "x": 215.0837045660176,
+          "y": 0.005491635325157063,
+          "rotation": 0.001919862177193643
+        }
+      },
+      "foot_near": {
+        "name": "foot_near",
+        "parent": "shin_near",
+        "x": 780,
+        "y": 1497,
+        "angle": 3.141592653589793,
+        "length": 90,
+        "id": "1:17",
+        "rotationDegrees": 180,
+        "rotationRadians": 3.141593,
+        "localTransform": {
+          "x": 192.06509304389942,
+          "y": -0.005834232202467149,
+          "rotation": 1.596801732649612
+        }
+      }
+    },
+    "head": "base",
+    "nearHand": "hand_near_cupped",
+    "farHand": "hand_far_cupped",
+    "nearFoot": "foot_near",
+    "farFoot": "foot_far",
+    "skirt": "skirt_thobe_crossed"
+  }
+]

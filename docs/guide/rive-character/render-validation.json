@@ -1,0 +1,249 @@
+{
+  "renderer": "Rive CLI 1.5.1, Metal",
+  "sampleRate": 60,
+  "transitionSampleMs": 600,
+  "checks": [
+    {
+      "case": "standing",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        94303
+      ],
+      "bottom": 1307
+    },
+    {
+      "case": "standing",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        4843,
+        4189
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "takbir",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        94303
+      ],
+      "bottom": 1307
+    },
+    {
+      "case": "takbir",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        4843,
+        4189
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "bowing",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        86887
+      ],
+      "bottom": 1309
+    },
+    {
+      "case": "bowing",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        4843,
+        4189
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "rising",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        94303
+      ],
+      "bottom": 1307
+    },
+    {
+      "case": "rising",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        4843,
+        4189
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "prostrating",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        80235
+      ],
+      "bottom": 1489
+    },
+    {
+      "case": "prostrating",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        9060
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "sitting",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        83817
+      ],
+      "bottom": 1509
+    },
+    {
+      "case": "sitting",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        10514
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "tashahhud",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        83817
+      ],
+      "bottom": 1509
+    },
+    {
+      "case": "tashahhud",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        10514
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "salamRight",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        83817
+      ],
+      "bottom": 1509
+    },
+    {
+      "case": "salamRight",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        10514
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "salamLeft",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        83817
+      ],
+      "bottom": 1509
+    },
+    {
+      "case": "salamLeft",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        10514
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "after",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        95348
+      ],
+      "bottom": 1529
+    },
+    {
+      "case": "after",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        4843,
+        4189
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "standing-to-bowing-600ms",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        82289
+      ],
+      "bottom": 1309
+    },
+    {
+      "case": "standing-to-bowing-600ms",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        4849,
+        4181
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "rising-to-prostrating-600ms",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        73175
+      ],
+      "bottom": 1387
+    },
+    {
+      "case": "rising-to-prostrating-600ms",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        5433,
+        5123
+      ],
+      "bottom": 1559
+    },
+    {
+      "case": "prostrating-to-sitting-600ms",
+      "check": "cloth connected on transparency",
+      "pass": true,
+      "areas": [
+        63358
+      ],
+      "bottom": 1464
+    },
+    {
+      "case": "prostrating-to-sitting-600ms",
+      "check": "lowest foot contact",
+      "pass": true,
+      "areas": [
+        10054
+      ],
+      "bottom": 1559
+    }
+  ],
+  "allPassed": true
+}

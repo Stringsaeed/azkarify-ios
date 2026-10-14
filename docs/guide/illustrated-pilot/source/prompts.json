@@ -1,0 +1,17 @@
+{
+  "method": "existing built-in image_gen tool",
+  "firstPass": [
+    [
+      "standing",
+      "/Users/saeed/projects/azkarify/azkarify/Assets.xcassets/GuidePose-standing.imageset/guide-pose-standing.jpg",
+      "Preserve the exact standing pose, identity, facial features, proportions, clothing folds, linework, and painted colors. Right hand over left on chest, eyes down. Remove only the room, mat, floor, and cast shadow, leaving the entire boy as ONE coherent fully rendered illustration. Do not separate body parts. Do not redesign or repaint the boy. No ground shadow."
+    ],
+    [
+      "bowing",
+      "/var/folders/4k/mlnwxj1d47x28dl1j4f57z900000gn/T/codex-clipboard-a6229be8-51e8-4926-abbb-4a58c57fcd85.jpg",
+      "Keep the exact same boy, painted children's-book style, clothing and colors. Make ONE coherent whole-boy illustration with the boy facing LEFT in a proper 90-degree bow: flat horizontal back, head in line with back, straight legs and both hands resting on knees. Carefully preserve child proportions and the original face identity. This is a complete painted key drawing, not a puppet or parts. Remove room, mat, floor and cast shadow. Keep every part of the full boy within the frame."
+    ]
+  ],
+  "bowingCorrection": "Use standing only as identity reference; whole character in a 90-degree bow, shoulders and hips at the same height, horizontal back, head follows torso, hands on knees, straight legs; preserve the painted children's-book style. Transparent background.",
+  "runtimeDecision": "Whole paintings with sequential fades, no segmented deformation."
+}

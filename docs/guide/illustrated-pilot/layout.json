@@ -1,0 +1,43 @@
+{
+  "status": "two-pose illustrated prototype",
+  "artboard": {
+    "name": "PrayerGuide",
+    "width": 1080,
+    "height": 1920
+  },
+  "input": {
+    "machine": "Guide",
+    "name": "pose",
+    "supportedValues": [
+      0,
+      2
+    ]
+  },
+  "transition": {
+    "outMs": 200,
+    "inMs": 300,
+    "bodyInterpolation": false
+  },
+  "artwork": [
+    {
+      "name": "standing",
+      "width": 279,
+      "height": 1000,
+      "x": 621,
+      "y": 560
+    },
+    {
+      "name": "bowing",
+      "width": 660,
+      "height": 760,
+      "x": 240,
+      "y": 800
+    }
+  ],
+  "notes": [
+    "Whole character drawings; no segmented rig.",
+    "Standing image is a generated extraction of the reference, not pixel-identical source art.",
+    "Bowing is a generated full-character redraw based on the reference.",
+    "No paid artist or separately paid model service used."
+  ]
+}

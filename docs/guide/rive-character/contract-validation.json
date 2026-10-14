@@ -1,0 +1,440 @@
+{
+  "allPassed": true,
+  "checks": [
+    {
+      "name": "Rive inspection",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Artboard",
+      "pass": true,
+      "detail": {
+        "width": 1080,
+        "height": 1920
+      }
+    },
+    {
+      "name": "Exactly Guide",
+      "pass": true,
+      "detail": [
+        "Guide"
+      ]
+    },
+    {
+      "name": "Single pose Number",
+      "pass": true,
+      "detail": [
+        {
+          "type": "StateMachineNumber",
+          "name": "pose",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "name": "Eleven named animations",
+      "pass": true,
+      "detail": [
+        "standing",
+        "takbir",
+        "bowing",
+        "rising",
+        "prostrating",
+        "sitting",
+        "tashahhud",
+        "salamRight",
+        "salamLeft",
+        "after",
+        "idle"
+      ]
+    },
+    {
+      "name": "standing has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "takbir has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "bowing has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "rising has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "prostrating has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "sitting has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "tashahhud has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "salamRight has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "salamLeft has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "after has only frame-zero pose keys",
+      "pass": true,
+      "detail": {
+        "duration": 1,
+        "keyCount": 1250
+      }
+    },
+    {
+      "name": "Three-second breathing loop",
+      "pass": true,
+      "detail": {
+        "fps": 60,
+        "duration": 180,
+        "loop": "loop"
+      }
+    },
+    {
+      "name": "Two independent layers",
+      "pass": true,
+      "detail": [
+        "Poses",
+        "Breathing"
+      ]
+    },
+    {
+      "name": "Ten Any State transitions",
+      "pass": true,
+      "detail": 10
+    },
+    {
+      "name": "pose 0 selects standing",
+      "pass": true,
+      "detail": {
+        "destination": "standing",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "pose 1 selects takbir",
+      "pass": true,
+      "detail": {
+        "destination": "takbir",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "pose 2 selects bowing",
+      "pass": true,
+      "detail": {
+        "destination": "bowing",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "pose 3 selects rising",
+      "pass": true,
+      "detail": {
+        "destination": "rising",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "pose 4 selects prostrating",
+      "pass": true,
+      "detail": {
+        "destination": "prostrating",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "pose 5 selects sitting",
+      "pass": true,
+      "detail": {
+        "destination": "sitting",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "pose 6 selects tashahhud",
+      "pass": true,
+      "detail": {
+        "destination": "tashahhud",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "pose 7 selects salamRight",
+      "pass": true,
+      "detail": {
+        "destination": "salamRight",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "pose 8 selects salamLeft",
+      "pass": true,
+      "detail": {
+        "destination": "salamLeft",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "pose 9 selects after",
+      "pass": true,
+      "detail": {
+        "destination": "after",
+        "duration": 1200,
+        "ease": [
+          0.419999987,
+          0,
+          0.579999983,
+          1
+        ],
+        "earlyExit": true
+      }
+    },
+    {
+      "name": "forearm_far rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hand_far rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hand_far_palm rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hand_far_cupped rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hand_far_flat rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "forearm_near rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hand_near rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hand_near_pointing rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hand_near_palm rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hand_near_cupped rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hand_near_flat rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "kufi rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "ear_near rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "hair rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "head rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "head_salamRight rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "head_salamLeft rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "shin_near rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "foot_near rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "foot_near_tucked rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "foot_near_seated rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "shin_far rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "foot_far rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "foot_far_tucked rigid binding",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "Rive-rendered cloth and feet checks",
+      "pass": true,
+      "detail": {
+        "sampleCount": 26
+      }
+    }
+  ],
+  "unchangedInput": {
+    "mechanism": "Rive excludes a transition whose destination is already the current state.",
+    "source": "https://github.com/rive-app/rive-runtime/blob/main/src/animation/state_machine_instance.cpp",
+    "symbols": [
+      "StateMachineLayerInstance::canChangeState",
+      "StateMachineLayerInstance::changeState"
+    ]
+  }
+}

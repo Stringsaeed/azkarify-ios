@@ -1,0 +1,73 @@
+{
+  "method": "built-in image_gen.imagegen",
+  "common": "Create one COMPLETE isolated 2D cutout animation sprite matching the attached specific boy and his painted children's-book illustration. Delicate brown pencil outlines, warm tan skin, muted sand beige thobe and ivory kufi, subtle watercolor texture. Transparent background, NO surrounding room, NO text, NO shadow outside the silhouette. Include hidden overlap areas. Center the single requested part with generous transparent margins. ",
+  "alternateParts": [
+    [
+      "head_salamRight",
+      "/var/folders/4k/mlnwxj1d47x28dl1j4f57z900000gn/T/codex-clipboard-6075d529-b384-4759-9a6e-60385e4218ef.jpg",
+      "Only the complete HEAD, INCLUDING its dark brown hair, left ear, and off-white ribbed KUFI. Head turned to HIS RIGHT, AWAY from viewer: back of hair and kufi dominate, a sliver of left profile on left edge. Exactly the head orientation and identity in the supplied reference. No neck or body."
+    ],
+    [
+      "head_salamLeft",
+      "/var/folders/4k/mlnwxj1d47x28dl1j4f57z900000gn/T/codex-clipboard-acc57012-ad8d-4dba-833c-ed96cf816e54.jpg",
+      "Only the complete HEAD INCLUDING dark hair, ears, and off-white ribbed KUFI. Head turned to HIS LEFT, TOWARD viewer: friendly three-quarter face as in attached reference, not a full frontal portrait, eyes glancing to viewer-right. Exact reference identity. No neck or body."
+    ],
+    [
+      "hand_near_palm",
+      "/Users/saeed/projects/azkarify/azkarify/Assets.xcassets/GuidePose-standing.imageset/guide-pose-standing.jpg",
+      "One LEFT hand with palm facing viewer, four straight fingers together pointing UP, thumb on image RIGHT, wrist at BOTTOM with a rounded extended tab to fit inside sleeve. For takbir beside ear. No sleeve. Child proportions. Palm creases, no fingernails on palm."
+    ],
+    [
+      "hand_far_palm",
+      "/Users/saeed/projects/azkarify/azkarify/Assets.xcassets/GuidePose-standing.imageset/guide-pose-standing.jpg",
+      "One RIGHT hand with palm facing viewer, four straight fingers together pointing UP, thumb on image LEFT, wrist at BOTTOM with a rounded extended tab to fit inside sleeve. For takbir beside ear. No sleeve. Child proportions. Palm creases, no fingernails on palm."
+    ],
+    [
+      "hand_near_cupped",
+      "/var/folders/4k/mlnwxj1d47x28dl1j4f57z900000gn/T/codex-clipboard-9febff23-6487-4134-85a3-73d26f00d1db.jpg",
+      "Only the near LEFT hand, gently cupped palm UP, fingers together curved upward toward the LEFT, wrist to lower RIGHT with complete rounded overlap tab. As the raised praying hands in reference. No second hand, no sleeve, no arm."
+    ],
+    [
+      "hand_far_cupped",
+      "/var/folders/4k/mlnwxj1d47x28dl1j4f57z900000gn/T/codex-clipboard-9febff23-6487-4134-85a3-73d26f00d1db.jpg",
+      "Only the far RIGHT hand, gently cupped palm UP, fingers together curved upward toward the LEFT, wrist to lower RIGHT with complete rounded overlap tab. As raised praying hands in reference. No second hand, no sleeve, no arm."
+    ],
+    [
+      "foot_near_tucked",
+      "/var/folders/4k/mlnwxj1d47x28dl1j4f57z900000gn/T/codex-clipboard-e7fea484-6b9b-4487-bca4-36d76bb1d349.jpg",
+      "Only the near LEFT foot with toes tucked under against invisible horizontal floor, heel raised on RIGHT, bent toe pads making contact at BOTTOM LEFT, sole nearly vertical, ankle continues UP in complete rounded overlap tab. Match foot posture in reference but toes tuck toward LEFT, consistent with left-facing boy. No pants or floor."
+    ],
+    [
+      "foot_far_tucked",
+      "/var/folders/4k/mlnwxj1d47x28dl1j4f57z900000gn/T/codex-clipboard-e7fea484-6b9b-4487-bca4-36d76bb1d349.jpg",
+      "Only the far RIGHT foot upright with toes tucked toward LEFT under the foot, toes contact invisible floor, heel raised on RIGHT, ankle continues UP with complete rounded overlap tab. For sitting with right foot upright and prostration. No pants or floor."
+    ],
+    [
+      "skirt_thobe_folded",
+      "/var/folders/4k/mlnwxj1d47x28dl1j4f57z900000gn/T/codex-clipboard-c4ba7bf5-7db4-43c8-b87b-31cdaaf2bebf.jpg",
+      "Only the COMPLETE folded lower skirt of beige thobe for left-facing boy sitting on heels: wide diagonal drape from higher hip at UPPER RIGHT to knee at LOWER LEFT, hem drapes over knees to left, fabric bunches at hip right. Reconstruct concealed upper waist behind torso as fully painted cloth. No torso, legs, hands or feet. Wide cloth shape approximately 1.8 times wider than tall. Same #cbbbA5 sand beige."
+    ],
+    [
+      "skirt_thobe_crossed",
+      "/var/folders/4k/mlnwxj1d47x28dl1j4f57z900000gn/T/codex-clipboard-9febff23-6487-4134-85a3-73d26f00d1db.jpg",
+      "Only COMPLETE lower skirt of beige thobe draped over crossed legs: broad soft dome of sand beige cloth, waist at UPPER RIGHT, spread over knees toward LEFT, lower hem with natural overlapping folds and side slit. Full hidden fabric waist and hip filled. No torso, hands, legs or feet. About 1.6 times wider than tall. Same #cbbbA5 muted beige."
+    ]
+  ],
+  "contactParts": [
+    [
+      "hand_near_flat",
+      "One complete LEFT hand with palm DOWN on an invisible horizontal surface, fingers together pointing LEFT, wrist on RIGHT with rounded overlap extension. Very shallow side profile: length about FOUR times thickness. Show back of hand and subtle knuckle lines, not the palm. Fingers lie straight FLAT. For resting on a thigh or mat. No sleeve, no actual surface."
+    ],
+    [
+      "hand_far_flat",
+      "One complete RIGHT hand with palm DOWN on an invisible horizontal surface, fingers together pointing LEFT, wrist on RIGHT with rounded overlap extension. Very shallow side profile: length about FOUR times thickness. Show back of hand and subtle knuckle lines, not the palm. Fingers lie straight FLAT. Far side view. No sleeve, no actual surface."
+    ],
+    [
+      "foot_near_seated",
+      "One complete LEFT barefoot resting flat, toes pointing RIGHT, heel on LEFT, viewed from side. Ankle at LEFT TOP with a complete rounded overlap extension. The foot lies extended behind a kneeling child who sits on this left heel. Warm tan skin, child proportions, length about 2.2 times total height. Toes together. No trouser leg, no surface."
+    ]
+  ],
+  "continuousGarment": "Complete sleeveless thobe from collar to hem, uninterrupted cloth with no waistline. Generated from standing reference, normalized and split with identical y=1000..1120 overlap.",
+  "artworkSource": "source/whole_thobe.png",
+  "neckNote": "The retained neck artwork is now meshed between head and neck; no replacement neck image was used."
+}
