@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "summary": true,
+  "problems": [],
+  "artboards": [
+    {"name": "PrayerGuide", "objects": 32505, "types": {"AnimationState": 11, "AnyState": 2, "Artboard": 1, "ContourMeshVertex": 292, "CubicEaseInterpolator": 14, "EntryState": 2, "ExitState": 2, "IKConstraint": 4, "Image": 33, "KeyFrameDouble": 12446, "KeyFrameId": 60, "KeyedObject": 6071, "KeyedProperty": 12502, "LayoutComponentStyle": 1, "LinearAnimation": 11, "Mesh": 33, "MeshVertex": 275, "Node": 18, "RootBone": 17, "RotationConstraint": 9, "ScaleConstraint": 12, "Skin": 33, "Solo": 6, "StateMachine": 1, "StateMachineLayer": 2, "StateMachineNumber": 1, "StateTransition": 12, "Tendon": 44, "TransitionNumberCondition": 10, "TranslationConstraint": 13, "Weight": 567}}
+  ],
+  "roots": {"objects": 34, "types": {"Backboard": 1, "ImageAsset": 33}}
+}

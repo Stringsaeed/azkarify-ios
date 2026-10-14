@@ -1,0 +1,321 @@
+{
+  "allPassed": true,
+  "assets": [
+    {
+      "part": "foot_far",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "thigh_far",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "shin_far",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "foot_near",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "thigh_near",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "shin_near",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "upper_arm_far",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "neck",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "skirt_thobe",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "torso_thobe",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "head",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hair",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "ear_near",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "kufi",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "forearm_far",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "upper_arm_near",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hand_near",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "forearm_near",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hand_far",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hand_near_pointing",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "head_salamRight",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "head_salamLeft",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hand_near_palm",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hand_far_palm",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hand_near_cupped",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hand_far_cupped",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "foot_near_tucked",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "foot_far_tucked",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "skirt_thobe_folded",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "skirt_thobe_crossed",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hand_near_flat",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "hand_far_flat",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "part": "foot_near_seated",
+      "pass": true,
+      "size": [
+        2160,
+        3840
+      ],
+      "alpha": true
+    },
+    {
+      "name": "identical 120-unit waist overlap",
+      "pass": true
+    },
+    {
+      "name": "room dimensions",
+      "pass": true,
+      "size": [
+        1232,
+        2208
+      ]
+    }
+  ],
+  "contractChecks": 53,
+  "renderChecks": 26,
+  "runtimeBytes": 4641666,
+  "editorBytes": 5001968,
+  "scope": "All ten poses and three requested 600ms transition samples. Not all 90 directed pose pairs or iOS integration.",
+  "artisticAcceptance": "rejected by user after technical checks passed",
+  "productionApproval": false
+}

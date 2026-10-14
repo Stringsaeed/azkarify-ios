@@ -1,0 +1,984 @@
+{
+ "standing": {
+  "root": [
+   808.0,
+   1212.0
+  ],
+  "parts": {
+   "torso": {
+    "r": -1
+   },
+   "neck": {
+    "r": -4
+   },
+   "head": {
+    "r": -15
+   },
+   "near_foot": {
+    "v": "flat"
+   },
+   "far_foot": {
+    "v": "flat"
+   },
+   "near_upper_arm": {
+    "r": -2.927,
+    "sy": 1.0
+   },
+   "near_forearm": {
+    "r": 120.222,
+    "sy": 0.66
+   },
+   "near_hand": {
+    "r": -30.295,
+    "v": "clasp"
+   },
+   "far_upper_arm": {
+    "r": -0.949,
+    "sy": 1.0
+   },
+   "far_forearm": {
+    "r": 123.597,
+    "sy": 0.64
+   },
+   "far_hand": {
+    "r": -35.648,
+    "v": "none"
+   }
+  },
+  "head": {
+   "yaw": -58,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {}
+ },
+ "takbir": {
+  "root": [
+   808.0,
+   1212.0
+  ],
+  "parts": {
+   "torso": {
+    "r": -1
+   },
+   "neck": {
+    "r": -4
+   },
+   "head": {
+    "r": -8
+   },
+   "near_foot": {
+    "v": "flat"
+   },
+   "far_foot": {
+    "v": "flat"
+   },
+   "near_upper_arm": {
+    "r": 80.48,
+    "sy": 0.6
+   },
+   "near_forearm": {
+    "r": 131.763,
+    "sy": 0.9
+   },
+   "near_hand": {
+    "r": -37.581,
+    "v": "open"
+   },
+   "far_upper_arm": {
+    "r": 69.264,
+    "sy": 0.62
+   },
+   "far_forearm": {
+    "r": 128.838,
+    "sy": 0.9
+   },
+   "far_hand": {
+    "r": -18.665,
+    "v": "open"
+   }
+  },
+  "head": {
+   "yaw": -58,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {}
+ },
+ "bowing": {
+  "root": [
+   854.0,
+   1220.0
+  ],
+  "parts": {
+   "torso": {
+    "r": -92
+   },
+   "neck": {
+    "r": -2
+   },
+   "head": {
+    "r": 6
+   },
+   "near_foot": {
+    "v": "flat",
+    "r": 1.487
+   },
+   "far_foot": {
+    "v": "flat",
+    "r": 1.487
+   },
+   "near_thigh": {
+    "r": 13.755,
+    "sy": 1.0
+   },
+   "near_shin": {
+    "r": -15.242,
+    "sy": 1.0
+   },
+   "far_thigh": {
+    "r": 13.755,
+    "sy": 1.0
+   },
+   "far_shin": {
+    "r": -15.242,
+    "sy": 1.0
+   },
+   "near_upper_arm": {
+    "r": 34.855,
+    "sy": 1.0
+   },
+   "near_forearm": {
+    "r": -4.587,
+    "sy": 1.0
+   },
+   "near_hand": {
+    "r": 67.732,
+    "v": "grip"
+   },
+   "far_upper_arm": {
+    "r": 33.058,
+    "sy": 1.0
+   },
+   "far_forearm": {
+    "r": -4.599,
+    "sy": 1.0
+   },
+   "far_hand": {
+    "r": 69.541,
+    "v": "grip"
+   }
+  },
+  "head": {
+   "yaw": -58,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {}
+ },
+ "rising": {
+  "root": [
+   808.0,
+   1212.0
+  ],
+  "parts": {
+   "torso": {
+    "r": -1
+   },
+   "neck": {
+    "r": -4
+   },
+   "head": {
+    "r": -13
+   },
+   "near_foot": {
+    "v": "flat"
+   },
+   "far_foot": {
+    "v": "flat"
+   },
+   "near_upper_arm": {
+    "r": 5
+   },
+   "near_forearm": {
+    "r": 9.0
+   },
+   "near_hand": {
+    "r": 4,
+    "v": "relaxed"
+   },
+   "far_upper_arm": {
+    "r": 7
+   },
+   "far_forearm": {
+    "r": 10.0
+   },
+   "far_hand": {
+    "r": 4,
+    "v": "relaxed"
+   }
+  },
+  "head": {
+   "yaw": -58,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {}
+ },
+ "prostrating": {
+  "root": [
+   661.42,
+   1424.47
+  ],
+  "parts": {
+   "near_thigh": {
+    "r": 10.0
+   },
+   "near_shin": {
+    "r": -110.0
+   },
+   "far_thigh": {
+    "r": 10.0
+   },
+   "far_shin": {
+    "r": -110.0
+   },
+   "near_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "far_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "neck": {
+    "r": 14
+   },
+   "head": {
+    "r": 16
+   },
+   "torso": {
+    "sy": 0.9,
+    "r": -108.632
+   },
+   "near_upper_arm": {
+    "r": -155.312,
+    "sy": 1.0,
+    "z": 55
+   },
+   "near_forearm": {
+    "r": -86.434,
+    "sy": 1.0,
+    "z": 56
+   },
+   "near_hand": {
+    "r": 75.789,
+    "v": "flat",
+    "z": 57
+   },
+   "far_upper_arm": {
+    "r": -149.757,
+    "sy": 1.0
+   },
+   "far_forearm": {
+    "r": -91.3,
+    "sy": 1.0
+   },
+   "far_hand": {
+    "r": 75.062,
+    "v": "flat"
+   }
+  },
+  "head": {
+   "yaw": -62,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {}
+ },
+ "sitting": {
+  "root": [
+   872.97,
+   1565.41
+  ],
+  "parts": {
+   "near_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "near_shin": {
+    "r": -168.0
+   },
+   "far_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "far_shin": {
+    "r": -168.0,
+    "sy": 1.3
+   },
+   "near_foot": {
+    "r": -86.0,
+    "v": "flat"
+   },
+   "far_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "torso": {
+    "r": -5
+   },
+   "neck": {
+    "r": -4
+   },
+   "head": {
+    "r": -15
+   },
+   "near_upper_arm": {
+    "r": 31.47,
+    "sy": 1.0
+   },
+   "near_forearm": {
+    "r": -4.091,
+    "sy": 1.0
+   },
+   "near_hand": {
+    "r": 77.621,
+    "v": "flat"
+   },
+   "far_upper_arm": {
+    "r": 34.731,
+    "sy": 1.0
+   },
+   "far_forearm": {
+    "r": -4.088,
+    "sy": 1.0
+   },
+   "far_hand": {
+    "r": 72.357,
+    "v": "flat"
+   }
+  },
+  "head": {
+   "yaw": -58,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {
+   "2": [
+    24.14,
+    34.86
+   ],
+   "3": [
+    -4.24,
+    18.52
+   ],
+   "4": [
+    22.53,
+    45.53
+   ],
+   "5": [
+    90.67,
+    -18.58
+   ],
+   "6": [
+    71.73,
+    -141.58
+   ],
+   "7": [
+    -24.0,
+    -163.41
+   ],
+   "8": [
+    6.0,
+    -142.0
+   ]
+  }
+ },
+ "tashahhud": {
+  "root": [
+   872.97,
+   1565.41
+  ],
+  "parts": {
+   "near_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "near_shin": {
+    "r": -168.0
+   },
+   "far_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "far_shin": {
+    "r": -168.0,
+    "sy": 1.3
+   },
+   "near_foot": {
+    "r": -86.0,
+    "v": "flat"
+   },
+   "far_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "torso": {
+    "r": -5
+   },
+   "neck": {
+    "r": -4
+   },
+   "head": {
+    "r": -10
+   },
+   "near_upper_arm": {
+    "r": 31.47,
+    "sy": 1.0
+   },
+   "near_forearm": {
+    "r": -4.091,
+    "sy": 1.0
+   },
+   "near_hand": {
+    "r": 77.621,
+    "v": "flat"
+   },
+   "far_upper_arm": {
+    "r": 34.731,
+    "sy": 1.0
+   },
+   "far_forearm": {
+    "r": -4.088,
+    "sy": 1.0
+   },
+   "far_hand": {
+    "r": 54.357,
+    "v": "point"
+   }
+  },
+  "head": {
+   "yaw": -58,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {
+   "2": [
+    24.14,
+    34.86
+   ],
+   "3": [
+    -4.24,
+    18.52
+   ],
+   "4": [
+    22.53,
+    45.53
+   ],
+   "5": [
+    90.67,
+    -18.58
+   ],
+   "6": [
+    71.73,
+    -141.58
+   ],
+   "7": [
+    -24.0,
+    -163.41
+   ],
+   "8": [
+    6.0,
+    -142.0
+   ]
+  }
+ },
+ "salamRight": {
+  "root": [
+   872.97,
+   1565.41
+  ],
+  "parts": {
+   "near_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "near_shin": {
+    "r": -168.0
+   },
+   "far_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "far_shin": {
+    "r": -168.0,
+    "sy": 1.3
+   },
+   "near_foot": {
+    "r": -86.0,
+    "v": "flat"
+   },
+   "far_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "torso": {
+    "r": -5
+   },
+   "neck": {
+    "r": -4
+   },
+   "head": {
+    "r": -2
+   },
+   "near_upper_arm": {
+    "r": 31.47,
+    "sy": 1.0
+   },
+   "near_forearm": {
+    "r": -4.091,
+    "sy": 1.0
+   },
+   "near_hand": {
+    "r": 77.621,
+    "v": "flat"
+   },
+   "far_upper_arm": {
+    "r": 34.731,
+    "sy": 1.0
+   },
+   "far_forearm": {
+    "r": -4.088,
+    "sy": 1.0
+   },
+   "far_hand": {
+    "r": 72.357,
+    "v": "flat"
+   }
+  },
+  "head": {
+   "yaw": -150,
+   "eyes": 0.6,
+   "smile": 0.6
+  },
+  "skirt": {
+   "2": [
+    24.14,
+    34.86
+   ],
+   "3": [
+    -4.24,
+    18.52
+   ],
+   "4": [
+    22.53,
+    45.53
+   ],
+   "5": [
+    90.67,
+    -18.58
+   ],
+   "6": [
+    71.73,
+    -141.58
+   ],
+   "7": [
+    -24.0,
+    -163.41
+   ],
+   "8": [
+    6.0,
+    -142.0
+   ]
+  }
+ },
+ "salamLeft": {
+  "root": [
+   872.97,
+   1565.41
+  ],
+  "parts": {
+   "near_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "near_shin": {
+    "r": -168.0
+   },
+   "far_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "far_shin": {
+    "r": -168.0,
+    "sy": 1.3
+   },
+   "near_foot": {
+    "r": -86.0,
+    "v": "flat"
+   },
+   "far_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "torso": {
+    "r": -5
+   },
+   "neck": {
+    "r": -4
+   },
+   "head": {
+    "r": -2
+   },
+   "near_upper_arm": {
+    "r": 31.47,
+    "sy": 1.0
+   },
+   "near_forearm": {
+    "r": -4.091,
+    "sy": 1.0
+   },
+   "near_hand": {
+    "r": 77.621,
+    "v": "flat"
+   },
+   "far_upper_arm": {
+    "r": 34.731,
+    "sy": 1.0
+   },
+   "far_forearm": {
+    "r": -4.088,
+    "sy": 1.0
+   },
+   "far_hand": {
+    "r": 72.357,
+    "v": "flat"
+   }
+  },
+  "head": {
+   "yaw": -16,
+   "eyes": 1.0,
+   "smile": 1.0
+  },
+  "skirt": {
+   "2": [
+    24.14,
+    34.86
+   ],
+   "3": [
+    -4.24,
+    18.52
+   ],
+   "4": [
+    22.53,
+    45.53
+   ],
+   "5": [
+    90.67,
+    -18.58
+   ],
+   "6": [
+    71.73,
+    -141.58
+   ],
+   "7": [
+    -24.0,
+    -163.41
+   ],
+   "8": [
+    6.0,
+    -142.0
+   ]
+  }
+ },
+ "after": {
+  "root": [
+   872.97,
+   1565.41
+  ],
+  "parts": {
+   "near_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "near_shin": {
+    "r": -168.0
+   },
+   "far_thigh": {
+    "r": 74.0,
+    "sy": 1.22
+   },
+   "far_shin": {
+    "r": -168.0,
+    "sy": 1.3
+   },
+   "near_foot": {
+    "r": -86.0,
+    "v": "flat"
+   },
+   "far_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "torso": {
+    "r": -5
+   },
+   "neck": {
+    "r": -4
+   },
+   "head": {
+    "r": -10
+   },
+   "near_upper_arm": {
+    "r": 43.859,
+    "sy": 1.0
+   },
+   "near_forearm": {
+    "r": 82.028,
+    "sy": 1.0
+   },
+   "near_hand": {
+    "r": 29.113,
+    "v": "cup"
+   },
+   "far_upper_arm": {
+    "r": 40.781,
+    "sy": 1.0
+   },
+   "far_forearm": {
+    "r": 82.949,
+    "sy": 1.0
+   },
+   "far_hand": {
+    "r": 31.269,
+    "v": "cup"
+   }
+  },
+  "head": {
+   "yaw": -60,
+   "eyes": 0.0,
+   "smile": 0.9
+  },
+  "skirt": {
+   "2": [
+    24.14,
+    34.86
+   ],
+   "3": [
+    -4.24,
+    18.52
+   ],
+   "4": [
+    22.53,
+    45.53
+   ],
+   "5": [
+    90.67,
+    -18.58
+   ],
+   "6": [
+    71.73,
+    -141.58
+   ],
+   "7": [
+    -24.0,
+    -163.41
+   ],
+   "8": [
+    6.0,
+    -142.0
+   ]
+  }
+ },
+ "kneelDown": {
+  "root": [
+   646.55,
+   1421.96
+  ],
+  "parts": {
+   "near_thigh": {
+    "r": 6.0
+   },
+   "near_shin": {
+    "r": -106.0
+   },
+   "far_thigh": {
+    "r": 6.0
+   },
+   "far_shin": {
+    "r": -106.0
+   },
+   "near_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "far_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "torso": {
+    "r": -34
+   },
+   "neck": {
+    "r": -2
+   },
+   "head": {
+    "r": -14
+   },
+   "near_upper_arm": {
+    "r": 46
+   },
+   "near_forearm": {
+    "r": 34
+   },
+   "near_hand": {
+    "r": 30,
+    "v": "relaxed"
+   },
+   "far_upper_arm": {
+    "r": 50
+   },
+   "far_forearm": {
+    "r": 34
+   },
+   "far_hand": {
+    "r": 30,
+    "v": "relaxed"
+   }
+  },
+  "head": {
+   "yaw": -58,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {},
+  "breakdown": true
+ },
+ "kneelUp": {
+  "root": [
+   624.0,
+   1411.32
+  ],
+  "parts": {
+   "near_thigh": {
+    "r": 0.0
+   },
+   "near_shin": {
+    "r": -98.0
+   },
+   "far_thigh": {
+    "r": 0.0
+   },
+   "far_shin": {
+    "r": -98.0
+   },
+   "near_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "far_foot": {
+    "r": 4.0,
+    "v": "tuck"
+   },
+   "torso": {
+    "r": -8
+   },
+   "neck": {
+    "r": -4
+   },
+   "head": {
+    "r": -14
+   },
+   "near_upper_arm": {
+    "r": 14
+   },
+   "near_forearm": {
+    "r": 40
+   },
+   "near_hand": {
+    "r": 30
+   },
+   "far_upper_arm": {
+    "r": 17
+   },
+   "far_forearm": {
+    "r": 40
+   },
+   "far_hand": {
+    "r": 30
+   }
+  },
+  "head": {
+   "yaw": -58,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {},
+  "breakdown": true
+ },
+ "squat": {
+  "root": [
+   871.88,
+   1348.16
+  ],
+  "parts": {
+   "near_thigh": {
+    "r": 62.0
+   },
+   "far_thigh": {
+    "r": 62.0
+   },
+   "near_shin": {
+    "r": -92.0
+   },
+   "far_shin": {
+    "r": -92.0
+   },
+   "near_foot": {
+    "r": 16.0,
+    "v": "flat"
+   },
+   "far_foot": {
+    "r": 16.0,
+    "v": "flat"
+   },
+   "torso": {
+    "r": -42
+   },
+   "neck": {
+    "r": -2
+   },
+   "head": {
+    "r": -10
+   },
+   "near_upper_arm": {
+    "r": 40
+   },
+   "near_forearm": {
+    "r": 26
+   },
+   "near_hand": {
+    "r": 24,
+    "v": "relaxed"
+   },
+   "far_upper_arm": {
+    "r": 44
+   },
+   "far_forearm": {
+    "r": 26
+   },
+   "far_hand": {
+    "r": 24,
+    "v": "relaxed"
+   }
+  },
+  "head": {
+   "yaw": -58,
+   "eyes": 0.0,
+   "smile": 0.6
+  },
+  "skirt": {},
+  "breakdown": true
+ }
+}

@@ -1,0 +1,125 @@
+{
+  "method": "built-in image_gen.imagegen",
+  "reference": "/Users/saeed/projects/azkarify/azkarify/Assets.xcassets/GuidePose-standing.imageset/guide-pose-standing.jpg",
+  "common": "Use case: illustration-story. Reconstruct one COMPLETE cutout rig part from the attached boy reference. Match this specific boy's painted children's book art, delicate dark-brown pencil contour, muted beige thobe, warm peach-tan skin, dark brown hair, off-white cap. Same LEFT-facing view seen from his left. Truly transparent background. Only the requested isolated part, centered large with margin, no labels, no other parts, no shadow outside shape. Reconstruct hidden regions for rotation, no cut-out holes where other parts overlap. Preserve subtle watercolor paper texture INSIDE the part. ",
+  "body": [
+    [
+      "torso_thobe",
+      "ONLY the sleeveless upper torso section of the beige thobe, from complete rounded shoulders and small mandarin collar to hips, with the placket and small chest pocket. No arms, no skin, no head, no skirt. Boy faces left so placket lies toward left front and back silhouette on right. Full solid fabric behind where both arms normally cover it. Straight lower fabric edge without a dark hem line, for overlap with skirt. Beige base approximately #cbbbA5, soft shadows #ad9780."
+    ],
+    [
+      "skirt_thobe",
+      "ONLY lower skirt section of beige thobe from waist/hips down to below knees, complete single filled cloth shape with gently flared sides and bottom hem, small side slit on right. NO torso, legs or skin. Upper edge full and continuous with 15 percent extra fabric for hidden overlap, no dark outline along top edge. Vertical cloth folds as original. Beige base approximately #cbbbA5, soft shadows #ad9780. About as wide as tall."
+    ],
+    [
+      "upper_arm_near",
+      "ONLY near upper arm's beige thobe sleeve from shoulder to elbow, straight down vertical, complete rounded shoulder cap and rounded elbow overlap end. NO forearm, hand, torso, cuff or skin. Left arm facing viewer. Sleeve long capsule, length about 2.1 times width, soft natural lengthwise folds. Same beige #cbbbA5."
+    ],
+    [
+      "upper_arm_far",
+      "ONLY far upper arm's beige thobe sleeve from shoulder to elbow, straight down vertical, complete rounded shoulder cap and rounded elbow overlap end. NO forearm, hand, torso, cuff or skin. Right arm on far side of left-facing boy. Sleeve long capsule length about 2.1 times width, soft natural lengthwise folds. Same beige slightly shadowed #bead96."
+    ],
+    [
+      "forearm_near",
+      "ONLY near forearm beige sleeve, straight horizontally from fully rounded elbow on RIGHT to narrow open cuff on LEFT. Complete overlap elbow end, no skin, no hand, no upper arm, no torso. Width about 2.0 times height. Slight bend along lower contour, natural fabric folds near elbow. Same beige #cbbbA5."
+    ],
+    [
+      "forearm_far",
+      "ONLY far forearm beige sleeve, straight horizontally from fully rounded elbow on RIGHT to narrow open cuff on LEFT. Complete overlap elbow end, no skin, no hand, no upper arm, no torso. Width about 2.0 times height. Slight bend along lower contour, natural fabric folds near elbow. Same beige slightly shadowed #bead96."
+    ]
+  ],
+  "limbs": [
+    [
+      "hand_near",
+      "One LEFT hand animation sprite, open relaxed palm with all four fingers together extended horizontally LEFT, thumb above. Wrist on RIGHT with long rounded overlap tab to hide inside sleeve. Seen from back/side of hand for the viewer-facing left arm of the reference character. Warm tan #dfa978 watercolor with delicate brown pencil lines. No sleeve."
+    ],
+    [
+      "hand_far",
+      "One RIGHT hand animation sprite, open relaxed hand, four fingers together extended horizontally RIGHT, thumb above. Wrist on LEFT with long rounded overlap tab to hide inside sleeve. Back of right hand visible as it rests over the left wrist on chest. Warm tan #dfa978 watercolor with delicate brown pencil lines. No sleeve."
+    ],
+    [
+      "hand_near_pointing",
+      "One LEFT hand animation sprite, fist with INDEX FINGER ONLY extended straight LEFT, other fingers curled together, thumb resting over curled fingers. Wrist on RIGHT with long rounded overlap tab. Same scale proportions as normal hand, view from left side. Warm tan #dfa978 watercolor with delicate brown pencil lines. No sleeve."
+    ],
+    [
+      "thigh_near",
+      "One upper trouser leg CLOTH sprite from hip to knee, IVORY cotton, fully filled rounded top and rounded lower overlap end. Straight VERTICAL, no waist band, no bare skin, no foot. Child's loose ivory trousers as in reference, near left leg. Length twice width. Entire hidden top section painted."
+    ],
+    [
+      "thigh_far",
+      "One upper trouser leg CLOTH sprite from hip to knee, IVORY cotton, fully filled rounded top and rounded lower overlap end. Straight VERTICAL, no waist band, no bare skin, no foot. Child's loose ivory trousers as in reference, far right leg slightly shaded. Length twice width. Entire hidden top section painted."
+    ],
+    [
+      "shin_near",
+      "One lower trouser leg CLOTH sprite from knee to ankle, IVORY cotton, rounded closed hidden knee end at top and curved horizontal trouser hem at bottom. Straight VERTICAL. No upper leg, no bare skin, no feet. Loose ivory trousers as in reference, near left leg. Length 2.5 times width."
+    ],
+    [
+      "shin_far",
+      "One lower trouser leg CLOTH sprite from knee to ankle, IVORY cotton, rounded closed hidden knee end at top and curved horizontal trouser hem at bottom. Straight VERTICAL. No upper leg, no bare skin, no feet. Loose ivory trousers as in reference, far right leg slightly shaded. Length 2.5 times width."
+    ],
+    [
+      "foot_near",
+      "One barefoot LEFT FOOT sprite, child's foot in profile pointing LEFT, viewed from left side, toes together resting on flat invisible ground, short vertical ankle on RIGHT fully continued up into rounded overlap tab for trousers. Warm tan skin as reference. All foot drawn complete. No trousers, no floor, no cast shadow."
+    ],
+    [
+      "foot_far",
+      "One barefoot RIGHT FOOT sprite, child's foot pointing LEFT in far-side profile, toes together resting on flat invisible ground, short vertical ankle on RIGHT fully continued up into rounded overlap tab for trousers. Warm tan skin as reference slightly shaded. All foot drawn complete. No trousers, no floor, no cast shadow."
+    ]
+  ],
+  "edits": [
+    [
+      "torso_thobe",
+      "/Users/saeed/.codex/generated_images/01a13911-a264-7f40-be7d-f9239b6d72b2/exec-7ac1acfd-79fa-4039-a314-48a91418e447.png",
+      "Remove the entire soft halo outside this cloth sprite, all pixels outside crisp pencil silhouette must be fully transparent. Remove the drawn oval armhole outline and paint it as uninterrupted beige cloth. Keep collar, placket, pocket and fabric unchanged. Complete cloth torso only."
+    ],
+    [
+      "hand_near",
+      "/Users/saeed/.codex/generated_images/01a13911-a264-7f40-be7d-f9239b6d72b2/exec-8533784e-fc2e-4465-8661-395822f248f4.png",
+      "Remove ONLY all soft glow or halo outside the hand. Transparent alpha zero everywhere outside the pencil outline. Keep the hand shape, lines and texture unchanged. No background."
+    ],
+    [
+      "hand_far",
+      "/Users/saeed/.codex/generated_images/01a13911-a264-7f40-be7d-f9239b6d72b2/exec-adfe6fbd-3165-4446-9953-075db654565d.png",
+      "Remove ONLY all soft glow or halo outside the hand. Transparent alpha zero everywhere outside the pencil outline. Keep the hand shape, lines and texture unchanged. No background."
+    ],
+    [
+      "upper_arm_near",
+      "/Users/saeed/.codex/generated_images/01a13911-a264-7f40-be7d-f9239b6d72b2/exec-1198177b-dca6-4294-988a-961d279b89c9.png",
+      "Make a matching near-side CLOTH sleeve sprite from this far-side sleeve sprite. Same complete rounded top and bottom, same vertical orientation, proportions and watercolor pencil style. Very slightly lighten the right-side shadow, preserve beige cloth. Transparent background with sharp silhouette, no halo. Only a fabric garment part."
+    ]
+  ],
+  "finishing": [
+    [
+      "roomResult",
+      "/Users/saeed/.codex/generated_images/01a13911-a264-7f40-be7d-f9239b6d72b2/exec-857ed36f-3c5b-475d-976b-8d42f6a17064.png",
+      false,
+      "Edit this empty room only. Keep image size, niche, wall, light and painting style. Move the ENTIRE wooden floor and mat upward by 140 pixels of this 937x1679 image. Wall floor join must be y=1140. TOP mat edge must be y=1200, bottom mat edge y=1530. Extend wood seamlessly to bottom. The mat should be the original large prayer mat, extending off the LEFT edge of image, its top edge from x=0,y=1200 to x=810,y=1200, bottom edge x=0,y=1530 to x=890,y=1530. No people or shadows. Crucial: enough mat ABOVE y=1350 for feet to stand well inside it."
+    ],
+    [
+      "torso_thobe",
+      "/Users/saeed/projects/azkarify/azkarify/Assets.xcassets/GuidePose-standing.imageset/guide-pose-standing.jpg",
+      true,
+      "Create ONLY a complete separate upper-torso beige thobe CLOTH sprite for the attached boy. Chest to hips only, no sleeves, no head, no skin, no lower skirt. Match child's shoulder/collar/placket/pocket and watercolor-pencil style exactly. Fully paint the shoulder regions hidden by arms. Ratio width 0.8 to height 1.0. Bottom edge is an INVISIBLE join to another cloth piece: no pencil line, no hem, no seam, fade the last 15 percent of beige cloth smoothly into transparent alpha at bottom while keeping the central upper 85 percent opaque. No armhole lines. Transparent background. Beige cloth #cbbbA5."
+    ],
+    [
+      "skirt_thobe",
+      "/Users/saeed/.codex/generated_images/01a13911-a264-7f40-be7d-f9239b6d72b2/exec-6b5bbd9f-4690-446b-8758-727748a2c1d8.png",
+      true,
+      "Edit this complete beige thobe skirt sprite. Keep lower hem, slit, colors and art. Widen only its upper waist section so TOP WIDTH is 90 PERCENT of bottom width; nearly straight side seams with only slight flare. Upper edge no dark pencil line, full complete solid cloth region for overlap behind upper torso. Transparent background."
+    ],
+    [
+      "ear_near",
+      "/Users/saeed/projects/azkarify/azkarify/Assets.xcassets/GuidePose-standing.imageset/guide-pose-standing.jpg",
+      true,
+      "Create ONLY one complete left EAR sprite for the illustrated boy, matching precisely his visible left ear in reference. Warm tan small oval ear in three-quarter left-facing view, inner ear dark pencil curl, subtle watercolor skin. No head, no hair, no earrings. Transparent background, no shadow outside. This is a supplementary overlay to sit above the hair; complete ear shape including hidden root."
+    ]
+  ],
+  "finalTorsoEdit": "Preserve the exact three-quarter side view, tilted collar, placket, pocket, colors and texture. Remove bottom pencil contour and fade bottommost 12 percent into transparency for skirt overlap.",
+  "heads": {
+    "kufi": "Complete off-white ribbed domed cap only, tilted left-facing reference shape, no hair or face.",
+    "hair": "Complete dark-brown hair, including crown concealed under cap, fringe, sideburn and nape.",
+    "head": "Complete head with bare scalp beneath hair, downcast eyes, gentle smile and visible left ear. Preserve left-facing reference identity. No hair, cap or neck.",
+    "neck": "Complete short tan neck with hidden upper and lower overlap ends."
+  },
+  "selectionNotes": "The upper_arm_near generation repeatedly failed at the image service. The complete upper_arm_far artwork is intentionally reused for upper_arm_near."
+}
