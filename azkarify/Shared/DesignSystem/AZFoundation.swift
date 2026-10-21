@@ -212,7 +212,16 @@ enum AZAppearance {
     segmented.backgroundColor = UIColor(AZColor.paperSunk)
     segmented.selectedSegmentTintColor = UIColor(AZColor.paperRaised)
 
-    UITabBarItem.appearance().setTitleTextAttributes(
-      [.font: AZFont.uiFont(.footnote).withSize(10)], for: .normal)
+    // The Liquid Glass tab bar reads its titles from UITabBarAppearance, not UITabBarItem.appearance().
+    // Only the item titles change, so the bar keeps its system glass, layout and selection colours.
+    let tabFont = AZFont.uiFont(.footnote).withSize(10)
+    let tabs = UITabBarAppearance()
+    for layout in [tabs.stackedLayoutAppearance, tabs.inlineLayoutAppearance, tabs.compactInlineLayoutAppearance] {
+      for state in [layout.normal, layout.selected, layout.focused, layout.disabled] {
+        state.titleTextAttributes[.font] = tabFont
+      }
+    }
+    UITabBar.appearance().standardAppearance = tabs
+    UITabBar.appearance().scrollEdgeAppearance = tabs
   }
 }
