@@ -1,62 +1,110 @@
 import SwiftUI
 import UIKit
 
+/// The reader: one category's azkar as calm cards, with a progress line and focus mode.
 struct ZikrListView: View {
-  @AppStorage("accent") private var accent = "brown"
   @EnvironmentObject private var store: AzkarStore
   @EnvironmentObject private var progress: JourneyProgressStore
+  @AppStorage(ReaderSettings.scaleKey) private var scale = 1.0
+  @AppStorage(ReaderSettings.transliterationKey) private var showsTransliteration = false
   let category: ZikrCategory
   @State private var entries: [ZikrEntry] = []
   @State private var isLoading = false
   @State private var errorMessage: String?
-  @State private var showSlideshow = false
-  @State private var completionOrigin: CGPoint?
-  @Environment(\.celebrate) private var celebrate
+  @State private var showFocusMode = false
+  @State private var didFinishFocus = false
+  @State private var visibleID: Int?
+  @State private var counterEntry: ZikrEntry?
+  @State private var completion: CompletionSummary?
+
+  private var visibleIndex: Int {
+    entries.firstIndex { $0.id == visibleID } ?? 0
+  }
 
   var body: some View {
     ScrollView {
-      LazyVStack(spacing: 12) {
+      LazyVStack(spacing: AZSpace.md) {
         if isLoading && entries.isEmpty { ProgressView().padding() }
         if let errorMessage, entries.isEmpty {
-          ContentUnavailableView(
-            AppCopy.text("Could not load azkar"),
-            systemImage: "doc.text", description: Text(errorMessage))
-          Button(AppCopy.text("Retry")) {
-            Task { await load() }
+          AZEmptyState(title: AZLocale.text("Could not load azkar", "تعذر تحميل الأذكار"), message: errorMessage) {
+            AZOrnament(shape: .crescent, size: 56, color: AZColor.clay)
+          } actions: {
+            Button(AZLocale.text("Retry", "إعادة المحاولة")) { Task { await load() } }
+              .buttonStyle(.azSecondary)
           }
         }
         ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
-          ZikrCard(entry: entry)
-            .modifier(StaggeredEntrance(index: index))
+          ZikrCard(
+            entry: entry, index: index, total: entries.count, scale: scale,
+            showsTransliteration: showsTransliteration
+          ) { counterEntry = entry }
+          .id(entry.id)
         }
       }
-      .padding(16)
+      .scrollTargetLayout()
+      .padding(.horizontal, AZSpace.gutter)
+      .padding(.top, AZSpace.xs)
+      .padding(.bottom, AZSpace.xxl)
+      .frame(maxWidth: 640)
+      .frame(maxWidth: .infinity)
     }
-    .background(AppAppearance.background(accent))
-    .appNavigationTitle(category.title, language: store.language)
+    .scrollPosition(id: $visibleID, anchor: .top)
+    .safeAreaInset(edge: .top, spacing: 0) {
+      if entries.count > 1 {
+        HStack(spacing: AZSpace.sm) {
+          AZProgressTrack(value: Double(visibleIndex + 1) / Double(entries.count), height: 6)
+          Text(AZLocale.position(visibleIndex + 1, of: entries.count))
+            .azText(.footnote)
+            .monospacedDigit()
+            .foregroundStyle(AZColor.inkMuted)
+            .accessibilityIdentifier("reader.position")
+        }
+        .padding(.horizontal, AZSpace.gutter)
+        .padding(.vertical, AZSpace.xs)
+        .background(AZColor.paper)
+        .accessibilityElement(children: .combine)
+      }
+    }
+    .azScreenBackground()
+    .navigationTitle(category.title)
+    .navigationBarTitleDisplayMode(.inline)
     .toolbar {
-      Button {
-        UIApplication.shared.sendAction(
-          #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        completionOrigin = nil
-        showSlideshow = true
-      } label: {
-        Image(systemName: "slider.horizontal.below.rectangle")
-      }
-      .disabled(entries.isEmpty)
-      .accessibilityLabel(AppCopy.text("Slideshow"))
-    }
-    .fullScreenCover(isPresented: $showSlideshow, onDismiss: {
-      if let completionOrigin {
-        progress.completeSlideshow(categoryID: category.id)
-        celebrate(completionOrigin)
-      }
-    }) {
-      SlideshowView(entries: entries, title: category.title) { origin in
-        completionOrigin = origin
+      ToolbarItemGroup(placement: .topBarTrailing) {
+        ReaderSizeMenu()
+        Button {
+          UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+          didFinishFocus = false
+          showFocusMode = true
+        } label: {
+          Image(systemName: "rectangle.portrait.on.rectangle.portrait")
+        }
+        .disabled(entries.isEmpty)
+        .accessibilityLabel(AZLocale.text("Focus mode", "وضع التركيز"))
+        .accessibilityIdentifier("focusMode")
       }
     }
+    .fullScreenCover(isPresented: $showFocusMode, onDismiss: finishFocus) {
+      FocusModeView(entries: entries, title: category.title) { didFinishFocus = true }
+    }
+    .sheet(item: $counterEntry) { entry in
+      CounterView(initialCount: entry.repeat, title: entry.text.arabic)
+    }
+    .sheet(item: $completion) { CompletionSheet(summary: $0) }
     .task(id: category.detailUrl) { await load() }
+  }
+
+  private func finishFocus() {
+    guard didFinishFocus else { return }
+    didFinishFocus = false
+    let before = progress.totalPoints
+    let awarded = progress.completeSlideshow(categoryID: category.id)
+    completion = CompletionSummary(
+      stickerLabel: AZLocale.text("All read", "اكتملت القراءة"),
+      title: category.title,
+      message: AZLocale.text("Every zikr in this set, done.", "أتممت كل أذكار هذا الباب."),
+      pointsEarned: awarded ? progress.totalPoints - before : 0,
+      totalPoints: progress.totalPoints)
   }
 
   private func load() async {
@@ -69,248 +117,149 @@ struct ZikrListView: View {
   }
 }
 
-struct ZikrCard: View {
-  @EnvironmentObject private var store: AzkarStore
-  let entry: ZikrEntry
-  @State private var showCounter = false
-  private var text: String { store.language == "ar" ? entry.text.arabic : entry.text.translated }
-
-  var body: some View {
-    AppListItem(horizontalPadding: 14, verticalPadding: 12) {
-      VStack(alignment: .leading, spacing: 12) {
-        Text(text)
-          .textSelection(.enabled)
-          .font(
-            AppAppearance.font(
-              size: store.language == "ar" ? 20 : 21, relativeTo: .title3)
-          )
-          .frame(maxWidth: .infinity, alignment: .leading)
-          .accessibilityAddTraits(.isStaticText)
-        if entry.repeat > 1 {
-          Button {
-            showCounter = true
-          } label: {
-            Label {
-              Text("\(entry.repeat)")
-            } icon: {
-              Text("📿")
-            }
-            .font(
-              AppAppearance.font(
-                size: 21, relativeTo: .title3)
-            )
-            .frame(minHeight: 44)
-          }
-          .accessibilityLabel(
-            AppCopy.format("Count down from %lld", entry.repeat))
-        }
-      }
-    }
-    .sheet(isPresented: $showCounter) { CounterView(initialCount: entry.repeat, title: text) }
-  }
-}
-
-struct SlideshowView: View {
-  @AppStorage("accent") private var accent = "brown"
+/// Focus mode: one zikr at a time, large and centred.
+struct FocusModeView: View {
   @Environment(\.dismiss) private var dismiss
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
-  @EnvironmentObject private var store: AzkarStore
+  @AppStorage(ReaderSettings.scaleKey) private var scale = 1.0
+  @AppStorage(ReaderSettings.transliterationKey) private var showsTransliteration = false
   let entries: [ZikrEntry]
   let title: String
-  let onComplete: (CGPoint) -> Void
+  let onComplete: () -> Void
   @State private var page = 0
-  @State private var doneButtonOrigin = CGPoint.zero
-  @State private var showCounter = false
+  @State private var counterEntry: ZikrEntry?
 
   private var currentEntry: ZikrEntry? {
     entries.indices.contains(page) ? entries[page] : nil
   }
 
-  private var currentText: String {
-    guard let entry = currentEntry else { return "" }
-    return store.language == "ar" ? entry.text.arabic : entry.text.translated
-  }
+  private var isLast: Bool { page == entries.count - 1 }
 
   var body: some View {
-    NavigationStack {
+    VStack(spacing: 0) {
+      header
       TabView(selection: $page) {
         ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
           ScrollView {
-            Text(store.language == "ar" ? entry.text.arabic : entry.text.translated)
-              .textSelection(.enabled)
-              .font(
-                AppAppearance.font(
-                  size: 17, relativeTo: .body)
-              )
-              .multilineTextAlignment(.leading)
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .fixedSize(horizontal: false, vertical: true)
-              .padding(24)
-              .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
-              .padding(16)
+            pageContent(for: entry)
+              .frame(maxWidth: 640)
+              .frame(maxWidth: .infinity, minHeight: 0)
+              .padding(.horizontal, 28)
+              .padding(.vertical, AZSpace.xl)
           }
+          .scrollBounceBehavior(.basedOnSize)
+          .defaultScrollAnchor(.center, for: .alignment)
+          .defaultScrollAnchor(.top, for: .initialOffset)
           .tag(index)
-          .accessibilityLabel(
-            AppCopy.format("Zikr %lld of %lld", index + 1, entries.count))
+          .accessibilityLabel(AZLocale.text(
+            "Zikr \(index + 1) of \(entries.count)",
+            "الذكر \(AZLocale.number(index + 1)) من \(AZLocale.number(entries.count))"))
         }
       }
-      .tabViewStyle(
-        .page(indexDisplayMode: .never)
-      )
-      .background(AppAppearance.background(accent))
-      .appNavigationTitle(title, language: store.language)
-      .toolbar {
-        if showsCounter {
-          ToolbarItem(placement: .topBarLeading) {
-            counterButton
-          }
+      .tabViewStyle(.page(indexDisplayMode: .never))
+      if !entries.isEmpty { footer }
+    }
+    .foregroundStyle(AZColor.ink)
+    .azScreenBackground()
+    .sheet(item: $counterEntry) { entry in
+      CounterView(initialCount: entry.repeat, title: entry.text.arabic)
+    }
+  }
+
+  private var header: some View {
+    HStack(spacing: AZSpace.xs) {
+      Button { dismiss() } label: { Image(systemName: "xmark") }
+        .buttonStyle(.azIcon(.filled))
+        .accessibilityLabel(AZLocale.text("Close", "إغلاق"))
+        .accessibilityIdentifier("focus.close")
+      VStack(spacing: 2) {
+        Text(title).azText(.eyebrow).foregroundStyle(AZColor.sparkInk).lineLimit(1)
+        if Celebration.showsSlideshowProgress(entryCount: entries.count) {
+          Text(AZLocale.position(page + 1, of: entries.count))
+            .azText(.footnote)
+            .monospacedDigit()
+            .foregroundStyle(AZColor.inkMuted)
+            .accessibilityIdentifier("slideshowProgress")
         }
-        ToolbarItem(placement: .topBarTrailing) {
-          Button {
+      }
+      .frame(maxWidth: .infinity)
+      ReaderSizeMenu()
+        .foregroundStyle(AZColor.ink)
+        .frame(width: 44, height: 44)
+        .background(AZColor.paperSunk, in: Circle())
+    }
+    .padding(.horizontal, AZSpace.md)
+    .padding(.top, AZSpace.xs)
+  }
+
+  private func pageContent(for entry: ZikrEntry) -> some View {
+    VStack(spacing: AZSpace.xl) {
+      Text(entry.text.arabic)
+        .azReadingArabic(scale: scale * 1.5)
+        .multilineTextAlignment(.center)
+        .environment(\.layoutDirection, .rightToLeft)
+        .textSelection(.enabled)
+      if showsTransliteration && !entry.text.arabicTranslated.isEmpty {
+        Text(entry.text.arabicTranslated)
+          .azText(.callout)
+          .italic()
+          .foregroundStyle(AZColor.inkMuted)
+          .multilineTextAlignment(.center)
+      }
+      if !AZLocale.isArabic && !entry.text.translated.isEmpty {
+        Text(entry.text.translated)
+          .azReadingTranslation(scale: scale * 20.0 / 18.0)
+          .multilineTextAlignment(.center)
+          .textSelection(.enabled)
+      }
+      if entry.repeat > 1 {
+        CountButton(count: entry.repeat) { counterEntry = entry }
+          .accessibilityIdentifier("slideshowCounter")
+      }
+    }
+  }
+
+  private var footer: some View {
+    VStack(spacing: 18) {
+      if entries.count > 1 && entries.count <= 12 {
+        AZPageDots(count: entries.count, index: page)
+          .accessibilityIdentifier("slideshowPagination")
+      }
+      HStack(spacing: AZSpace.sm) {
+        if entries.count > 1 {
+          Button { movePage(by: -1) } label: {
+            Label(AZLocale.text("Previous", "السابق"), systemImage: "chevron.backward")
+              .labelStyle(.titleAndIcon)
+          }
+          .buttonStyle(.az(.secondary, fullWidth: true))
+          .disabled(page == 0)
+          .accessibilityIdentifier("slideshowPrevious")
+        }
+        Button {
+          if isLast {
+            onComplete()
             dismiss()
-          } label: {
-            Image(systemName: "xmark")
+          } else {
+            movePage(by: 1)
           }
-          .accessibilityLabel(AppCopy.text("Close"))
+        } label: {
+          HStack(spacing: 8) {
+            Text(isLast ? AZLocale.text("Done", "تم") : AZLocale.text("Next", "التالي"))
+            Image(systemName: isLast ? "checkmark" : "chevron.forward")
+          }
         }
-      }
-      .safeAreaInset(edge: .bottom) {
-        if !entries.isEmpty {
-          slideshowChrome
-        }
-      }
-      .sheet(isPresented: $showCounter) {
-        CounterView(initialCount: currentEntry?.repeat ?? 0, title: currentText)
-          .id(currentEntry?.id)
+        .buttonStyle(.az(.primary, fullWidth: true))
+        .accessibilityIdentifier(isLast ? "slideshowDone" : "slideshowNext")
       }
     }
-    .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
-  }
-
-  private var showsProgress: Bool {
-    Celebration.showsSlideshowProgress(entryCount: entries.count)
-  }
-
-  private var showsCounter: Bool {
-    (currentEntry?.repeat ?? 0) > 1
-  }
-
-  private var counterButton: some View {
-    Button {
-      showCounter = true
-    } label: {
-      Label {
-        Text("\(currentEntry?.repeat ?? 0)")
-      } icon: {
-        Text("📿")
-      }
-      .labelStyle(.titleAndIcon)
-      .font(AppAppearance.font(size: 17, relativeTo: .body))
-      .frame(minWidth: 44, minHeight: 44)
-    }
-    .accessibilityLabel(AppCopy.format("Count down from %lld", currentEntry?.repeat ?? 0))
-    .accessibilityIdentifier("slideshowCounter")
-    .animation(reduceMotion ? nil : .easeInOut(duration: 0.18), value: showsCounter)
-  }
-
-  private var slideshowChrome: some View {
-    VStack(spacing: 12) {
-      if showsProgress {
-        ProgressView(value: Double(page + 1), total: Double(entries.count))
-          .tint(AppAppearance.accent(accent))
-          .accessibilityHidden(true)
-          .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: page)
-        Text(AppCopy.format("%lld of %lld", page + 1, entries.count))
-          .font(AppAppearance.font(size: 17, relativeTo: .headline, bold: true))
-          .foregroundStyle(AppAppearance.accent(accent))
-          .monospacedDigit()
-          .accessibilityIdentifier("slideshowProgress")
-      }
-      if entries.count == 2 {
-        HStack(spacing: 8) {
-          ForEach(entries.indices, id: \.self) { index in
-            Circle()
-              .fill(AppAppearance.accent(accent).opacity(page == index ? 1 : 0.25))
-              .frame(width: 7, height: 7)
-          }
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(AppCopy.format("%lld of %lld", page + 1, entries.count))
-        .accessibilityIdentifier("slideshowPagination")
-      }
-      if !entries.isEmpty {
-        HStack(spacing: 16) {
-          if entries.count > 1 {
-            Button {
-              movePage(by: -1)
-            } label: {
-              ViewThatFits(in: .horizontal) {
-                HStack(spacing: 6) {
-                  Image(systemName: previousIcon)
-                  Text(AppCopy.text("Previous"))
-                }
-                .fixedSize(horizontal: true, vertical: false)
-                Image(systemName: previousIcon)
-              }
-              .frame(minWidth: 44, minHeight: 44)
-              .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .disabled(page == 0)
-            .accessibilityLabel(AppCopy.text("Previous"))
-            .accessibilityIdentifier("slideshowPrevious")
-          }
-          Button {
-            if page == entries.count - 1 {
-              onComplete(doneButtonOrigin)
-              dismiss()
-            } else {
-              movePage(by: 1)
-            }
-          } label: {
-            ViewThatFits(in: .horizontal) {
-              HStack(spacing: 6) {
-                Text(AppCopy.text(page == entries.count - 1 ? "Done" : "Next"))
-                Image(systemName: nextIcon)
-              }
-              .fixedSize(horizontal: true, vertical: false)
-              Image(systemName: nextIcon)
-            }
-            .frame(minWidth: 44, minHeight: 44)
-            .onGeometryChange(for: CGPoint.self) { geometry in
-              let frame = geometry.frame(in: .global)
-              return CGPoint(x: frame.midX, y: frame.midY)
-            } action: { origin in
-              doneButtonOrigin = origin
-            }
-            .frame(maxWidth: .infinity, alignment: .trailing)
-          }
-          .accessibilityLabel(AppCopy.text(page == entries.count - 1 ? "Done" : "Next"))
-          .accessibilityIdentifier(entries.count == 1 ? "slideshowDone" : "slideshowNext")
-        }
-        .font(AppAppearance.font(size: 17, relativeTo: .headline, bold: true))
-      }
-    }
-    .tint(AppAppearance.accent(accent))
-    .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
-    .padding(.horizontal, 24)
-    .padding(.top, 12)
-    .padding(.bottom, 8)
-    .background(AppAppearance.background(accent))
-  }
-
-  private var previousIcon: String {
-    store.language == "ar" ? "chevron.right" : "chevron.left"
-  }
-
-  private var nextIcon: String {
-    page == entries.count - 1 ? "checkmark" :
-      (store.language == "ar" ? "chevron.left" : "chevron.right")
+    .padding(.horizontal, AZSpace.gutter)
+    .padding(.bottom, AZSpace.lg)
   }
 
   private func movePage(by offset: Int) {
     let nextPage = page + offset
     guard entries.indices.contains(nextPage) else { return }
-    withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
+    withAnimation(AZMotion.animation(AZDuration.base, reduceMotion: reduceMotion)) {
       page = nextPage
     }
   }

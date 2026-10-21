@@ -1,136 +1,169 @@
 import SwiftUI
 
+/// The tasbih: one big round target. Counts up (free counter) or down from a repeat count.
+struct CounterDial: View {
+  let count: Int
+  /// 0 counts up; otherwise the ring shows progress from this number down to zero.
+  let startingCount: Int
+  let onTap: () -> Void
+  let onAdjust: (Int) -> Void
+
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+  private var progress: Double {
+    if startingCount > 0 { return Double(startingCount - count) / Double(startingCount) }
+    return Double(count % 33) / 33
+  }
+
+  var body: some View {
+    Button(action: onTap) {
+      ZStack {
+        Circle().fill(AZColor.peach).padding(-11)
+        Circle().strokeBorder(AZColor.dialRing, lineWidth: AZBorder.hairline).padding(-11)
+        Circle()
+          .trim(from: 0, to: progress)
+          .stroke(AZColor.spark, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+          .rotationEffect(.degrees(-90))
+          .padding(-6)
+          .animation(reduceMotion ? nil : AZMotion.curve(AZDuration.base), value: progress)
+        Circle().fill(AZColor.blush)
+        Circle().strokeBorder(AZColor.dialRim, lineWidth: AZBorder.hairline)
+        Text(AZLocale.number(count))
+          .azText(.numeral)
+          .monospacedDigit()
+          .foregroundStyle(AZColor.ink)
+          .contentTransition(.numericText(value: Double(count)))
+          .lineLimit(1)
+          .minimumScaleFactor(0.5)
+          .padding(.horizontal, 24)
+        Image(systemName: startingCount > 0 ? "minus" : "plus")
+          .font(.system(size: 24, weight: .medium))
+          .foregroundStyle(AZColor.paper)
+          .frame(width: 56, height: 56)
+          .background(AZColor.ink, in: Circle())
+          .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+          .offset(x: 4, y: 4)
+          .accessibilityHidden(true)
+      }
+      .frame(width: 232, height: 232)
+      .padding(11)
+      .contentShape(Circle())
+    }
+    .buttonStyle(DialPressStyle())
+    .environment(\.layoutDirection, .leftToRight)
+    .accessibilityLabel(AZLocale.text("Count: \(count)", "العدد: \(AZLocale.number(count))"))
+    .accessibilityHint(AZLocale.text("Double tap to change the count", "انقر مرتين لتغيير العدد"))
+    .accessibilityIdentifier("counter.count")
+    .accessibilityAdjustableAction { direction in
+      switch direction {
+      case .increment: onAdjust(1)
+      case .decrement: onAdjust(-1)
+      @unknown default: break
+      }
+    }
+  }
+
+  private struct DialPressStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+      configuration.label
+        .scaleEffect(configuration.isPressed ? 0.98 : 1)
+        .animation(AZMotion.curve(AZDuration.press), value: configuration.isPressed)
+    }
+  }
+}
+
+/// The counter, as the Counter tab (counts up) or a sheet for one zikr (counts down).
 struct CounterView: View {
-  @EnvironmentObject private var store: AzkarStore
   @EnvironmentObject private var journeyProgress: JourneyProgressStore
   @Environment(\.dismiss) private var dismiss
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   var initialCount = 0
   var title = ""
-  @AppStorage("accent") private var accent = "brown"
+  /// The tab hosts the counter in its own navigation; the sheet draws its own close button.
+  var isTab = false
   @State private var count = 0
   @State private var audio = CounterAudio()
-  @State private var contentHeight: CGFloat = 420
-  @State private var selectedDetent: PresentationDetent = .height(420)
+  @State private var tapToken = 0
+  @State private var didStart = false
 
   var body: some View {
     ScrollView {
-      VStack(spacing: 24) {
-        HStack {
-          HStack(spacing: 6) {
-            PointsCurrencyIcon().frame(width: 24, height: 24)
-            Text(journeyProgress.totalPoints.formatted())
-          }
-          .accessibilityElement(children: .ignore)
-          .accessibilityLabel(store.language == "ar" ? "نقاطك" : "Your points")
-          .accessibilityValue(String(journeyProgress.totalPoints))
-          .accessibilityIdentifier("counter.points")
-          Spacer()
-          Button { dismiss() } label: {
-            Image(systemName: "xmark")
-          }
-          .buttonStyle(.bordered)
-          .buttonBorderShape(.circle)
-          .accessibilityLabel(store.language == "ar" ? "إغلاق" : "Close")
-          .accessibilityIdentifier("counter.close")
-        }
+      VStack(spacing: 28) {
+        if !isTab { sheetHeader }
         if !title.isEmpty {
           Text(title)
+            .azReadingArabic()
+            .multilineTextAlignment(.center)
+            .environment(\.layoutDirection, .rightToLeft)
+            .frame(maxWidth: 560)
             .textSelection(.enabled)
-            .font(
-              AppAppearance.font(
-                size: 20, relativeTo: .title3)
-            )
-            .multilineTextAlignment(.leading)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityIdentifier("counter.title")
         }
-        counterControls
+        Text(instruction)
+          .azText(.callout)
+          .foregroundStyle(AZColor.inkMuted)
+          .multilineTextAlignment(.center)
+        CounterDial(
+          count: count, startingCount: initialCount,
+          onTap: { changeCount(by: initialCount > 0 ? -1 : 1) },
+          onAdjust: { changeCount(by: $0) })
+        VStack(spacing: 4) {
+          Text(AZLocale.text(
+            "\(journeyProgress.countsUntilNextPoint) to your next point",
+            "\(AZLocale.number(journeyProgress.countsUntilNextPoint)) للنقطة التالية"))
+            .azText(.headline)
+            .monospacedDigit()
+          Text(AZLocale.text("1 point for every 33 counts", "نقطة واحدة لكل ٣٣ تسبيحة"))
+            .azText(.footnote)
+            .foregroundStyle(AZColor.inkMuted)
+        }
+        .padding(.top, AZSpace.xs)
+        Button(AZLocale.text("Reset", "إعادة")) { changeCount(to: initialCount, cue: .reset) }
+          .buttonStyle(.azText)
+          .disabled(count == initialCount)
       }
-      .fixedSize(horizontal: false, vertical: true)
-      .padding(24)
+      .foregroundStyle(AZColor.ink)
+      .padding(.horizontal, AZSpace.gutter)
+      .padding(.top, isTab ? AZSpace.xl : AZSpace.lg)
+      .padding(.bottom, AZSpace.xxl)
       .frame(maxWidth: .infinity)
     }
+    .scrollBounceBehavior(.basedOnSize)
+    .defaultScrollAnchor(.center, for: .alignment)
     .accessibilityIdentifier("counterZikrScroll")
-    .background(AppAppearance.background(accent))
-    .onScrollGeometryChange(for: CGFloat.self) { $0.contentSize.height } action: { _, height in
-      contentHeight = height
-      selectedDetent = height > maximumSheetHeight ? .large : .height(height)
-    }
-    .presentationDetents(
-      [.height(min(contentHeight, maximumSheetHeight)), .large], selection: $selectedDetent)
-    .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
+    .azScreenBackground()
+    .presentationDetents([.large])
+    .presentationDragIndicator(.visible)
+    .sensoryFeedback(.selection, trigger: tapToken)
+    .sensoryFeedback(.success, trigger: count) { _, new in initialCount > 0 && new == 0 }
     .onAppear {
-      count = initialCount
+      if !didStart {
+        count = initialCount
+        didStart = true
+      }
       audio.prepare()
     }
     .onDisappear { audio.stop() }
   }
 
-  private var maximumSheetHeight: CGFloat {
-    let scene = UIApplication.shared.connectedScenes
-      .first { $0.activationState == .foregroundActive } as? UIWindowScene
-    return (scene?.screen.bounds.height ?? 800) * 0.9
+  private var instruction: String {
+    initialCount > 0
+      ? AZLocale.text("Tap the circle to count down.", "انقر على الدائرة للعد التنازلي.")
+      : AZLocale.text("Tap anywhere on the circle to count.", "انقر في أي مكان على الدائرة للعد.")
   }
 
-  private var counterControls: some View {
-    VStack(spacing: 20) {
-      Text(
-        initialCount > 0
-          ? AppCopy.text("Tap the number to count down")
-          : AppCopy.text("Tap the number to count up")
-      )
-      .font(
-        AppAppearance.font(
-          size: 15, relativeTo: .subheadline))
-      Text(store.language == "ar" ? "نقطة واحدة لكل ٣٣ تسبيحة" : "1 point for every 33 counts")
-        .font(AppAppearance.font(size: 13))
-        .foregroundStyle(.secondary)
-      Button {
-        changeCount(by: initialCount > 0 ? -1 : 1)
-      } label: {
-        ZStack {
-          Circle()
-            .stroke(AppAppearance.accent(accent).opacity(0.18), lineWidth: 2)
-          if initialCount > 0 {
-            Circle()
-              .trim(from: 0, to: CGFloat(count) / CGFloat(initialCount))
-              .stroke(
-                AppAppearance.accent(accent), style: StrokeStyle(lineWidth: 2.5, lineCap: .round)
-              )
-              .rotationEffect(.degrees(-90))
-          }
-          Text(count.formatted())
-            .font(
-              AppAppearance.font(
-                size: 60, relativeTo: .largeTitle,
-                bold: true)
-            )
-            .contentTransition(.numericText())
-            .foregroundStyle(.primary)
-        }
-        .frame(width: 190, height: 190)
-        .shadow(color: AppAppearance.accent(accent).opacity(0.12), radius: 8, y: 3)
-        .frame(maxWidth: .infinity)
-      }
-      .accessibilityLabel(
-        AppCopy.format("Count: %lld", count)
-      )
-      .accessibilityIdentifier("counter.count")
-      .accessibilityHint(
-        AppCopy.text("Double tap to change the count")
-      )
-      .accessibilityAdjustableAction { direction in
-        switch direction {
-        case .increment: changeCount(by: 1)
-        case .decrement: changeCount(by: -1)
-        @unknown default: break
-        }
-      }
-      Button(AppCopy.text("Reset")) {
-        changeCount(to: initialCount, cue: .reset)
-      }
-      .frame(minHeight: 44)
+  private var sheetHeader: some View {
+    HStack {
+      AZPointsBadge(points: journeyProgress.totalPoints)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(AZLocale.text("Your points", "نقاطك"))
+        .accessibilityValue(String(journeyProgress.totalPoints))
+        .accessibilityIdentifier("counter.points")
+      Spacer()
+      Button { dismiss() } label: { Image(systemName: "xmark") }
+        .buttonStyle(.azIcon(.filled))
+        .accessibilityLabel(AZLocale.text("Close", "إغلاق"))
+        .accessibilityIdentifier("counter.close")
     }
   }
 
@@ -140,12 +173,30 @@ struct CounterView: View {
     guard nextCount != count else { return }
     if initialCount > 0 ? value < 0 : value > 0 {
       journeyProgress.recordCounterTap()
+      tapToken += 1
     }
     changeCount(to: nextCount, cue: initialCount > 0 && nextCount == 0 ? .completion : .tick)
   }
+
   private func changeCount(to value: Int, cue: CounterAudio.Cue) {
     guard value != count else { return }
-    withAnimation(reduceMotion ? nil : .smooth(duration: 0.25)) { count = value }
+    withAnimation(reduceMotion ? nil : AZMotion.curve(AZDuration.fast)) { count = value }
     audio.play(cue)
+  }
+}
+
+/// The Counter tab: the free counter, full screen.
+struct CounterTab: View {
+  @EnvironmentObject private var journeyProgress: JourneyProgressStore
+
+  var body: some View {
+    NavigationStack {
+      CounterView(isTab: true)
+        .navigationTitle(AZLocale.text("Counter", "السبحة"))
+        .toolbar {
+          ToolbarItem(placement: .topBarTrailing) { PointsToolbarButton() }
+            .sharedBackgroundVisibility(.hidden)
+        }
+    }
   }
 }

@@ -7,14 +7,12 @@ struct SupportTipView: View {
   let language: String
   let accent: String
 
-  @Environment(\.colorScheme) private var colorScheme
   @Environment(\.dismiss) private var dismiss
   @State private var isPurchasing = false
   @State private var didTip = false
   @State private var didTrackImpression = false
   @State private var purchaseError: String?
 
-  private var accentColor: Color { AppAppearance.accent(accent) }
 
   var body: some View {
     VStack(spacing: 0) {
@@ -22,11 +20,8 @@ struct SupportTipView: View {
         Spacer()
         Button { dismiss() } label: {
           Image(systemName: "xmark")
-            .font(.system(size: 14, weight: .semibold))
-            .foregroundStyle(.primary)
-            .frame(width: 44, height: 44)
-            .background(accentColor.opacity(0.12), in: Circle())
         }
+        .buttonStyle(.azIcon(.filled))
         .accessibilityLabel(copy("Close", "إغلاق"))
         .accessibilityIdentifier("support-tip.close")
         .disabled(isPurchasing)
@@ -38,23 +33,22 @@ struct SupportTipView: View {
         ScrollView {
           VStack(spacing: 0) {
             Spacer(minLength: 16)
-            SupportTipArtwork(accent: accentColor)
-              .frame(height: min(190, max(136, geometry.size.height * 0.34)))
+            SupportTipArtwork()
+              .frame(height: min(200, max(150, geometry.size.height * 0.34)))
               .padding(.bottom, 18)
 
             Text(didTip ? copy("THANK YOU", "شكرًا لك")
                         : copy("A NOTE FROM THE MAKER", "رسالة من المطوّر"))
-              .font(AppAppearance.font(size: 12, relativeTo: .caption, bold: true))
-              .tracking(language == "ar" ? 0 : 1.8)
-              .foregroundStyle(accentColor)
+              .azText(.eyebrow)
+              .foregroundStyle(AZColor.sparkInk)
               .padding(.bottom, 12)
 
             Text(didTip
                  ? copy("Thank you for supporting Azkarify.", "شكرًا لدعم أذكاريفاي.")
                  : copy("A little support goes a long way.",
                         "دعم صغير يصنع فرقًا كبيرًا"))
-              .font(AppAppearance.font(size: 32, relativeTo: .largeTitle, bold: true))
-              .foregroundStyle(.primary)
+              .azText(.title1)
+              .foregroundStyle(AZColor.ink)
               .multilineTextAlignment(.center)
               .fixedSize(horizontal: false, vertical: true)
               .padding(.bottom, 14)
@@ -64,8 +58,8 @@ struct SupportTipView: View {
                         "تساعدني مساهمتك على صيانة التطبيق وتطويره.")
                  : copy("Azkarify is free for everyone. A one-time tip helps me maintain and improve it.",
                         "أذكاريفاي مجاني للجميع. مساهمتك لمرة واحدة تساعدني على صيانته وتطويره."))
-              .font(AppAppearance.font(size: 17))
-              .foregroundStyle(.secondary)
+              .azText(.body)
+              .foregroundStyle(AZColor.inkMuted)
               .multilineTextAlignment(.center)
               .fixedSize(horizontal: false, vertical: true)
 
@@ -80,8 +74,7 @@ struct SupportTipView: View {
 
       footer
     }
-    .background { BotanicalBackground(accent: accent) }
-    .environment(\.layoutDirection, language == "ar" ? .rightToLeft : .leftToRight)
+    .azScreenBackground()
     .onAppear {
       guard !didTrackImpression else { return }
       didTrackImpression = true
@@ -105,14 +98,13 @@ struct SupportTipView: View {
   private var footer: some View {
     VStack(spacing: 12) {
       Rectangle()
-        .fill(accentColor.opacity(0.25))
-        .frame(height: 1)
+        .fill(AZColor.line)
+        .frame(height: AZBorder.hairline)
 
       if !didTip {
         Text(copy("ONE-TIME TIP", "مساهمة لمرة واحدة"))
-          .font(AppAppearance.font(size: 12, relativeTo: .caption, bold: true))
-          .tracking(language == "ar" ? 0 : 1.2)
-          .foregroundStyle(accentColor)
+          .azText(.eyebrow)
+          .foregroundStyle(AZColor.inkMuted)
       }
 
       Button {
@@ -124,7 +116,7 @@ struct SupportTipView: View {
       } label: {
         Group {
           if isPurchasing {
-            ProgressView().tint(colorScheme == .dark ? .black : .white)
+            ProgressView().tint(AZColor.paper)
           } else if didTip {
             Text(copy("Done", "تم"))
           } else {
@@ -141,12 +133,8 @@ struct SupportTipView: View {
             }
           }
         }
-        .font(AppAppearance.font(size: 18, relativeTo: .headline, bold: true))
-        .frame(maxWidth: .infinity, minHeight: 56)
-        .foregroundStyle(colorScheme == .dark ? Color.black.opacity(0.85) : .white)
-        .background(accentColor, in: RoundedRectangle(cornerRadius: 16))
       }
-      .buttonStyle(.plain)
+      .buttonStyle(.az(.primary, fullWidth: true))
       .disabled(isPurchasing)
       .accessibilityLabel(
         didTip ? copy("Done", "تم")
@@ -158,15 +146,15 @@ struct SupportTipView: View {
       if !didTip {
         Text(copy("Entirely optional. All azkar remain free.",
                   "الدعم اختياري تمامًا. جميع الأذكار متاحة مجانًا."))
-          .font(AppAppearance.font(size: 13, relativeTo: .footnote))
-          .foregroundStyle(.secondary)
+          .azText(.footnote)
+          .foregroundStyle(AZColor.inkMuted)
           .multilineTextAlignment(.center)
       }
     }
     .padding(.horizontal, 24)
     .padding(.top, 14)
     .padding(.bottom, 12)
-    .background(AppAppearance.background(accent))
+    .background(AZColor.paper)
   }
 
   @MainActor
@@ -187,54 +175,16 @@ struct SupportTipView: View {
 }
 
 private struct SupportTipArtwork: View {
-  let accent: Color
-
   var body: some View {
     ZStack {
-      Circle()
-        .fill(accent.opacity(0.07))
-        .frame(width: 190, height: 190)
-      TipArch()
-        .stroke(accent.opacity(0.85), style: StrokeStyle(lineWidth: 1.8, lineCap: .round))
-        .frame(width: 138, height: 164)
-      TipArch()
-        .stroke(accent.opacity(0.3), style: StrokeStyle(lineWidth: 0.8, lineCap: .round))
-        .frame(width: 126, height: 152)
-      Image(systemName: "moon.fill")
-        .font(.system(size: 26))
-        .foregroundStyle(accent)
-        .offset(y: -48)
-      Image(systemName: "leaf")
-        .font(.system(size: 34, weight: .ultraLight))
-        .foregroundStyle(accent.opacity(0.8))
-        .rotationEffect(.degrees(-28))
-        .offset(x: 28, y: 64)
+      Circle().fill(AZColor.mist).frame(width: 190, height: 190)
+      AZJourneyArch(width: 128, height: 172) {
+        AZOrnament(shape: .crescent, size: 52, color: AZColor.forest)
+      }
+      AZOrnament(shape: .sparkle, size: 26, color: AZColor.spark)
+        .offset(x: 78, y: -66)
     }
     .frame(maxWidth: .infinity)
     .accessibilityHidden(true)
-  }
-}
-
-private struct TipArch: Shape {
-  func path(in rect: CGRect) -> Path {
-    let width = rect.width
-    let height = rect.height
-    var path = Path()
-    path.move(to: CGPoint(x: width * 0.18, y: height * 0.96))
-    path.addLine(to: CGPoint(x: width * 0.18, y: height * 0.39))
-    path.addQuadCurve(
-      to: CGPoint(x: width * 0.27, y: height * 0.31),
-      control: CGPoint(x: width * 0.18, y: height * 0.32))
-    path.addQuadCurve(
-      to: CGPoint(x: width * 0.5, y: height * 0.04),
-      control: CGPoint(x: width * 0.31, y: height * 0.11))
-    path.addQuadCurve(
-      to: CGPoint(x: width * 0.73, y: height * 0.31),
-      control: CGPoint(x: width * 0.69, y: height * 0.11))
-    path.addQuadCurve(
-      to: CGPoint(x: width * 0.82, y: height * 0.39),
-      control: CGPoint(x: width * 0.82, y: height * 0.32))
-    path.addLine(to: CGPoint(x: width * 0.82, y: height * 0.96))
-    return path
   }
 }

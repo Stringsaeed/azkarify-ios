@@ -12,7 +12,6 @@ struct PrayerLocationSheet: View {
   @EnvironmentObject private var store: AzkarStore
   @EnvironmentObject private var prayerSchedule: PrayerScheduleStore
   @EnvironmentObject private var locationCatalog: LocationCatalogStore
-  @AppStorage("accent") private var accent = "brown"
   @StateObject private var locationProvider = PrayerLocationProvider()
   @State private var path: [Route] = []
   @State private var navigationID = UUID()
@@ -71,11 +70,9 @@ struct PrayerLocationSheet: View {
           }
         }
     }
-    .background(AppAppearance.background(accent))
+    .background(AZColor.paper)
     .id(navigationID)
-    .font(AppAppearance.font(size: 17))
-    .tint(AppAppearance.accent(accent))
-    .environment(\.layoutDirection, arabic ? .rightToLeft : .leftToRight)
+    .font(AZFont.font(.body))
     .presentationDetents(path.isEmpty ? [.height(choiceHeight)] : [.large])
     .presentationDragIndicator(.visible)
     .onPreferenceChange(LocationChoiceHeightKey.self) { height in
@@ -104,99 +101,99 @@ struct PrayerLocationSheet: View {
   }
 
   private var choiceScreen: some View {
-    VStack(spacing: 18) {
+    VStack(alignment: .leading, spacing: AZSpace.lg) {
       HStack {
         Text(text("Prayer location", "موقع الصلاة"))
-          .font(AppAppearance.font(size: 24, relativeTo: .title2, bold: true))
+          .azText(.title2)
+          .accessibilityAddTraits(.isHeader)
         Spacer(minLength: 12)
         Button(action: onFinish) {
           Image(systemName: "xmark")
         }
-        .buttonStyle(.bordered)
-        .buttonBorderShape(.circle)
+        .buttonStyle(.azIcon(.filled))
         .accessibilityLabel(text("Close", "إغلاق"))
         .accessibilityIdentifier("location.close")
       }
 
+      HStack(spacing: 14) {
+        Image(systemName: "lock")
+          .font(.system(size: 20))
+          .accessibilityHidden(true)
+        Text(text("Prayer times are calculated on your phone. Your location is never uploaded.",
+                  "تُحسب أوقات الصلاة على هاتفك. لا يُرفع موقعك أبداً."))
+          .azText(.callout)
+          .foregroundStyle(AZColor.inkSoft)
+      }
+      .azCard(.sage, compact: true)
+
       Button(action: requestLocation) {
         HStack(spacing: 10) {
           if locationRequestIsActive {
-            ProgressView().tint(Color(.systemBackground))
+            ProgressView().tint(AZColor.paper)
           } else {
             Image(systemName: "location.fill")
           }
           Text(locationRequestIsActive
                ? text("Finding your location…", "جارٍ تحديد موقعك…")
-               : text("Use current location", "استخدم موقعي الحالي"))
+               : text("Use my current location", "استخدم موقعي الحالي"))
         }
-        .frame(maxWidth: .infinity, minHeight: 32)
-        .foregroundStyle(Color(.systemBackground))
       }
-      .buttonStyle(.borderedProminent)
+      .buttonStyle(.az(.primary, fullWidth: true))
       .disabled(locationRequestIsActive)
       .accessibilityIdentifier("location.useDevice")
 
       HStack(spacing: 12) {
-        Rectangle().frame(height: 1)
-        Text(text("or", "أو"))
-          .font(AppAppearance.font(size: 16, relativeTo: .subheadline, bold: true))
+        Rectangle().fill(AZColor.line).frame(height: AZBorder.hairline)
+        Text(text("or choose a city", "أو اختر مدينة"))
+          .azText(.footnote)
+          .foregroundStyle(AZColor.inkMuted)
           .fixedSize()
-        Rectangle().frame(height: 1)
+        Rectangle().fill(AZColor.line).frame(height: AZBorder.hairline)
       }
-      .foregroundStyle(.secondary)
       .accessibilityHidden(true)
 
-      VStack(spacing: 0) {
+      AZListGroup {
         NavigationLink(value: Route.countries) {
-          HStack(spacing: 12) {
+          AZListRow(title: countryName, subtitle: text("Country", "الدولة"), subtitleFirst: true) {
             if let flag = country?.flagEmoji {
               Text(flag)
-                .font(.system(size: 24))
-                .frame(width: 24)
+                .font(.system(size: 20))
+                .frame(width: 36, height: 36)
+                .background(AZColor.paperSunk, in: Circle())
                 .accessibilityHidden(true)
             } else {
-              Image(systemName: "globe")
-                .frame(width: 24)
+              AZIconWell(systemImage: "globe", size: 36)
             }
-            Text(text("Country", "الدولة"))
-            Spacer(minLength: 8)
-            Text(countryName)
-              .foregroundStyle(.secondary)
-              .lineLimit(1)
-            Image(systemName: "chevron.forward")
-              .font(.caption)
-              .foregroundStyle(.secondary)
-              .accessibilityHidden(true)
+          } trailing: {
+            AZChevron()
           }
-          .frame(minHeight: 54)
-          .contentShape(Rectangle())
         }
         .accessibilityIdentifier("location.country")
 
-        Divider()
-
         NavigationLink(value: Route.cities) {
-          HStack(spacing: 12) {
-            Image(systemName: "building.2")
-              .frame(width: 24)
-            Text(text("Choose a city", "اختر مدينة"))
-            Spacer(minLength: 8)
-            Image(systemName: "chevron.forward")
-              .font(.caption)
-              .foregroundStyle(.secondary)
-              .accessibilityHidden(true)
+          AZListRow(
+            title: currentCityName ?? text("Choose a city", "اختر مدينة"),
+            subtitle: text("City", "المدينة"), subtitleFirst: true
+          ) {
+            AZIconWell(systemImage: "building.2", state: currentCityName == nil ? .idle : .on, size: 36)
+          } trailing: {
+            AZChevron()
           }
-          .frame(minHeight: 54)
-          .contentShape(Rectangle())
         }
         .accessibilityIdentifier("location.chooseCity")
       }
-      .padding(.horizontal, 16)
-      .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
       .buttonStyle(.plain)
+
+      Text(text("City coordinates represent the city centre. You can change the calculation method and madhab in Settings › Prayer times.",
+                "إحداثيات المدينة تمثل مركزها. يمكنك تغيير طريقة الحساب والمذهب من الإعدادات › مواقيت الصلاة."))
+        .azText(.footnote)
+        .foregroundStyle(AZColor.inkMuted)
+        .padding(.horizontal, 4)
     }
-    .padding(.horizontal, 20)
+    .foregroundStyle(AZColor.ink)
+    .padding(.horizontal, AZSpace.gutter)
     .padding(.top, 18)
+    .padding(.bottom, AZSpace.lg)
     .fixedSize(horizontal: false, vertical: true)
     .background {
       GeometryReader { proxy in
@@ -204,8 +201,16 @@ struct PrayerLocationSheet: View {
       }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-    .background(AppAppearance.background(accent))
+    .azScreenBackground()
     .toolbar(.hidden, for: .navigationBar)
+  }
+
+  /// The saved city, when it belongs to the selected country.
+  private var currentCityName: String? {
+    guard let configuration = prayerSchedule.configuration, !configuration.usesDeviceLocation,
+      configuration.countryCode == nil || configuration.countryCode == selectedCountryCode
+    else { return nil }
+    return configuration.displayLocationName(language: store.language)
   }
 
   private var cityScreen: some View {
@@ -229,13 +234,15 @@ struct PrayerLocationSheet: View {
               VStack(alignment: .leading, spacing: 3) {
                 Text(city.name(language: store.language)).foregroundStyle(.primary)
                 if let region = city.region, !region.isEmpty {
-                  Text(region).font(AppAppearance.font(size: 13)).foregroundStyle(.secondary)
+                  Text(region).azText(.footnote).foregroundStyle(AZColor.inkMuted)
                 }
               }
               .frame(maxWidth: .infinity, minHeight: 36, alignment: .leading)
               .contentShape(Rectangle())
             }
             .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+          .azFormRow()
+            .azFormRow()
             .accessibilityIdentifier("location.city.\(city.id)")
           }
           if cities.isEmpty {
@@ -255,7 +262,7 @@ struct PrayerLocationSheet: View {
     }
     .listStyle(.insetGrouped)
     .scrollContentBackground(.hidden)
-    .background(AppAppearance.background(accent))
+    .azFormStyle()
     .listSectionSpacing(.compact)
     .refreshable { await locationCatalog.loadCities(
       countryCode: selectedCountryCode, query: citySearch,
@@ -269,7 +276,7 @@ struct PrayerLocationSheet: View {
     .toolbar {
       ToolbarItem(placement: .principal) {
         Text(text("Choose a city", "اختر مدينة"))
-          .font(AppAppearance.font(size: 21, relativeTo: .headline, bold: true))
+          .azText(.headline)
       }
     }
   }
@@ -319,6 +326,7 @@ struct PrayerLocationSheet: View {
             .contentShape(Rectangle())
           }
           .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+          .azFormRow()
           .accessibilityIdentifier("country.\(item.code)")
         }
         if countries.isEmpty {
@@ -329,7 +337,7 @@ struct PrayerLocationSheet: View {
     }
     .listStyle(.insetGrouped)
     .scrollContentBackground(.hidden)
-    .background(AppAppearance.background(accent))
+    .azFormStyle()
     .refreshable { await locationCatalog.loadCountries(
       language: store.language, forceRefresh: true) }
     .scrollDismissesKeyboard(.interactively)
@@ -342,7 +350,7 @@ struct PrayerLocationSheet: View {
     .toolbar {
       ToolbarItem(placement: .principal) {
         Text(text("Country", "الدولة"))
-          .font(AppAppearance.font(size: 21, relativeTo: .headline, bold: true))
+          .azText(.headline)
       }
     }
   }
