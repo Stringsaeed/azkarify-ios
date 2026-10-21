@@ -261,7 +261,8 @@ final class PrayerScheduleStore: ObservableObject {
       formatter = cached
     } else {
       formatter = DateFormatter()
-      formatter.locale = Locale(identifier: language)
+      // Match the rest of the Arabic UI, which uses Arabic-Indic digits.
+      formatter.locale = Locale(identifier: language == "ar" ? "ar@numbers=arab" : language)
       formatter.timeZone = timeZone
       if compact {
         // Five times share one row: drop the day period ("3:36", not "3:36 PM").

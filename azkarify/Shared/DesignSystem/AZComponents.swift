@@ -410,6 +410,8 @@ struct AZPointsBadge: View {
         .contentTransition(.numericText(value: Double(points)))
         .lineLimit(1)
     }
+    // Toolbars propose a narrow width; the score must never truncate.
+    .fixedSize()
     .foregroundStyle(AZColor.ink)
     .padding(.leading, 8)
     .padding(.trailing, 12)

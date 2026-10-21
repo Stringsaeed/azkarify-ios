@@ -173,8 +173,8 @@ struct JourneyCard: View {
     .padding(.top, isNext ? 10 : 0)
     .accessibilityElement(children: .combine)
     .accessibilityValue(AZLocale.text(
-      "\(completedCount) of \(required) steps completed",
-      "اكتملت \(AZLocale.number(completedCount)) من \(AZLocale.number(required)) خطوات"))
+      "\(completedCount) of \(AZLocale.steps(required)) completed",
+      "اكتملت \(AZLocale.number(completedCount)) من \(AZLocale.steps(required))"))
   }
 }
 

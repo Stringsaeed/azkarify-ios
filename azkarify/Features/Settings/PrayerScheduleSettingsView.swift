@@ -416,7 +416,9 @@ private struct PrayerCityPicker: View {
       .azFormRow()
     }
     .azFormStyle()
-    .searchable(text: $search, prompt: language == "ar" ? "ابحث عن مدينة" : "Search cities")
+    .searchable(
+      text: $search, placement: .navigationBarDrawer(displayMode: .always),
+      prompt: language == "ar" ? "ابحث عن مدينة" : "Search cities")
     .navigationTitle(language == "ar" ? "اختر مدينة" : "Choose a city")
     .navigationBarTitleDisplayMode(.inline)
     .sheet(isPresented: $showingCountrySelection) {
@@ -504,7 +506,9 @@ private struct PrayerTimeZonePicker: View {
       .azFormRow()
     }
     .azFormStyle()
-    .searchable(text: $search, prompt: language == "ar" ? "ابحث عن منطقة زمنية" : "Search time zones")
+    .searchable(
+      text: $search, placement: .navigationBarDrawer(displayMode: .always),
+      prompt: language == "ar" ? "ابحث عن منطقة زمنية" : "Search time zones")
     .navigationTitle(language == "ar" ? "المنطقة الزمنية" : "Time zone")
     .navigationBarTitleDisplayMode(.inline)
   }

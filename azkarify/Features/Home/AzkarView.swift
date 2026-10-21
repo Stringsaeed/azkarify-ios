@@ -120,7 +120,9 @@ struct AzkarListView: View {
     .listSectionSpacing(AZSpace.md)
     .azFormStyle()
     .navigationTitle(AZLocale.text("Azkar", "الأذكار"))
-    .searchable(text: $search, prompt: AZLocale.text("Search azkar", "ابحث في الأذكار"))
+    .searchable(
+      text: $search, placement: .navigationBarDrawer(displayMode: .always),
+      prompt: AZLocale.text("Search azkar", "ابحث في الأذكار"))
     .background(SearchFieldTypography().allowsHitTesting(false))
     .fullScreenCover(item: $quickStart) { FocusModeLoader(category: $0) }
     .accessibilityIdentifier("azkarSidebar")

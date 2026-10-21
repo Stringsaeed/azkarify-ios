@@ -59,7 +59,7 @@ struct JourneyDetailView: View {
     let done = progress.completedCount(for: journey, on: date)
     let required = journey.requiredSteps.count
     let complete = progress.isComplete(journey, on: date)
-    let steps = AZLocale.text("\(journey.steps.count) steps", "\(AZLocale.number(journey.steps.count)) خطوات")
+    let steps = AZLocale.steps(journey.steps.count)
     return VStack(alignment: .leading, spacing: 10) {
       Text("\(sectionEyebrow) · \(steps)").azText(.eyebrow).foregroundStyle(AZColor.sparkInk)
       Text(journey.subtitle.value(language: AZLocale.language))

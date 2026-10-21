@@ -30,7 +30,7 @@ struct CountButton: View {
           .foregroundStyle(AZColor.paper)
           .frame(width: 28, height: 28)
           .background(AZColor.ink, in: Circle())
-        Text(AZLocale.text(count == 1 ? "1 time" : "\(count) times", "\(AZLocale.number(count)) مرات"))
+        Text(AZLocale.times(count))
           .azText(.headline, scale: 15.0 / 17.0)
           .monospacedDigit()
       }
@@ -106,6 +106,8 @@ struct ZikrCard: View {
 /// Smaller / larger reading text, remembered across launches.
 struct ReaderSizeMenu: View {
   @AppStorage(ReaderSettings.scaleKey) private var scale = 1.0
+  /// Outside a toolbar, draw the 44 pt filled circle inside the label so all of it is tappable.
+  var filled = false
 
   var body: some View {
     Menu {
@@ -126,7 +128,15 @@ struct ReaderSizeMenu: View {
       Button(AZLocale.text("Reset text size", "إعادة حجم النص")) { scale = 1 }
         .disabled(abs(scale - 1) < 0.01)
     } label: {
-      Image(systemName: "textformat.size")
+      if filled {
+        Image(systemName: "textformat.size")
+          .foregroundStyle(AZColor.ink)
+          .frame(width: 44, height: 44)
+          .background(AZColor.paperSunk, in: Circle())
+          .contentShape(Circle())
+      } else {
+        Image(systemName: "textformat.size")
+      }
     }
     .menuActionDismissBehavior(.disabled)
     .accessibilityLabel(AZLocale.text("Text size", "حجم النص"))

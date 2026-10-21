@@ -83,6 +83,8 @@ struct CompletionSheet: View {
       try? await Task.sleep(for: .milliseconds(150))
       withAnimation(AZMotion.animation(0.35, reduceMotion: reduceMotion)) { settled = true }
     }
+    // Contain, so the sheet's identifier doesn't replace the Done button's.
+    .accessibilityElement(children: .contain)
     .accessibilityIdentifier("completionSheet")
   }
 }

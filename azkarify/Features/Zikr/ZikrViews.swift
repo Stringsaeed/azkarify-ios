@@ -183,10 +183,7 @@ struct FocusModeView: View {
         }
       }
       .frame(maxWidth: .infinity)
-      ReaderSizeMenu()
-        .foregroundStyle(AZColor.ink)
-        .frame(width: 44, height: 44)
-        .background(AZColor.paperSunk, in: Circle())
+      ReaderSizeMenu(filled: true)
     }
     .padding(.horizontal, AZSpace.md)
     .padding(.top, AZSpace.xs)

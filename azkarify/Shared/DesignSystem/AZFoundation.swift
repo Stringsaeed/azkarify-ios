@@ -7,7 +7,8 @@ import UIKit
 enum AZLocale {
   static let isArabic = Bundle.main.preferredLocalizations.first?.hasPrefix("ar") == true
   static let language = isArabic ? "ar" : "en"
-  static let locale = Locale(identifier: language)
+  /// Plain "ar" now formats with Latin digits, so ask for Arabic-Indic numbering explicitly.
+  static let locale = Locale(identifier: isArabic ? "ar@numbers=arab" : "en")
 
   static func text(_ english: String, _ arabic: String) -> String { isArabic ? arabic : english }
 
@@ -19,6 +20,28 @@ enum AZLocale {
   /// "2 / 4" in English and "٢ من ٤" in Arabic, where a slash reorders in RTL.
   static func progress(_ done: Int, of total: Int) -> String {
     isArabic ? "\(number(done)) من \(number(total))" : "\(done) / \(total)"
+  }
+
+  /// A counted noun: "1 step" / "8 steps", and in Arabic "خطوة واحدة", "خطوتان", "٨ خطوات", "١٢ خطوة".
+  static func count(
+    _ value: Int, english: (one: String, other: String),
+    arabic: (one: String, two: String, few: String, many: String)
+  ) -> String {
+    guard isArabic else { return "\(value) \(value == 1 ? english.one : english.other)" }
+    switch value {
+    case 1: return arabic.one
+    case 2: return arabic.two
+    case 3...10: return "\(number(value)) \(arabic.few)"
+    default: return "\(number(value)) \(arabic.many)"
+    }
+  }
+
+  static func steps(_ value: Int) -> String {
+    count(value, english: ("step", "steps"), arabic: ("خطوة واحدة", "خطوتان", "خطوات", "خطوة"))
+  }
+
+  static func times(_ value: Int) -> String {
+    count(value, english: ("time", "times"), arabic: ("مرة واحدة", "مرتان", "مرات", "مرة"))
   }
 
   /// "3 of 24" / "٣ من ٢٤".
