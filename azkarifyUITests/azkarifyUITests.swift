@@ -8,74 +8,78 @@
 import XCTest
 
 final class azkarifyUITests: XCTestCase {
+  private let morningAndEvening = 27
+  private let beforeSleeping = 28
 
   @MainActor
   func testAdaptiveCategoryNavigation() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    let morning = app.buttons["Words of remembrance for morning and evening"].firstMatch
-    let sleeping = app.buttons["What to say before sleeping"].firstMatch
-    XCTAssertTrue(morning.waitForExistence(timeout: 15))
-    morning.tap()
-    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+    let app = XCUIApplication.launchConfigured(language: "en")
+    app.open(.azkar)
+    app.openCategory(id: morningAndEvening)
+    let sleeping = app.descendants(matching: .any)["category-\(beforeSleeping)"].firstMatch
 
     if app.frame.width >= 700 {
-      XCTAssertTrue(sleeping.isHittable, "The sidebar should remain available beside the azkar")
-      XCTAssertTrue(morning.isSelected)
+      XCTAssertTrue(sleeping.isHittable, "The list should remain available beside the azkar")
     } else {
-      XCTAssertFalse(sleeping.isHittable)
-      let back = app.buttons["BackButton"]
-      if back.exists {
-        back.tap()
-      } else {
-        app.navigationBars.buttons.firstMatch.tap()
-      }
+      XCTAssertFalse(sleeping.exists && sleeping.isHittable)
+      app.goBack()
       XCTAssertTrue(sleeping.waitForExistence(timeout: 5))
     }
     sleeping.tap()
-    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+    XCTAssertTrue(app.buttons["focusMode"].waitForExistence(timeout: 5))
     XCTAssertTrue(app.staticTexts["What to say before sleeping"].firstMatch.exists)
-    let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = "Adaptive category navigation"
-    image.lifetime = .keepAlways
-    add(image)
+    attachScreenshot(app, name: "Adaptive category navigation")
   }
 
   @MainActor
-  func testArabicAppearanceAndSlideshow() throws {
-    let app = XCUIApplication()
-    app.launchArguments = [
-      "-AppleLanguages", "(ar)", "-accent", "teal", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES",
-    ]
-    app.launch()
-    XCTAssertTrue(app.staticTexts["حصن المسلم"].waitForExistence(timeout: 15))
+  func testQuickStartRowAlignsWithFilterAndScrolls() throws {
+    for language in ["ar", "en"] {
+      let app = XCUIApplication.launchConfigured(language: language)
+      app.open(.azkar)
+      let first = app.buttons["quickStart-\(morningAndEvening)"]
+      let last = app.buttons["quickStart-1"]
+      let filter = app.segmentedControls["azkar.filter"]
+      XCTAssertTrue(first.waitForExistence(timeout: 10))
+      XCTAssertTrue(filter.exists)
+      // The first chip starts on the leading edge of the filter below it, fully on screen.
+      if language == "ar" {
+        XCTAssertEqual(first.frame.maxX, filter.frame.maxX, accuracy: 1, "\(language): first chip edge")
+      } else {
+        XCTAssertEqual(first.frame.minX, filter.frame.minX, accuracy: 1, "\(language): first chip edge")
+      }
+      XCTAssertGreaterThanOrEqual(first.frame.minX, 0)
+      XCTAssertLessThanOrEqual(first.frame.maxX, app.frame.maxX)
 
-    app.buttons["القائمة"].tap()
-    app.buttons["الإعدادات"].tap()
-    XCTAssertTrue(app.staticTexts["الإعدادات"].waitForExistence(timeout: 5))
-    let settingsImage = XCTAttachment(screenshot: app.screenshot())
-    settingsImage.name = "Arabic Settings"
-    settingsImage.lifetime = .keepAlways
-    add(settingsImage)
-
-    app.buttons["لون التمييز"].tap()
-    XCTAssertTrue(app.staticTexts["لون التمييز"].waitForExistence(timeout: 5))
-    let accentImage = XCTAttachment(screenshot: app.screenshot())
-    accentImage.name = "Accent choices"
-    accentImage.lifetime = .keepAlways
-    add(accentImage)
-
-    app.buttons["فيروزي"].tap()
-
-    if app.frame.width < 700 {
-      app.navigationBars["الإعدادات"].buttons.firstMatch.tap()
+      let row = app.scrollViews.containing(.button, identifier: first.identifier).firstMatch
+      if language == "ar" { row.swipeRight() } else { row.swipeLeft() }
+      let reachable = XCTNSPredicateExpectation(
+        predicate: NSPredicate { _, _ in
+          last.isHittable && last.frame.minX >= 0 && last.frame.maxX <= app.frame.maxX
+        }, object: nil)
+      XCTAssertEqual(XCTWaiter.wait(for: [reachable], timeout: 5), .completed, "\(language): last chip")
+      attachScreenshot(app, name: "\(language) quick start scrolled to the end")
+      app.terminate()
     }
-    app.buttons["أذكار الصباح والمساء"].firstMatch.tap()
-    app.buttons["عرض الشرائح"].tap()
-    XCTAssertTrue(app.staticTexts["slideshowProgress"].waitForExistence(timeout: 5))
-    let slideshowImage = XCTAttachment(screenshot: app.screenshot())
+  }
+
+  @MainActor
+  func testArabicAppearanceAndFocusMode() throws {
+    let app = XCUIApplication.launchConfigured(language: "ar", extraArguments: ["-accent", "teal"])
+
+    app.open(.settings)
+    XCTAssertTrue(app.staticTexts["الإعدادات"].firstMatch.waitForExistence(timeout: 5))
+    let teal = app.buttons["accent.teal"]
+    XCTAssertTrue(teal.waitForExistence(timeout: 5))
+    XCTAssertTrue(teal.isSelected)
+    XCTAssertEqual(teal.label, "فيروزي")
+    attachScreenshot(app, name: "Arabic Settings")
+
+    app.open(.azkar)
+    app.openCategory(id: morningAndEvening)
+    app.buttons["focusMode"].tap()
     let progress = app.staticTexts["slideshowProgress"]
+    XCTAssertTrue(progress.waitForExistence(timeout: 5))
+    let focusImage = XCTAttachment(screenshot: app.screenshot())
     let progressY = progress.frame.midY
     let next = app.buttons["slideshowNext"]
     let previous = app.buttons["slideshowPrevious"]
@@ -85,40 +89,32 @@ final class azkarifyUITests: XCTestCase {
     next.tap()
     XCTAssertEqual(progress.frame.midY, progressY, accuracy: 1)
     let counter = app.buttons["slideshowCounter"]
-    XCTAssertTrue(counter.isHittable)
-    XCTAssertGreaterThan(counter.frame.midX, app.frame.midX)
-    XCTAssertLessThan(counter.frame.midY, app.frame.height / 3)
+    XCTAssertTrue(counter.waitForExistence(timeout: 5))
     previous.tap()
-    XCTAssertEqual(progress.label, "1 من 24")
+    XCTAssertEqual(progress.label, "١ من ٢٤")
     let counterHidden = XCTNSPredicateExpectation(
-      predicate: NSPredicate(format: "exists == false"), object: counter)
+      predicate: NSPredicate { _, _ in !counter.exists || !counter.isHittable }, object: nil)
     XCTAssertEqual(XCTWaiter.wait(for: [counterHidden], timeout: 3), .completed)
-    slideshowImage.name = "Arabic slideshow first page"
-    slideshowImage.lifetime = .keepAlways
-    add(slideshowImage)
+    focusImage.name = "Arabic focus mode first page"
+    focusImage.lifetime = .keepAlways
+    add(focusImage)
   }
 
   @MainActor
-  func testSlideshowProgressAndCounterSheet() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    XCTAssertTrue(
-      app.buttons["Words of remembrance for morning and evening"].firstMatch.waitForExistence(
-        timeout: 15))
-    app.buttons["Words of remembrance for morning and evening"].firstMatch.tap()
-    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
-    app.buttons["Slideshow"].tap()
+  func testFocusModeProgressAndCounterSheet() throws {
+    let app = XCUIApplication.launchConfigured(language: "en")
+    app.open(.azkar)
+    app.openCategory(id: morningAndEvening)
+    app.buttons["focusMode"].tap()
 
     let progress = app.staticTexts["slideshowProgress"]
     XCTAssertTrue(progress.waitForExistence(timeout: 5))
     XCTAssertEqual(progress.label, "1 of 24")
-    XCTAssertFalse(app.buttons["slideshowCounter"].isHittable)
+    XCTAssertFalse(app.buttons["slideshowCounter"].exists && app.buttons["slideshowCounter"].isHittable)
 
     let progressY = progress.frame.midY
     XCTAssertFalse(app.buttons["slideshowPrevious"].isEnabled)
     app.buttons["slideshowNext"].tap()
-    XCTAssertTrue(progress.waitForExistence(timeout: 5))
     XCTAssertEqual(progress.label, "2 of 24")
     XCTAssertEqual(progress.frame.midY, progressY, accuracy: 1)
     XCTAssertTrue(app.buttons["slideshowPrevious"].isEnabled)
@@ -127,197 +123,169 @@ final class azkarifyUITests: XCTestCase {
     app.buttons["slideshowNext"].tap()
     let counter = app.buttons["slideshowCounter"]
     XCTAssertTrue(counter.waitForExistence(timeout: 5))
-    XCTAssertLessThan(counter.frame.midX, app.frame.midX)
-    XCTAssertLessThan(counter.frame.midY, app.frame.height / 3)
+    app.reveal(counter)
     counter.tap()
     XCTAssertTrue(app.scrollViews["counterZikrScroll"].waitForExistence(timeout: 5))
     XCTAssertTrue(app.buttons["Count: 3"].waitForExistence(timeout: 5))
-    let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = "Slideshow counter sheet"
-    image.lifetime = .keepAlways
-    add(image)
+    XCTAssertTrue(app.descendants(matching: .any)["counter.points"].firstMatch.exists)
+    attachScreenshot(app, name: "Focus mode counter sheet")
+    app.buttons["counter.close"].tap()
+    XCTAssertTrue(progress.waitForExistence(timeout: 5))
   }
 
   @MainActor
-  func testSlideshowHidesChromeForShortSets() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    let search = app.searchFields.firstMatch
-    XCTAssertTrue(search.waitForExistence(timeout: 15))
-    search.tap()
-    search.typeText("completing ablution")
-    let category = app.buttons["What to say upon completing ablution"].firstMatch
-    XCTAssertTrue(category.waitForExistence(timeout: 15))
-    category.tap()
-    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
-    app.buttons["Slideshow"].tap()
-    XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 5))
+  func testFocusModeShowsDotsWithoutProgressForShortSets() throws {
+    let app = XCUIApplication.launchConfigured(language: "en")
+    app.open(.azkar)
+    app.searchAndOpenCategory("completing ablution", title: "What to say upon completing ablution")
+    app.buttons["focusMode"].tap()
+    let close = app.buttons["focus.close"]
+    XCTAssertTrue(close.waitForExistence(timeout: 5))
     XCTAssertFalse(app.staticTexts["slideshowProgress"].exists)
     XCTAssertTrue(app.buttons["slideshowNext"].exists)
     XCTAssertTrue(app.buttons["slideshowPrevious"].exists)
-    XCTAssertFalse(app.otherElements["slideshowPagination"].exists)
+    XCTAssertTrue(app.descendants(matching: .any)["slideshowPagination"].firstMatch.exists)
     app.buttons["slideshowNext"].tap()
     app.buttons["slideshowNext"].tap()
-    XCTAssertTrue(app.buttons["slideshowNext"].label.contains("Done"))
-    XCTAssertTrue(app.buttons["Close"].exists, "The last slide stays open until Done.")
-    app.buttons["slideshowNext"].tap()
-    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
-    XCTAssertFalse(app.buttons["Close"].exists)
+    let done = app.buttons["slideshowDone"]
+    XCTAssertTrue(done.waitForExistence(timeout: 5))
+    XCTAssertTrue(done.label.contains("Done"))
+    XCTAssertTrue(close.exists, "The last zikr stays open until Done.")
+    done.tap()
+    app.dismissCompletionSheetIfShown()
+    XCTAssertTrue(app.buttons["focusMode"].waitForExistence(timeout: 5))
+    XCTAssertFalse(close.exists)
     XCTAssertFalse(app.keyboards.firstMatch.exists)
-    let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = "Short slideshow without progress"
-    image.lifetime = .keepAlways
-    add(image)
+    attachScreenshot(app, name: "Short focus session finished")
   }
 
   @MainActor
-  func testShortSlideshowKeepsCounterWithoutProgress() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    let search = app.searchFields.firstMatch
-    XCTAssertTrue(search.waitForExistence(timeout: 15))
-    search.tap()
-    search.typeText("الرؤيا")
-    let category = app.buttons["ما يفعل من رأى الرؤيا أو الحلم"].firstMatch
-    XCTAssertTrue(category.waitForExistence(timeout: 15))
-    category.tap()
-    XCTAssertTrue(app.buttons["عرض الشرائح"].waitForExistence(timeout: 5))
-    app.buttons["عرض الشرائح"].tap()
-    XCTAssertTrue(app.buttons["slideshowCounter"].waitForExistence(timeout: 5))
+  func testShortFocusSessionKeepsCounterWithoutProgress() throws {
+    let app = XCUIApplication.launchConfigured(language: "ar")
+    app.open(.azkar)
+    app.searchAndOpenCategory("الرؤيا", title: "ما يفعل من رأى الرؤيا أو الحلم")
+    app.buttons["focusMode"].tap()
+    let counter = app.buttons["slideshowCounter"]
+    XCTAssertTrue(counter.waitForExistence(timeout: 5))
     XCTAssertFalse(app.staticTexts["slideshowProgress"].exists)
-    app.buttons["slideshowCounter"].tap()
+    app.reveal(counter)
+    counter.tap()
     XCTAssertTrue(app.scrollViews["counterZikrScroll"].waitForExistence(timeout: 5))
-    let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = "Short slideshow keeps counter"
-    image.lifetime = .keepAlways
-    add(image)
+    attachScreenshot(app, name: "Short focus session keeps counter")
   }
 
   @MainActor
-  func testTwoSlidePaginationAndSingleSlideNavigation() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    let search = app.searchFields.firstMatch
-    XCTAssertTrue(search.waitForExistence(timeout: 15))
-    search.tap()
-    search.typeText("sitting between")
-    let category = app.buttons["Invocations for sitting between two prostrations"].firstMatch
-    XCTAssertTrue(category.waitForExistence(timeout: 5))
-    category.tap()
-    app.buttons["Slideshow"].tap()
-    XCTAssertTrue(app.otherElements["slideshowPagination"].waitForExistence(timeout: 5))
+  func testTwoZikrPaginationAndSingleZikrNavigation() throws {
+    let app = XCUIApplication.launchConfigured(language: "en")
+    app.open(.azkar)
+    app.searchAndOpenCategory("sitting between", title: "Invocations for sitting between two prostrations")
+    app.buttons["focusMode"].tap()
+    XCTAssertTrue(app.descendants(matching: .any)["slideshowPagination"].firstMatch.waitForExistence(timeout: 5))
     XCTAssertFalse(app.staticTexts["slideshowProgress"].exists)
     app.buttons["slideshowNext"].tap()
-    XCTAssertTrue(app.buttons["slideshowNext"].label.contains("Done"))
+    XCTAssertTrue(app.buttons["slideshowDone"].waitForExistence(timeout: 5))
+    XCTAssertTrue(app.buttons["slideshowDone"].label.contains("Done"))
     app.buttons["slideshowPrevious"].tap()
+    XCTAssertTrue(app.buttons["slideshowNext"].waitForExistence(timeout: 5))
     XCTAssertTrue(app.buttons["slideshowNext"].label.contains("Next"))
-    app.buttons["Close"].tap()
-    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
-    if app.buttons["BackButton"].exists {
-      app.buttons["BackButton"].tap()
-    } else {
-      app.navigationBars.buttons.firstMatch.tap()
-    }
-    XCTAssertTrue(search.waitForExistence(timeout: 5))
-    search.tap()
-    if app.buttons["Clear text"].exists { app.buttons["Clear text"].tap() }
-    search.typeText("undressing")
-    let single = app.buttons["What to say when undressing"].firstMatch
-    XCTAssertTrue(single.waitForExistence(timeout: 5))
-    single.tap()
-    app.buttons["Slideshow"].tap()
-    XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 5))
+    app.buttons["focus.close"].tap()
+    XCTAssertTrue(app.buttons["focusMode"].waitForExistence(timeout: 5))
+    XCTAssertFalse(app.buttons["completion.done"].exists, "Closing early is not a completed session")
+    app.goBack()
+
+    app.searchAndOpenCategory("undressing", title: "What to say when undressing")
+    app.buttons["focusMode"].tap()
+    XCTAssertTrue(app.buttons["focus.close"].waitForExistence(timeout: 5))
     XCTAssertFalse(app.buttons["slideshowNext"].exists)
     XCTAssertFalse(app.buttons["slideshowPrevious"].exists)
-    XCTAssertFalse(app.otherElements["slideshowPagination"].exists)
+    XCTAssertFalse(app.descendants(matching: .any)["slideshowPagination"].firstMatch.exists)
     XCTAssertTrue(app.buttons["slideshowDone"].exists)
     app.buttons["slideshowDone"].tap()
-    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+    app.dismissCompletionSheetIfShown()
+    XCTAssertTrue(app.buttons["focusMode"].waitForExistence(timeout: 5))
   }
 
   @MainActor
-  func testAccentSelectionUpdatesSettings() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
+  func testAccentSwatchUpdatesSettings() throws {
+    let app = XCUIApplication.launchConfigured(language: "ar")
+    app.open(.settings)
+    let forest = app.buttons["accent.green"]
+    let dusk = app.buttons["accent.blue"]
+    XCTAssertTrue(dusk.waitForExistence(timeout: 5))
+    forest.tap()
+    waitForSelection(forest, selected: true)
+    dusk.tap()
+    waitForSelection(dusk, selected: true)
+    waitForSelection(forest, selected: false)
+    XCTAssertEqual(dusk.label, "شفقي")
+    attachScreenshot(app, name: "Settings after selecting dusk")
+
+    app.terminate()
     app.launch()
-    app.buttons["القائمة"].tap()
-    app.buttons["الإعدادات"].tap()
-    app.buttons["لون التمييز"].tap()
-    app.buttons["أزرق"].tap()
-    let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = "Settings after selecting blue"
-    image.lifetime = .keepAlways
-    add(image)
-    app.buttons["لون التمييز"].tap()
-    XCTAssertTrue(app.buttons["أزرق"].isSelected)
+    app.open(.settings)
+    XCTAssertTrue(dusk.waitForExistence(timeout: 5))
+    XCTAssertTrue(dusk.isSelected, "The accent must survive relaunch")
   }
 
   @MainActor
-  func testHomeCounterSheetAwardsPointsAndResetDoesNotAward() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    let homePoints = app.buttons["journey-total-points"]
-    XCTAssertTrue(homePoints.waitForExistence(timeout: 15))
-    let initialPoints = try XCTUnwrap(Int(homePoints.value as? String ?? ""))
-    app.buttons["Menu"].tap()
-    app.buttons["Counter"].tap()
-    let close = app.buttons["counter.close"]
-    XCTAssertTrue(close.waitForExistence(timeout: 5))
+  func testCounterTabAwardsPointsAndResetDoesNotAward() throws {
+    let app = XCUIApplication.launchConfigured(language: "en")
+    app.open(.today)
+    let points = app.buttons["journey-total-points"]
+    XCTAssertTrue(points.waitForExistence(timeout: 15))
+    let initialPoints = try XCTUnwrap(Int(points.value as? String ?? ""))
+
+    app.open(.counter)
     let counter = app.buttons["counter.count"]
+    XCTAssertTrue(counter.waitForExistence(timeout: 5))
+    XCTAssertEqual(counter.label, "Count: 0")
     for _ in 0..<33 { counter.tap() }
-    let points = app.descendants(matching: .any)["counter.points"].firstMatch
+    XCTAssertEqual(counter.label, "Count: 33")
     XCTAssertEqual(points.value as? String, String(initialPoints + 1))
     app.buttons["Reset"].tap()
     XCTAssertEqual(counter.label, "Count: 0")
     XCTAssertEqual(points.value as? String, String(initialPoints + 1))
-    close.tap()
-    XCTAssertTrue(homePoints.waitForExistence(timeout: 5))
-    XCTAssertEqual(homePoints.value as? String, String(initialPoints + 1))
+
+    app.open(.today)
+    XCTAssertTrue(points.waitForExistence(timeout: 5))
+    XCTAssertEqual(points.value as? String, String(initialPoints + 1))
   }
 
   @MainActor
-  func testArabicMenuOpensCounter() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    app.buttons["القائمة"].tap()
-    let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = "Arabic menu"
-    image.lifetime = .keepAlways
-    add(image)
-    app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "السبحة")).firstMatch.tap()
-    XCTAssertTrue(app.buttons["العدد: 0"].waitForExistence(timeout: 5))
+  func testArabicCounterTab() throws {
+    let app = XCUIApplication.launchConfigured(language: "ar")
+    app.open(.counter)
+    XCTAssertTrue(app.buttons["العدد: ٠"].waitForExistence(timeout: 5))
+    attachScreenshot(app, name: "Arabic counter tab")
+    app.buttons["counter.count"].tap()
+    XCTAssertTrue(app.buttons["العدد: ١"].waitForExistence(timeout: 5))
   }
 
   @MainActor
-  func testAddingFavoriteShowsIndicator() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(en)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    let addButton = app.buttons["Add to favorites"].firstMatch
+  func testAddingFavoriteUpdatesStar() throws {
+    let app = XCUIApplication.launchConfigured(language: "en")
+    app.open(.azkar)
+    let addButton = app.buttons["Add to favourites"].firstMatch
     XCTAssertTrue(addButton.waitForExistence(timeout: 15))
+    let removeButtons = app.buttons.matching(NSPredicate(format: "label == %@", "Remove from favourites"))
+    let before = removeButtons.count
     addButton.tap()
-    XCTAssertTrue(app.buttons["Remove from favorites"].firstMatch.waitForExistence(timeout: 5))
-    let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = "Favorite added indicator"
-    image.lifetime = .keepAlways
-    add(image)
+    let added = XCTNSPredicateExpectation(
+      predicate: NSPredicate { _, _ in removeButtons.count == before + 1 }, object: nil)
+    XCTAssertEqual(XCTWaiter.wait(for: [added], timeout: 5), .completed)
+    attachScreenshot(app, name: "Favourite added")
   }
 
   @MainActor
   func testCounterKeepsFullZikrScrollable() throws {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(ar)", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    app.buttons["أذكار الصباح والمساء"].firstMatch.tap()
+    let app = XCUIApplication.launchConfigured(language: "ar")
+    app.open(.azkar)
+    app.openCategory(id: morningAndEvening)
     let counterButton = app.buttons.matching(
-      NSPredicate(format: "label CONTAINS %@", "ابدأ العد من 3")
+      NSPredicate(format: "label CONTAINS %@", "العد التنازلي من ٣")
     ).firstMatch
     XCTAssertTrue(counterButton.waitForExistence(timeout: 15))
+    app.reveal(counterButton)
     counterButton.tap()
 
     let zikrScroll = app.scrollViews["counterZikrScroll"]
@@ -326,17 +294,10 @@ final class azkarifyUITests: XCTestCase {
       predicate: NSPredicate { _, _ in zikrScroll.frame.height > app.frame.height * 0.75 },
       object: nil)
     XCTAssertEqual(XCTWaiter.wait(for: [expanded], timeout: 5), .completed)
-    let before = XCTAttachment(screenshot: app.screenshot())
-    before.name = "Counter zikr beginning"
-    before.lifetime = .keepAlways
-    add(before)
+    attachScreenshot(app, name: "Counter zikr beginning")
 
     zikrScroll.swipeUp()
-    XCTAssertTrue(app.buttons["العدد: 3"].waitForExistence(timeout: 5))
-    let after = XCTAttachment(screenshot: app.screenshot())
-    after.name = "Counter zikr ending"
-    after.lifetime = .keepAlways
-    add(after)
+    XCTAssertTrue(app.buttons["العدد: ٣"].waitForExistence(timeout: 5))
+    attachScreenshot(app, name: "Counter zikr ending")
   }
-
 }

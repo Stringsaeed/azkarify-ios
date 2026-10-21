@@ -61,6 +61,11 @@ final class JourneyProgressStore: ObservableObject {
       .reduce(0) { $0 + $1.amount }
   }
 
+  /// Counter taps left before the next counter point.
+  var countsUntilNextPoint: Int {
+    33 - (payload.counterTapRemainder ?? 0)
+  }
+
   func recordCounterTap(on date: Date = Date()) {
     var updatedPayload = payload
     let taps = (updatedPayload.counterTapRemainder ?? 0) + 1

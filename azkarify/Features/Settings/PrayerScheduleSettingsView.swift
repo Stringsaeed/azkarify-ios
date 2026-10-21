@@ -31,7 +31,6 @@ struct PrayerScheduleSettingsView: View {
   @EnvironmentObject private var locationCatalog: LocationCatalogStore
   @EnvironmentObject private var prayerSchedule: PrayerScheduleStore
   @Environment(\.dismiss) private var dismiss
-  @AppStorage("accent") private var accent = "brown"
   @State private var locationName = ""
   @State private var latitude = ""
   @State private var longitude = ""
@@ -78,6 +77,7 @@ struct PrayerScheduleSettingsView: View {
 
   var body: some View {
     Form {
+      Group {
       Section {
         NavigationLink {
           PrayerCityPicker(language: store.language, selectedCountryCode: $selectedCountryCode) { city in
@@ -181,12 +181,12 @@ struct PrayerScheduleSettingsView: View {
           }
         }
       }
+      }
+      .azFormRow()
     }
-    .scrollContentBackground(.hidden)
-    .background(AppAppearance.background(accent))
-    .font(AppAppearance.font(size: 17))
-    .tint(AppAppearance.accent(accent))
-    .appNavigationTitle(text("Prayer times", "مواقيت الصلاة"), language: store.language)
+    .azFormStyle()
+    .navigationTitle(text("Prayer times", "مواقيت الصلاة"))
+    .navigationBarTitleDisplayMode(.inline)
     .onAppear {
       guard !loadedConfiguration else { return }
       loadedConfiguration = true
@@ -298,6 +298,7 @@ private struct PrayerCityPicker: View {
 
   var body: some View {
     List {
+      Group {
       Section {
         Button { showingCountrySelection = true } label: {
           HStack(spacing: 12) {
@@ -324,7 +325,7 @@ private struct PrayerCityPicker: View {
       Section {
         Text(text("Online city searches send search terms, never your GPS coordinates.",
                   "يرسل البحث عبر الإنترنت أسماء المدن فقط، ولا يرسل إحداثيات موقعك."))
-          .font(AppAppearance.font(size: 12))
+          .azText(.footnote)
           .foregroundStyle(.secondary)
         if !selectedCountryIsAvailable {
           Text(text(
@@ -359,7 +360,7 @@ private struct PrayerCityPicker: View {
               Text(text(
                 "Some cities may be unavailable. Try again to refresh.",
                 "قد لا تتوفر بعض المدن. حاول مرة أخرى للتحديث."))
-                .font(AppAppearance.font(size: 13))
+                .azText(.footnote)
                 .foregroundStyle(.secondary)
               Spacer(minLength: 8)
               Button(text("Retry", "إعادة المحاولة")) {
@@ -384,7 +385,7 @@ private struct PrayerCityPicker: View {
                 VStack(alignment: .leading, spacing: 3) {
                   Text(city.name(language: language))
                   if let region = city.region, !region.isEmpty {
-                    Text(region).font(AppAppearance.font(size: 12)).foregroundStyle(.secondary)
+                    Text(region).azText(.footnote).foregroundStyle(.secondary)
                   }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -411,10 +412,15 @@ private struct PrayerCityPicker: View {
             .foregroundStyle(.secondary)
         }
       }
+      }
+      .azFormRow()
     }
-    .font(AppAppearance.font(size: 17))
-    .searchable(text: $search, prompt: language == "ar" ? "ابحث عن مدينة" : "Search cities")
-    .appNavigationTitle(language == "ar" ? "اختر مدينة" : "Choose a city", language: language)
+    .azFormStyle()
+    .searchable(
+      text: $search, placement: .navigationBarDrawer(displayMode: .always),
+      prompt: language == "ar" ? "ابحث عن مدينة" : "Search cities")
+    .navigationTitle(language == "ar" ? "اختر مدينة" : "Choose a city")
+    .navigationBarTitleDisplayMode(.inline)
     .sheet(isPresented: $showingCountrySelection) {
       CountrySelectionSheet(
         selectedCountryCode: selectedCountryCode,
@@ -494,12 +500,16 @@ private struct PrayerTimeZonePicker: View {
         HStack {
           Text(identifier)
           Spacer()
-          if selection == identifier { Image(systemName: "checkmark") }
+          if selection == identifier { Image(systemName: "checkmark").foregroundStyle(.tint) }
         }
       }
+      .azFormRow()
     }
-    .font(AppAppearance.font(size: 17))
-    .searchable(text: $search, prompt: language == "ar" ? "ابحث عن منطقة زمنية" : "Search time zones")
-    .appNavigationTitle(language == "ar" ? "المنطقة الزمنية" : "Time zone", language: language)
+    .azFormStyle()
+    .searchable(
+      text: $search, placement: .navigationBarDrawer(displayMode: .always),
+      prompt: language == "ar" ? "ابحث عن منطقة زمنية" : "Search time zones")
+    .navigationTitle(language == "ar" ? "المنطقة الزمنية" : "Time zone")
+    .navigationBarTitleDisplayMode(.inline)
   }
 }

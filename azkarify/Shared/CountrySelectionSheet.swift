@@ -7,7 +7,6 @@ struct CountrySelectionSheet: View {
   @EnvironmentObject private var store: AzkarStore
   @EnvironmentObject private var locationCatalog: LocationCatalogStore
   @Environment(\.dismiss) private var dismiss
-  @AppStorage("accent") private var accent = "brown"
 
   let selectedCountryCode: String
   let onSelect: (PrayerCountry) -> Void
@@ -81,7 +80,7 @@ struct CountrySelectionSheet: View {
                   VStack(alignment: .leading, spacing: 2) {
                     Text(country.name(language: store.language))
                     Text(country.code)
-                      .font(AppAppearance.font(size: 12))
+                      .azText(.footnote)
                       .foregroundStyle(.secondary)
                   }
                   .frame(maxWidth: .infinity, alignment: .leading)
@@ -89,7 +88,7 @@ struct CountrySelectionSheet: View {
                   if selectedCountryCode.caseInsensitiveCompare(country.code) == .orderedSame {
                     Image(systemName: "checkmark")
                       .fontWeight(.semibold)
-                      .foregroundStyle(AppAppearance.accent(accent))
+                      .foregroundStyle(.tint)
                       .accessibilityLabel(text("Selected", "محدد"))
                   }
                 }
@@ -109,7 +108,7 @@ struct CountrySelectionSheet: View {
           .listStyle(.plain)
         }
       }
-      .font(AppAppearance.font(size: 17))
+      .font(AZFont.font(.body))
       .searchable(
         text: $search,
         placement: .navigationBarDrawer(displayMode: .always),
@@ -143,7 +142,7 @@ struct CountrySelectionSheet: View {
       Text(text(
         "Some countries may be unavailable. Try again to refresh.",
         "قد لا تتوفر بعض الدول. حاول مرة أخرى للتحديث."))
-        .font(AppAppearance.font(size: 13))
+        .azText(.footnote)
         .foregroundStyle(.secondary)
       Spacer(minLength: 8)
       Button(text("Retry", "إعادة المحاولة")) {

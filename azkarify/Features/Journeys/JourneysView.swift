@@ -1,237 +1,165 @@
 import SwiftUI
 
-struct JourneysView: View {
-  @EnvironmentObject private var store: AzkarStore
+/// The Today tab: greeting, next prayer, the day's progress and its journeys.
+struct TodayView: View {
   @EnvironmentObject private var schedule: PrayerScheduleStore
-  @Environment(\.scenePhase) private var scenePhase
-  @AppStorage("accent") private var accent = "brown"
   @EnvironmentObject private var progress: JourneyProgressStore
-  @Environment(\.accessibilityReduceMotion) private var reduceMotion
+  @Environment(\.scenePhase) private var scenePhase
+  let onChooseLocation: () -> Void
   @State private var showPrayerSettings = false
-  @State private var showLocationSetup = false
 
   var body: some View {
     TimelineView(.periodic(from: .now, by: 60)) { context in
+      let date = context.date
+      let prayers = schedule.prayers(on: date)
+      let nextJourneyID = PrayerJourneyHighlight.nextJourneyID(
+        on: date, prayers: prayers,
+        completedJourneyIDs: Set(JourneyCatalog.prayers.filter { progress.isComplete($0, on: date) }.map(\.id)))
       ScrollView {
-        VStack(alignment: .leading, spacing: 24) {
-          introduction(date: context.date)
-          journeySection(
-            text("Begin your day", "بداية يومك"),
-            journeys: [JourneyCatalog.morning, JourneyCatalog.goingOut], date: context.date)
-          VStack(alignment: .leading, spacing: 12) {
-            HStack {
-              sectionTitle(text("Your prayer journeys", "رحلات الصلاة"))
-              Spacer()
-              Button { showPrayerSettings = true } label: {
-                Image(systemName: "clock.badge.checkmark")
-                  .frame(minWidth: 44, minHeight: 44)
-              }
-              .accessibilityLabel(text("Set prayer times", "ضبط أوقات الصلاة"))
+        VStack(alignment: .leading, spacing: AZSpace.xl) {
+          greeting(on: date, prayers: prayers)
+          dayProgress(on: date)
+          PrayerStrip(
+            prayers: prayers, next: schedule.nextPrayer(after: date), now: date,
+            locationName: schedule.configuration?.displayLocationName(language: AZLocale.language),
+            format: { schedule.formatted($0, language: AZLocale.language, compact: true) },
+            onSetLocation: onChooseLocation)
+          section(
+            eyebrow: AZLocale.text("01 / Morning", "٠١ / الصباح"),
+            title: AZLocale.text("Begin your day", "بداية يومك"),
+            journeys: [JourneyCatalog.morning, JourneyCatalog.goingOut], date: date, nextID: nil)
+          VStack(alignment: .leading, spacing: AZSpace.sm) {
+            AZSectionHeader(
+              eyebrow: AZLocale.text("02 / Prayer", "٠٢ / الصلاة"),
+              title: AZLocale.text("Your prayer journeys", "رحلات الصلاة")
+            ) {
+              Button(AZLocale.text("Prayer times", "المواقيت")) { showPrayerSettings = true }
+                .foregroundStyle(.tint)
+                .accessibilityLabel(AZLocale.text("Set prayer times", "ضبط أوقات الصلاة"))
             }
-            if schedule.configuration == nil {
-              Button { showPrayerSettings = true } label: {
-                Label(text("Set your location for prayer times", "حدد موقعك لأوقات الصلاة"),
-                      systemImage: "location")
-                  .font(AppAppearance.font(size: 14))
-                  .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-              }
-              .buttonStyle(.plain)
-              .foregroundStyle(AppAppearance.accent(accent))
-            } else if schedule.prayers(on: context.date).isEmpty {
-              Text(text("Prayer times are unavailable for this date and location.",
-                        "أوقات الصلاة غير متاحة لهذا اليوم وهذا الموقع."))
-                .font(AppAppearance.font(size: 14))
-                .foregroundStyle(.secondary)
+            if schedule.configuration != nil && prayers.isEmpty {
+              Text(AZLocale.text("Prayer times are unavailable for this date and location.",
+                                 "أوقات الصلاة غير متاحة لهذا اليوم وهذا الموقع."))
+                .azText(.callout)
+                .foregroundStyle(AZColor.inkMuted)
             }
             ForEach(JourneyCatalog.prayers) { journey in
-              journeyLink(journey, date: context.date)
+              journeyLink(journey, date: date, prayers: prayers, isNext: journey.id == nextJourneyID)
             }
           }
-          journeySection(
-            text("As the day settles", "ختام يومك"),
-            journeys: [JourneyCatalog.evening, JourneyCatalog.sleep], date: context.date)
+          section(
+            eyebrow: AZLocale.text("03 / Evening", "٠٣ / المساء"),
+            title: AZLocale.text("As the day settles", "ختام يومك"),
+            journeys: [JourneyCatalog.evening, JourneyCatalog.sleep], date: date, nextID: nil)
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 20)
-        .padding(.bottom, 28)
+        .foregroundStyle(AZColor.ink)
+        .padding(.horizontal, AZSpace.gutter)
+        .padding(.top, AZSpace.xs)
+        .padding(.bottom, AZSpace.xxl)
+        .frame(maxWidth: 720)
+        .frame(maxWidth: .infinity)
       }
-      .background { BotanicalBackground(accent: accent, variant: 2) }
-      .navigationTitle(text("Journeys", "الرحلات"))
-      .navigationBarTitleDisplayMode(.inline)
-      .toolbar {
-        ToolbarItem(placement: .principal) {
-          PrayerLocationTitle(title: text("Journeys", "الرحلات"), language: store.language,
-                              location: schedule.configuration?.displayLocationName(language: store.language)) {
-            showLocationSetup = true
-          }
-        }
-        ToolbarItem(placement: store.language == "ar" ? .topBarLeading : .topBarTrailing) { JourneyPointsButton() }
-      }
+      .azScreenBackground()
       .accessibilityIdentifier("journeysScreen")
     }
+    .toolbar {
+      ToolbarItem(placement: .topBarLeading) {
+        Button(action: onChooseLocation) {
+          HStack(spacing: 6) {
+            Image(systemName: "mappin.and.ellipse")
+            Text(schedule.configuration?.displayLocationName(language: AZLocale.language)
+                 ?? AZLocale.text("Choose a city", "اختر مدينة"))
+              .azText(.headline, scale: 15.0 / 17.0)
+              .lineLimit(1)
+            Image(systemName: "chevron.down").font(.system(size: 11, weight: .semibold))
+          }
+          .foregroundStyle(AZColor.ink)
+          .frame(maxWidth: 200)
+        }
+        .accessibilityLabel(AZLocale.text("Prayer location", "موقع الصلاة"))
+        .accessibilityValue(schedule.configuration?.displayLocationName(language: AZLocale.language) ?? "")
+        .accessibilityIdentifier("today.location")
+      }
+      ToolbarItem(placement: .topBarTrailing) { PointsToolbarButton() }
+        .sharedBackgroundVisibility(.hidden)
+    }
+    .toolbarTitleDisplayMode(.inline)
     .sheet(isPresented: $showPrayerSettings, onDismiss: { schedule.refresh() }) {
       NavigationStack { PrayerScheduleSettingsView() }
-    }
-    .sheet(isPresented: $showLocationSetup) {
-      PrayerLocationSheet(onFinish: { showLocationSetup = false })
-      .presentationDragIndicator(.visible)
     }
     .onChange(of: scenePhase) { _, phase in
       if phase == .active { schedule.refresh() }
     }
-    .task { schedule.refresh() }
-    .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
   }
 
-  private func introduction(date: Date) -> some View {
-    VStack(alignment: .leading, spacing: 16) {
-      HStack(alignment: .center, spacing: 12) {
-        VStack(alignment: .leading, spacing: 8) {
-          Text(text("A little, every day", "قليل يدوم كل يوم"))
-            .font(AppAppearance.font(size: 29, relativeTo: .title, bold: true))
-          Text(text("Follow a journey at your own pace.", "أكمل رحلتك على مهل."))
-            .font(AppAppearance.font(size: 16))
-            .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        JourneyCrescent(accent: accent)
-          .frame(width: 84, height: 110)
+  private func isEvening(_ date: Date, prayers: [ScheduledPrayer]) -> Bool {
+    if let maghrib = prayers.first(where: { $0.prayer == .maghrib }) { return date >= maghrib.time }
+    return Calendar.current.component(.hour, from: date) >= 18
+  }
+
+  private func greeting(on date: Date, prayers: [ScheduledPrayer]) -> some View {
+    let evening = isEvening(date, prayers: prayers)
+    return HStack(alignment: .top, spacing: AZSpace.sm) {
+      VStack(alignment: .leading, spacing: AZSpace.xs) {
+        Text(date.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(AZLocale.locale)))
+          .azText(.eyebrow)
+          .foregroundStyle(AZColor.sparkInk)
+        Text(evening
+             ? AZLocale.text("A softer\nending.", "ختام أهدأ\nليومك.")
+             : AZLocale.text("A little,\nevery day.", "قليل يدوم\nكل يوم."))
+          .azText(.display)
+          .accessibilityAddTraits(.isHeader)
       }
-      VStack(alignment: .leading, spacing: 12) {
-        HStack(spacing: 12) {
-          Image(systemName: "leaf")
-            .font(.system(size: 22))
-            .accessibilityHidden(true)
-          VStack(alignment: .leading, spacing: 3) {
-            Text(text("Today's progress", "إنجازك اليوم"))
-              .font(AppAppearance.font(size: 15, bold: true))
-            Text(text("of your day complete", "من يومك مكتمل"))
-              .font(AppAppearance.font(size: 13))
-              .foregroundStyle(.secondary)
-          }
-          Spacer(minLength: 0)
-          Text(dayProgressPercentage(on: date))
-            .font(AppAppearance.font(size: 28, relativeTo: .title2, bold: true))
-            .monospacedDigit()
-        }
-        ProgressView(value: progress.dayProgress(on: date))
-          .tint(AppAppearance.accent(accent))
-          .animation(reduceMotion ? nil : .easeOut(duration: 0.35), value: progress.dayProgress(on: date))
-      }
-      .foregroundStyle(AppAppearance.accent(accent))
-      .padding(16)
-      .background(AppAppearance.accent(accent).opacity(0.07), in: RoundedRectangle(cornerRadius: 20))
-      .accessibilityElement(children: .ignore)
-      .accessibilityLabel(text("Today's progress", "إنجازك اليوم"))
-      .accessibilityValue(dayProgressPercentage(on: date))
-      .accessibilityIdentifier("daily-progress")
+      Spacer(minLength: 0)
+      AZOrnament(
+        shape: evening ? .crescent : .star, size: 64, color: evening ? AZColor.clay : AZColor.spark,
+        spins: !evening)
+        .padding(.top, 14)
     }
   }
 
-  private func dayProgressPercentage(on date: Date) -> String {
-    progress.dayProgress(on: date).formatted(
-      .percent.precision(.fractionLength(0)).locale(Locale(identifier: store.language)))
+  private func dayProgress(on date: Date) -> some View {
+    let value = progress.dayProgress(on: date)
+    let percentage = value.formatted(.percent.precision(.fractionLength(0)).locale(AZLocale.locale))
+    return VStack(alignment: .leading, spacing: 10) {
+      HStack(alignment: .firstTextBaseline, spacing: AZSpace.xs) {
+        Text(percentage).azText(.title2).monospacedDigit()
+        Text(AZLocale.text("of today's journeys complete", "من رحلات اليوم مكتملة"))
+          .azText(.callout)
+          .foregroundStyle(AZColor.inkMuted)
+      }
+      AZProgressTrack(value: value)
+    }
+    .accessibilityElement(children: .ignore)
+    .accessibilityLabel(AZLocale.text("Today's progress", "إنجازك اليوم"))
+    .accessibilityValue(percentage)
+    .accessibilityIdentifier("daily-progress")
   }
 
-  private func journeySection(_ title: String, journeys: [JourneyDefinition], date: Date) -> some View {
-    VStack(alignment: .leading, spacing: 12) {
-      sectionTitle(title)
-      ForEach(journeys) { journey in journeyLink(journey, date: date) }
+  private func section(
+    eyebrow: String, title: String, journeys: [JourneyDefinition], date: Date, nextID: String?
+  ) -> some View {
+    VStack(alignment: .leading, spacing: AZSpace.sm) {
+      AZSectionHeader(eyebrow: eyebrow, title: title)
+      ForEach(journeys) { journey in
+        journeyLink(journey, date: date, prayers: [], isNext: journey.id == nextID)
+      }
     }
   }
 
-  private func sectionTitle(_ title: String) -> some View {
-    Text(title).font(AppAppearance.font(size: 20, relativeTo: .headline, bold: true))
-  }
-
-  private func journeyLink(_ journey: JourneyDefinition, date: Date) -> some View {
-    NavigationLink(value: DetailRoute.journey(journey)) {
+  private func journeyLink(
+    _ journey: JourneyDefinition, date: Date, prayers: [ScheduledPrayer], isNext: Bool
+  ) -> some View {
+    let time = journey.prayer.flatMap { prayer in
+      prayers.first { $0.prayer == prayer }.flatMap { schedule.formatted($0.time, language: AZLocale.language) }
+    }
+    return NavigationLink(value: DetailRoute.journey(journey)) {
       JourneyCard(
         journey: journey, completedCount: progress.completedCount(for: journey, on: date),
-        time: journey.prayer.flatMap { schedule.formattedTime(for: $0, on: date, language: store.language) },
-        language: store.language, accent: accent,
-        isNextPrayer: journey.id == PrayerJourneyHighlight.nextJourneyID(
-          on: date, prayers: schedule.prayers(on: date),
-          completedJourneyIDs: Set(JourneyCatalog.prayers.filter {
-            progress.isComplete($0, on: date)
-          }.map(\.id))))
+        time: time,
+        isNext: isNext)
     }
-    .buttonStyle(.plain)
+    .buttonStyle(AZPressableCardStyle(radius: AZRadius.md))
     .accessibilityIdentifier("journey-\(journey.id)")
-  }
-
-  private func text(_ english: String, _ arabic: String) -> String {
-    JourneyText(english, arabic).value(language: store.language)
-  }
-}
-
-private struct JourneyCard: View {
-  let journey: JourneyDefinition
-  let completedCount: Int
-  let time: String?
-  let language: String
-  let accent: String
-  let isNextPrayer: Bool
-
-  private var completed: Bool { completedCount == journey.requiredSteps.count }
-
-  var body: some View {
-    VStack(alignment: .leading, spacing: 14) {
-      if isNextPrayer {
-        Label(language == "ar" ? "الصلاة القادمة" : "Next prayer", systemImage: "clock.fill")
-          .font(AppAppearance.font(size: 13, bold: true))
-          .foregroundStyle(AppAppearance.accent(accent))
-          .accessibilityIdentifier("next-prayer-highlight")
-      }
-      HStack(alignment: .top, spacing: 12) {
-        Image(systemName: completed ? "checkmark" : journey.symbol)
-          .font(.system(size: 22, weight: .light))
-          .foregroundStyle(AppAppearance.accent(accent))
-          .frame(width: 44, height: 44)
-          .background(AppAppearance.accent(accent).opacity(0.08), in: Circle())
-          .accessibilityHidden(true)
-        VStack(alignment: .leading, spacing: 5) {
-          Text(journey.title.value(language: language))
-            .font(AppAppearance.font(size: 18, relativeTo: .headline, bold: true))
-          if let time {
-            Text(time)
-              .font(AppAppearance.font(size: 14))
-              .foregroundStyle(AppAppearance.accent(accent))
-          } else {
-            Text(journey.subtitle.value(language: language))
-              .font(AppAppearance.font(size: 13))
-              .foregroundStyle(.secondary)
-          }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        Image(systemName: "chevron.forward")
-          .font(.caption)
-          .foregroundStyle(.tertiary)
-          .padding(.top, 14)
-          .accessibilityHidden(true)
-      }
-      HStack(spacing: 12) {
-        ProgressView(value: Double(completedCount), total: Double(journey.requiredSteps.count))
-          .tint(AppAppearance.accent(accent))
-          .accessibilityHidden(true)
-        Text(JourneyText(
-          completed ? "Complete" : "\(completedCount) / \(journey.requiredSteps.count)",
-          completed ? "مكتملة" : "\(completedCount) / \(journey.requiredSteps.count)"
-        ).value(language: language))
-          .font(AppAppearance.font(size: 12, bold: true))
-          .foregroundStyle(AppAppearance.accent(accent))
-      }
-    }
-    .padding(18)
-    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 22))
-    .overlay {
-      RoundedRectangle(cornerRadius: 22)
-        .strokeBorder(AppAppearance.accent(accent).opacity(isNextPrayer ? 0.8 : completed ? 0.3 : 0.12), lineWidth: isNextPrayer ? 2 : 1)
-    }
-    .accessibilityElement(children: .combine)
-    .accessibilityValue(JourneyText(
-      "\(completedCount) of \(journey.requiredSteps.count) steps completed",
-      "اكتملت \(completedCount) من \(journey.requiredSteps.count) خطوات"
-    ).value(language: language))
   }
 }

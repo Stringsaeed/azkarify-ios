@@ -52,10 +52,14 @@ final class LocationSetupUITests: XCTestCase {
     let sheetGone = XCTNSPredicateExpectation(
       predicate: NSPredicate(format: "exists == false"), object: app.buttons["location.useDevice"])
     XCTAssertEqual(XCTWaiter.wait(for: [sheetGone], timeout: 20), .completed)
-    XCTAssertTrue(homeLocation.label.contains("Current location"))
-    app.buttons["Menu"].tap()
-    app.buttons["Settings"].tap()
-    app.buttons["Prayer times"].firstMatch.tap()
+    // The device location resolves asynchronously after the sheet closes.
+    let named = XCTNSPredicateExpectation(
+      predicate: NSPredicate(format: "label CONTAINS %@", "Current location"), object: homeLocation)
+    XCTAssertEqual(XCTWaiter.wait(for: [named], timeout: 10), .completed, homeLocation.label)
+    app.open(.settings)
+    let prayerTimes = app.buttons["Prayer times"].firstMatch
+    app.reveal(prayerTimes)
+    prayerTimes.tap()
     XCTAssertTrue(app.textFields["prayer.locationName"].waitForExistence(timeout: 5))
     XCTAssertEqual(app.textFields["prayer.locationName"].value as? String, "Current location")
     let coordinates = app.textFields.allElementsBoundByIndex.compactMap { $0.value as? String }

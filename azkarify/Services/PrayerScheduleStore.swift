@@ -186,6 +186,7 @@ final class PrayerScheduleStore: ObservableObject {
   @Published private(set) var schedule: [ScheduledPrayer] = []
   private let defaults: UserDefaults
   private static let configurationKey = "prayerSchedule.configuration.v1"
+  private var formatters: [String: DateFormatter] = [:]
 
   init(defaults: UserDefaults = .standard) {
     self.defaults = defaults
@@ -245,14 +246,34 @@ final class PrayerScheduleStore: ObservableObject {
   }
 
   func formattedTime(for prayer: DailyPrayer, on date: Date = Date(), language: String) -> String? {
-    guard let time = time(for: prayer, on: date),
-      let identifier = configuration?.timeZoneIdentifier,
+    guard let time = time(for: prayer, on: date) else { return nil }
+    return formatted(time, language: language)
+  }
+
+  /// A prayer time in the location's time zone, e.g. "3:36 PM".
+  func formatted(_ time: Date, language: String, compact: Bool = false) -> String? {
+    guard let identifier = configuration?.timeZoneIdentifier,
       let timeZone = TimeZone(identifier: identifier)
     else { return nil }
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: language)
-    formatter.timeZone = timeZone
-    formatter.timeStyle = .short
+    let key = "\(language)|\(identifier)|\(compact)"
+    let formatter: DateFormatter
+    if let cached = formatters[key] {
+      formatter = cached
+    } else {
+      formatter = DateFormatter()
+      // Match the rest of the Arabic UI, which uses Arabic-Indic digits.
+      formatter.locale = Locale(identifier: language == "ar" ? "ar@numbers=arab" : language)
+      formatter.timeZone = timeZone
+      if compact {
+        // Five times share one row: drop the day period ("3:36", not "3:36 PM").
+        let hourFormat = DateFormatter.dateFormat(
+          fromTemplate: "j", options: 0, locale: formatter.locale) ?? "H"
+        formatter.dateFormat = hourFormat.contains("a") || hourFormat.contains("h") ? "h:mm" : "H:mm"
+      } else {
+        formatter.timeStyle = .short
+      }
+      formatters[key] = formatter
+    }
     return formatter.string(from: time)
   }
 }

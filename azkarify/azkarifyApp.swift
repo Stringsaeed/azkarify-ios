@@ -11,11 +11,10 @@ struct azkarifyApp: App {
   @AppStorage("accent") private var accent = "brown"
   @AppStorage("hasSeenIntro") private var hasSeenIntro = false
   @State private var canPresentLocationSetup = false
-  @State private var confettiToken = 0
-  @State private var confettiOrigin: CGPoint?
 
   init() {
-    AppAppearance.registerFonts()
+    AZFont.registerFonts()
+    AZAppearance.configureUIKit()
     _ = RevenueCatService.isConfigured
     UNUserNotificationCenter.current().delegate = ReminderScheduler.delegate
     _store = StateObject(wrappedValue: AzkarStore(repository: AzkarRepository()))
@@ -29,13 +28,10 @@ struct azkarifyApp: App {
         .environmentObject(journeyProgress)
         .environmentObject(locationCatalog)
         .preferredColorScheme(theme == "dark" ? .dark : theme == "light" ? .light : nil)
-        .tint(AppAppearance.accent(accent))
-        .font(AppAppearance.font(size: 17))
-        .environment(\.celebrate, { origin in
-          confettiOrigin = origin
-          confettiToken += 1
-        })
-        .confettiBurst(token: $confettiToken, accent: accent, origin: confettiOrigin)
+        .tint(AZAccent.color(accent))
+        .font(AZFont.font(.body))
+        .foregroundStyle(AZColor.ink)
+        .environment(\.layoutDirection, AZLocale.isArabic ? .rightToLeft : .leftToRight)
         .onAppear { canPresentLocationSetup = hasSeenIntro }
         .fullScreenCover(
           isPresented: Binding(
@@ -46,7 +42,7 @@ struct azkarifyApp: App {
         ) {
           IntroView { hasSeenIntro = true }
             .environmentObject(store)
-            .tint(AppAppearance.accent(accent))
+            .tint(AZAccent.color(accent))
         }
     }
   }

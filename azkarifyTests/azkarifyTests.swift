@@ -10,7 +10,7 @@ struct azkarifyTests {
   @Test func nativeSearchFieldUsesAppFont() async throws {
     let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 834, height: 1194))
     let host = UIHostingController(
-      rootView: ContentView()
+      rootView: NavigationStack { AzkarListView(selection: .constant(nil)) }
         .environmentObject(AzkarStore(repository: AzkarRepository()))
         .environmentObject(PrayerScheduleStore())
         .environmentObject(JourneyProgressStore())
@@ -29,14 +29,16 @@ struct azkarifyTests {
       host.view.layoutIfNeeded()
     }
     let field = try #require(searchField(in: host.view))
-    for _ in 0..<20 where field.font?.familyName != "Alan Sans" {
+    // The body face follows the UI language: Space Grotesk in English, Alan Sans in Arabic.
+    let family = try #require(UIFont(name: AZFont.metrics(.body).face, size: 16)?.familyName)
+    for _ in 0..<20 where field.font?.familyName != family {
       try await Task.sleep(for: .milliseconds(100))
       host.view.layoutIfNeeded()
     }
-    #expect(field.font?.familyName == "Alan Sans")
+    #expect(field.font?.familyName == family)
     if let placeholder = field.attributedPlaceholder, placeholder.length > 0 {
       let font = placeholder.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
-      #expect(font?.familyName == "Alan Sans")
+      #expect(font?.familyName == family)
     }
 
     let originalSize = try #require(field.font?.pointSize)
@@ -45,7 +47,7 @@ struct azkarifyTests {
       try await Task.sleep(for: .milliseconds(100))
       host.view.layoutIfNeeded()
     }
-    #expect(field.font?.familyName == "Alan Sans")
+    #expect(field.font?.familyName == family)
     #expect((field.font?.pointSize ?? 0) > originalSize)
   }
 

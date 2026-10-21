@@ -28,7 +28,8 @@ struct SearchFieldTypography: UIViewControllerRepresentable {
     }
 
     func applyFont() {
-      guard let baseFont = UIFont(name: "AlanSans-Regular", size: 17) else { return }
+      let metrics = AZFont.metrics(.body)
+      guard let baseFont = UIFont(name: metrics.face, size: metrics.size) else { return }
       var ancestor = parent
       while let controller = ancestor {
         if let field = controller.navigationItem.searchController?.searchBar.searchTextField {

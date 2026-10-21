@@ -1,22 +1,16 @@
 import SwiftUI
 
-struct JourneyPointsButton: View {
-  @EnvironmentObject private var store: AzkarStore
+/// The points badge for a toolbar. Tapping it opens the points sheet.
+struct PointsToolbarButton: View {
   @EnvironmentObject private var progress: JourneyProgressStore
   @State private var showDetails = false
 
   var body: some View {
     Button { showDetails = true } label: {
-      HStack(spacing: 4) {
-        PointsCurrencyIcon().frame(width: 25, height: 25)
-        Text(progress.totalPoints.formatted(.number.locale(Locale(identifier: store.language))))
-          .font(AppAppearance.font(size: 15, bold: true))
-          .lineLimit(1)
-          .minimumScaleFactor(0.7)
-      }
-      .frame(minHeight: 44)
+      AZPointsBadge(points: progress.totalPoints)
     }
-    .accessibilityLabel(store.language == "ar" ? "نقاطك" : "Your points")
+    .buttonStyle(.plain)
+    .accessibilityLabel(AZLocale.text("Your points", "نقاطك"))
     .accessibilityValue(String(progress.totalPoints))
     .accessibilityIdentifier("journey-total-points")
     .sheet(isPresented: $showDetails) {
@@ -28,54 +22,57 @@ struct JourneyPointsButton: View {
 }
 
 private struct JourneyPointsDetails: View {
-  @EnvironmentObject private var store: AzkarStore
   @EnvironmentObject private var progress: JourneyProgressStore
   @Environment(\.dismiss) private var dismiss
-  @AppStorage("accent") private var accent = "brown"
 
   var body: some View {
     TimelineView(.periodic(from: .now, by: 60)) { context in
       ScrollView {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: AZSpace.md) {
           HStack {
-            Text(text("Your points", "نقاطك"))
-              .font(AppAppearance.font(size: 24, relativeTo: .title2, bold: true))
+            Text(text("Your points", "نقاطك")).azText(.title2)
             Spacer()
             Button(text("Done", "تم")) { dismiss() }
-              .font(AppAppearance.font(size: 15, bold: true))
+              .buttonStyle(.azText)
               .accessibilityIdentifier("points.dismiss")
           }
-          HStack(spacing: 10) {
-            PointsCurrencyIcon().frame(width: 48, height: 48)
-            Text(progress.totalPoints.formatted(.number.locale(Locale(identifier: store.language))))
-              .font(AppAppearance.font(size: 36, relativeTo: .largeTitle, bold: true))
+          HStack(spacing: AZSpace.sm) {
+            AZOrnament(shape: .star, size: 40, color: AZColor.spark)
+            Text(AZLocale.number(progress.totalPoints))
+              .azText(.numeral, scale: 0.6)
+              .monospacedDigit()
               .accessibilityLabel(text("Total points", "مجموع النقاط"))
               .accessibilityValue(String(progress.totalPoints))
           }
           Text(text("Total points for today: \(progress.pointsEarned(on: context.date))",
-                    "مجموع نقاط اليوم: \(progress.pointsEarned(on: context.date))"))
-            .font(AppAppearance.font(size: 17, bold: true))
+                    "مجموع نقاط اليوم: \(AZLocale.number(progress.pointsEarned(on: context.date)))"))
+            .azText(.headline)
             .accessibilityIdentifier("points.today")
-          Text(text(
-            "\(JourneyProgressStore.stepPoints) points per step, plus \(JourneyProgressStore.journeyCompletionPoints) per journey and \(JourneyProgressStore.slideshowCompletionPoints) per completed slideshow. Each step, journey, and slideshow category earns its reward once a day. Earned points stay yours if you undo a step.",
-            "\(JourneyProgressStore.stepPoints) نقاط لكل خطوة، و\(JourneyProgressStore.journeyCompletionPoints) نقطة إضافية لكل رحلة، و\(JourneyProgressStore.slideshowCompletionPoints) نقطة عند إكمال عرض الشرائح. تُكتسب مكافأة كل خطوة ورحلة وفئة في عرض الشرائح مرة واحدة يومياً، وتبقى نقاطك إذا ألغيت إكمال خطوة."))
-            .font(AppAppearance.font(size: 15))
-          Text(text("Saved on this device only. Future syncing will require your agreement.",
-                    "محفوظة على هذا الجهاز فقط. لن تتم المزامنة مستقبلاً إلا بموافقتك."))
-            .font(AppAppearance.font(size: 14))
-            .foregroundStyle(.secondary)
-          Text(text("Earn 1 point for every 33 counts in the counter. Progress toward the next point is saved between sessions.",
-                    "اكسب نقطة واحدة لكل ٣٣ تسبيحة في السبحة. يُحفظ تقدمك نحو النقطة التالية بين الجلسات."))
-            .font(AppAppearance.font(size: 15))
+          VStack(alignment: .leading, spacing: AZSpace.sm) {
+            Text(text(
+              "\(JourneyProgressStore.stepPoints) points per step, plus \(JourneyProgressStore.journeyCompletionPoints) per journey and \(JourneyProgressStore.slideshowCompletionPoints) per completed focus session. Each step, journey, and category earns its reward once a day. Earned points stay yours if you undo a step.",
+              "\(AZLocale.number(JourneyProgressStore.stepPoints)) نقاط لكل خطوة، و\(AZLocale.number(JourneyProgressStore.journeyCompletionPoints)) نقطة إضافية لكل رحلة، و\(AZLocale.number(JourneyProgressStore.slideshowCompletionPoints)) نقطة عند إكمال وضع التركيز. تُكتسب مكافأة كل خطوة ورحلة وباب مرة واحدة يومياً، وتبقى نقاطك إذا ألغيت إكمال خطوة."))
+            Text(text("Earn 1 point for every 33 counts in the counter. Progress toward the next point is saved between sessions.",
+                      "اكسب نقطة واحدة لكل ٣٣ تسبيحة في السبحة. يُحفظ تقدمك نحو النقطة التالية بين الجلسات."))
+          }
+          .azText(.body)
+          HStack(spacing: AZSpace.sm) {
+            Image(systemName: "lock")
+              .accessibilityHidden(true)
+            Text(text("Saved on this device only. Future syncing will require your agreement.",
+                      "محفوظة على هذا الجهاز فقط. لن تتم المزامنة مستقبلاً إلا بموافقتك."))
+              .azText(.footnote)
+          }
+          .azCard(.forest, compact: true)
         }
-        .padding(24)
+        .foregroundStyle(AZColor.ink)
+        .padding(AZSpace.xl)
       }
-      .background(AppAppearance.background(accent))
+      .azScreenBackground()
     }
-    .environment(\.layoutDirection, store.language == "ar" ? .rightToLeft : .leftToRight)
   }
 
   private func text(_ english: String, _ arabic: String) -> String {
-    store.language == "ar" ? arabic : english
+    AZLocale.text(english, arabic)
   }
 }

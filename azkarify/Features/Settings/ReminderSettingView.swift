@@ -17,12 +17,22 @@ struct ReminderSettingView: View {
 
   var body: some View {
     Toggle(
-      kind.title(language: language),
       isOn: Binding(
         get: { enabled },
         set: { newValue in Task { await update(enabled: newValue, time: time) } }
       )
-    )
+    ) {
+      VStack(alignment: .leading, spacing: 2) {
+        Text(rowTitle).azText(.rowTitle)
+        if enabled {
+          Text(AZLocale.text("Every day at \(time.formatted(date: .omitted, time: .shortened))",
+                             "كل يوم الساعة \(time.formatted(Date.FormatStyle(date: .omitted, time: .shortened).locale(AZLocale.locale)))"))
+            .azText(.footnote)
+            .foregroundStyle(AZColor.inkMuted)
+        }
+      }
+    }
+    .tint(AZColor.forest)
     .disabled(isSaving)
     .task(id: language) {
       if enabled {
@@ -43,7 +53,7 @@ struct ReminderSettingView: View {
 
     if enabled {
       DatePicker(
-        kind.title(language: language),
+        AZLocale.text("Time", "الوقت"),
         selection: Binding(
           get: { time },
           set: { newValue in Task { await update(enabled: true, time: newValue) } }
@@ -51,6 +61,13 @@ struct ReminderSettingView: View {
         displayedComponents: .hourAndMinute
       )
       .disabled(isSaving)
+    }
+  }
+
+  private var rowTitle: String {
+    switch kind {
+    case .morning: AZLocale.text("Morning azkar", "أذكار الصباح")
+    case .evening: AZLocale.text("Evening azkar", "أذكار المساء")
     }
   }
 
