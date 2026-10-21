@@ -138,9 +138,7 @@ struct AzkarListView: View {
           }
         }
       }
-      .padding(.horizontal, AZSpace.gutter)
     }
-    .padding(.horizontal, -AZSpace.gutter)
     .scrollClipDisabled()
   }
 
