@@ -9,26 +9,32 @@ final class JourneyUITests: XCTestCase {
   func testNavigationLocationAndPointsDetailsInBothLanguages() {
     for language in ["en", "ar"] {
       let app = launch(language: language)
+      // The prayer strip is a card on Today, below the greeting and the day's progress.
       let location = app.buttons["home.prayerLocation"]
       XCTAssertTrue(location.waitForExistence(timeout: 5))
-      XCTAssertLessThan(location.frame.maxY, app.frame.height * 0.25)
+      XCTAssertTrue(location.isHittable)
       let points = app.buttons["journey-total-points"]
       XCTAssertTrue(points.exists)
-      XCTAssertGreaterThan(points.frame.midX, app.frame.midX)
+      // The points badge is the trailing toolbar item, so it mirrors in Arabic.
+      if language == "ar" {
+        XCTAssertLessThan(points.frame.midX, app.frame.midX)
+      } else {
+        XCTAssertGreaterThan(points.frame.midX, app.frame.midX)
+      }
       points.tap()
       XCTAssertTrue(app.staticTexts["points.today"].waitForExistence(timeout: 5))
-      attachScreenshot(app, name: "\(language) points details with mosaic")
+      attachScreenshot(app, name: "\(language) points details")
       app.buttons["points.dismiss"].tap()
-      app.buttons["dailyJourneys"].tap()
       XCTAssertTrue(app.buttons["journey-morning"].waitForExistence(timeout: 5))
       let dailyProgress = app.descendants(matching: .any)["daily-progress"].firstMatch
       XCTAssertTrue(dailyProgress.exists)
       let percentage = dailyProgress.value as? String ?? ""
       XCTAssertTrue(percentage.contains("%") || percentage.contains("٪"))
-      attachScreenshot(app, name: "\(language) journeys with exact crescent and navigation")
+      attachScreenshot(app, name: "\(language) today journeys")
       let fajr = app.buttons["journey-prayer-fajr"]
       reveal(fajr, in: app)
-      XCTAssertTrue((fajr.value as? String ?? "").contains("8"))
+      let fajrValue = fajr.value as? String ?? ""
+      XCTAssertTrue(fajrValue.contains("8") || fajrValue.contains("٨"), "Fajr has eight steps: \(fajrValue)")
       fajr.tap()
       XCTAssertTrue(app.buttons["journey-step-restroom"].waitForExistence(timeout: 5))
       attachScreenshot(app, name: "\(language) eight-step prayer journey")
@@ -39,7 +45,6 @@ final class JourneyUITests: XCTestCase {
   @MainActor
   func testPointsPersistAndRecheckingDoesNotAwardAgain() {
     let app = launch(language: "en")
-    app.buttons["dailyJourneys"].tap()
     let total = app.buttons["journey-total-points"]
     XCTAssertTrue(total.waitForExistence(timeout: 5))
     let initialPoints = Int(total.value as? String ?? "")
@@ -55,9 +60,11 @@ final class JourneyUITests: XCTestCase {
     }
     step.tap()
     waitForSelection(step, selected: true)
+    // Heading out has one step, so checking it finishes the journey.
+    app.dismissCompletionSheet()
     app.terminate()
     app.launch()
-    app.buttons["dailyJourneys"].tap()
+    app.open(.today)
     XCTAssertTrue(total.waitForExistence(timeout: 5))
     let earnedPoints = Int(total.value as? String ?? "")
     XCTAssertNotNil(earnedPoints)
@@ -72,9 +79,10 @@ final class JourneyUITests: XCTestCase {
     waitForSelection(step, selected: false)
     step.tap()
     waitForSelection(step, selected: true)
+    app.dismissCompletionSheet()
     app.terminate()
     app.launch()
-    app.buttons["dailyJourneys"].tap()
+    app.open(.today)
     XCTAssertTrue(total.waitForExistence(timeout: 5))
     XCTAssertEqual(Int(total.value as? String ?? ""), earnedPoints)
   }
@@ -149,7 +157,6 @@ final class JourneyUITests: XCTestCase {
   @MainActor
   func testMorningJourneyLinksAzkarAndRecordsDuhaChoice() {
     let app = launch(language: "en")
-    app.buttons["dailyJourneys"].tap()
     let morning = app.buttons["journey-morning"]
     reveal(morning, in: app)
     morning.tap()
@@ -157,14 +164,9 @@ final class JourneyUITests: XCTestCase {
     XCTAssertTrue(wakeAzkar.waitForExistence(timeout: 5))
     attachScreenshot(app, name: "Morning journey timeline")
     wakeAzkar.tap()
-    XCTAssertTrue(app.buttons["Slideshow"].waitForExistence(timeout: 5))
+    XCTAssertTrue(app.buttons["focusMode"].waitForExistence(timeout: 5))
     attachScreenshot(app, name: "Morning journey linked wake azkar")
-    let back = app.buttons["BackButton"]
-    if back.exists {
-      back.tap()
-    } else {
-      app.navigationBars.buttons.firstMatch.tap()
-    }
+    app.goBack()
 
     let duha = app.buttons["journey-choice-duha"]
     reveal(duha, in: app)
@@ -186,10 +188,8 @@ final class JourneyUITests: XCTestCase {
 
   @MainActor
   private func launch(language: String) -> XCUIApplication {
-    let app = XCUIApplication()
-    app.launchArguments = ["-AppleLanguages", "(\(language))", "-hasSeenIntro", "YES", "-hasPresentedPrayerLocationSetup", "YES"]
-    app.launch()
-    XCTAssertTrue(app.buttons["dailyJourneys"].waitForExistence(timeout: 15))
+    let app = XCUIApplication.launchConfigured(language: language)
+    app.open(.today)
     return app
   }
 
@@ -206,6 +206,8 @@ final class JourneyUITests: XCTestCase {
     XCTAssertEqual(step.value as? String, language == "ar" ? "غير مكتملة" : "Incomplete")
     step.tap()
     waitForSelection(step, selected: true)
+    attachScreenshot(app, name: "\(language) evening journey completion sheet")
+    app.dismissCompletionSheet()
     XCTAssertEqual(
       app.staticTexts["journey-completion"].label,
       language == "ar" ? "اكتملت الرحلة" : "Journey complete")
@@ -226,9 +228,7 @@ final class JourneyUITests: XCTestCase {
 
   @MainActor
   private func openEveningJourney(_ app: XCUIApplication) {
-    let homeEntry = app.buttons["dailyJourneys"]
-    XCTAssertTrue(homeEntry.waitForExistence(timeout: 15))
-    homeEntry.tap()
+    app.open(.today)
     let evening = app.buttons["journey-evening"]
     reveal(evening, in: app)
     evening.tap()
@@ -236,9 +236,7 @@ final class JourneyUITests: XCTestCase {
 
   @MainActor
   private func openArabicPrayerSettings(_ app: XCUIApplication) {
-    let settings = app.buttons["الإعدادات"]
-    XCTAssertTrue(settings.waitForExistence(timeout: 15))
-    settings.tap()
+    app.open(.settings)
     let prayerTimes = app.buttons["مواقيت الصلاة"].firstMatch
     reveal(prayerTimes, in: app)
     prayerTimes.tap()
@@ -247,25 +245,6 @@ final class JourneyUITests: XCTestCase {
 
   @MainActor
   private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
-    for _ in 0..<12 {
-      if element.exists && element.isHittable { return }
-      app.swipeUp()
-    }
-    XCTAssertTrue(element.exists && element.isHittable, "Expected control to be reachable by scrolling")
-  }
-
-  @MainActor
-  private func waitForSelection(_ element: XCUIElement, selected: Bool) {
-    let expectation = XCTNSPredicateExpectation(
-      predicate: NSPredicate(format: "selected == %@", NSNumber(value: selected)), object: element)
-    XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: 5), .completed)
-  }
-
-  @MainActor
-  private func attachScreenshot(_ app: XCUIApplication, name: String) {
-    let attachment = XCTAttachment(screenshot: app.screenshot())
-    attachment.name = name
-    attachment.lifetime = .keepAlways
-    add(attachment)
+    app.reveal(element)
   }
 }
