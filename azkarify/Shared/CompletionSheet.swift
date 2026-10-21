@@ -10,6 +10,20 @@ struct CompletionSummary: Identifiable, Equatable {
   let totalPoints: Int
 }
 
+extension CompletionSummary {
+  /// Records a finished focus session and describes it for the completion sheet.
+  static func recordFocusSession(_ category: ZikrCategory, in progress: JourneyProgressStore) -> CompletionSummary {
+    let before = progress.totalPoints
+    let awarded = progress.completeSlideshow(categoryID: category.id)
+    return CompletionSummary(
+      stickerLabel: AZLocale.text("All read", "اكتملت القراءة"),
+      title: category.title,
+      message: AZLocale.text("Every zikr in this set, done.", "أتممت كل أذكار هذا الباب."),
+      pointsEarned: awarded ? progress.totalPoints - before : 0,
+      totalPoints: progress.totalPoints)
+  }
+}
+
 /// The celebration: check (0–150 ms), points tick up (150–500 ms), then still.
 struct CompletionSheet: View {
   let summary: CompletionSummary

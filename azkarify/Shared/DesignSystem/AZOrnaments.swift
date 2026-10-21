@@ -10,7 +10,7 @@ struct AZOrnament: View {
   let shape: AZOrnamentShape
   var size: CGFloat = 24
   var color: Color = AZColor.spark
-  /// One turn per 18 s; stops under Reduce Motion and off screen.
+  /// One turn per 18 s; stops under Reduce Motion, when hidden, and when scrolled out of view.
   var spins = false
 
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -30,6 +30,7 @@ struct AZOrnament: View {
     .frame(width: size, height: size)
     .onAppear { isVisible = true }
     .onDisappear { isVisible = false }
+    .onScrollVisibilityChange(threshold: 0.01) { isVisible = $0 }
     .accessibilityHidden(true)
     .allowsHitTesting(false)
   }

@@ -241,7 +241,6 @@ struct PrayerLocationSheet: View {
               .contentShape(Rectangle())
             }
             .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-          .azFormRow()
             .azFormRow()
             .accessibilityIdentifier("location.city.\(city.id)")
           }

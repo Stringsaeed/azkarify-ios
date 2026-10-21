@@ -5,6 +5,8 @@ struct CounterDial: View {
   let count: Int
   /// 0 counts up; otherwise the ring shows progress from this number down to zero.
   let startingCount: Int
+  /// Count-up mode: progress (0...1) toward the next counter point.
+  var pointProgress: Double = 0
   let onTap: () -> Void
   let onAdjust: (Int) -> Void
 
@@ -12,7 +14,7 @@ struct CounterDial: View {
 
   private var progress: Double {
     if startingCount > 0 { return Double(startingCount - count) / Double(startingCount) }
-    return Double(count % 33) / 33
+    return pointProgress
   }
 
   var body: some View {
@@ -105,6 +107,7 @@ struct CounterView: View {
           .multilineTextAlignment(.center)
         CounterDial(
           count: count, startingCount: initialCount,
+          pointProgress: Double(33 - journeyProgress.countsUntilNextPoint) / 33,
           onTap: { changeCount(by: initialCount > 0 ? -1 : 1) },
           onAdjust: { changeCount(by: $0) })
         VStack(spacing: 4) {

@@ -118,7 +118,7 @@ struct IntroView: View {
       AZJourneyArch(width: 168, height: 232) {
         if index == 0 {
           Text("ذكر")
-            .font(.custom("AlanSans-Bold", size: 56))
+            .font(.custom("AlanSans-Bold", size: 56, relativeTo: .largeTitle))
             .foregroundStyle(AZColor.forest)
             .rotationEffect(.degrees(-12))
         } else {

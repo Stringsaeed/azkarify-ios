@@ -48,6 +48,8 @@ struct AzkarListView: View {
   @State private var search = ""
   @State private var filter = AzkarFilter.all
   @State private var quickStart: ZikrCategory?
+  @State private var finishedFocus: CompletionSummary?
+  @State private var completion: CompletionSummary?
 
   private static let quickStartIDs: [(id: Int, symbol: String)] = [
     (27, "sun.horizon"), (28, "moon.stars"), (1, "sunrise"),
@@ -124,8 +126,16 @@ struct AzkarListView: View {
       text: $search, placement: .navigationBarDrawer(displayMode: .always),
       prompt: AZLocale.text("Search azkar", "ابحث في الأذكار"))
     .background(SearchFieldTypography().allowsHitTesting(false))
-    .fullScreenCover(item: $quickStart) { FocusModeLoader(category: $0) }
+    .fullScreenCover(item: $quickStart, onDismiss: showFinishedFocus) {
+      FocusModeLoader(category: $0) { finishedFocus = $0 }
+    }
+    .sheet(item: $completion) { CompletionSheet(summary: $0) }
     .accessibilityIdentifier("azkarSidebar")
+  }
+
+  private func showFinishedFocus() {
+    completion = finishedFocus
+    finishedFocus = nil
   }
 
   private var quickStartRow: some View {

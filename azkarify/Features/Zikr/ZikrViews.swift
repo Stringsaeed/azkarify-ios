@@ -97,14 +97,7 @@ struct ZikrListView: View {
   private func finishFocus() {
     guard didFinishFocus else { return }
     didFinishFocus = false
-    let before = progress.totalPoints
-    let awarded = progress.completeSlideshow(categoryID: category.id)
-    completion = CompletionSummary(
-      stickerLabel: AZLocale.text("All read", "اكتملت القراءة"),
-      title: category.title,
-      message: AZLocale.text("Every zikr in this set, done.", "أتممت كل أذكار هذا الباب."),
-      pointsEarned: awarded ? progress.totalPoints - before : 0,
-      totalPoints: progress.totalPoints)
+    completion = .recordFocusSession(category, in: progress)
   }
 
   private func load() async {

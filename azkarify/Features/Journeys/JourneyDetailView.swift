@@ -6,6 +6,7 @@ struct JourneyDetailView: View {
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   @State private var audio = CounterAudio()
   @State private var completion: CompletionSummary?
+  @State private var finishedFocus: CompletionSummary?
   @State private var focusCategory: ZikrCategory?
   let journey: JourneyDefinition
   @ObservedObject var progress: JourneyProgressStore
@@ -42,9 +43,14 @@ struct JourneyDetailView: View {
     .onAppear { audio.prepare() }
     .onDisappear { audio.stop() }
     .sheet(item: $completion) { CompletionSheet(summary: $0) }
-    .fullScreenCover(item: $focusCategory) { category in
-      FocusModeLoader(category: category)
+    .fullScreenCover(item: $focusCategory, onDismiss: showFinishedFocus) { category in
+      FocusModeLoader(category: category) { finishedFocus = $0 }
     }
+  }
+
+  private func showFinishedFocus() {
+    completion = finishedFocus
+    finishedFocus = nil
   }
 
   private var sectionEyebrow: String {
@@ -242,13 +248,15 @@ struct FocusModeLoader: View {
   @EnvironmentObject private var progress: JourneyProgressStore
   @Environment(\.dismiss) private var dismiss
   let category: ZikrCategory
+  /// Called with the finished session's summary, for the presenter to show once the cover closes.
+  var onFinished: (CompletionSummary) -> Void = { _ in }
   @State private var entries: [ZikrEntry]?
 
   var body: some View {
     Group {
       if let entries {
         FocusModeView(entries: entries, title: category.title) {
-          _ = progress.completeSlideshow(categoryID: category.id)
+          onFinished(.recordFocusSession(category, in: progress))
         }
       } else {
         ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity).azScreenBackground()
