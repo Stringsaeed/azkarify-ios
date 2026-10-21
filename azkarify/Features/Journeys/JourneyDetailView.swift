@@ -229,6 +229,9 @@ struct JourneyDetailView: View {
       audio.play(.tick)
     case .completedJourney:
       audio.play(.completion)
+      // The sheet celebrates points; re-completing a journey already rewarded today stays quiet.
+      let earned = progress.totalPoints - before
+      guard earned > 0 else { break }
       let required = journey.requiredSteps.count
       completion = CompletionSummary(
         stickerLabel: AZLocale.text("Journey complete", "اكتملت الرحلة"),
@@ -236,7 +239,7 @@ struct JourneyDetailView: View {
         message: AZLocale.text(
           required == 1 ? "Done for today." : "All \(required) steps, done for today.",
           required == 1 ? "تمّت لليوم." : "أتممت الخطوات كلها لليوم."),
-        pointsEarned: progress.totalPoints - before,
+        pointsEarned: earned,
         totalPoints: progress.totalPoints)
     }
   }
@@ -249,7 +252,7 @@ struct FocusModeLoader: View {
   @Environment(\.dismiss) private var dismiss
   let category: ZikrCategory
   /// Called with the finished session's summary, for the presenter to show once the cover closes.
-  var onFinished: (CompletionSummary) -> Void = { _ in }
+  var onFinished: (CompletionSummary?) -> Void = { _ in }
   @State private var entries: [ZikrEntry]?
 
   var body: some View {

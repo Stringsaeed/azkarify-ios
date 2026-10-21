@@ -72,11 +72,13 @@ extension XCUIApplication {
     }
   }
 
-  /// Finishing a journey or a focus session presents one celebration sheet.
+  /// Finishing a journey or a focus session presents one celebration sheet, but only when it earns
+  /// points. Earlier runs on the same simulator may already have earned today's reward, so the sheet
+  /// is optional here; tests that need a specific outcome assert it directly.
   @MainActor
-  func dismissCompletionSheet() {
+  func dismissCompletionSheetIfShown() {
     let done = buttons["completion.done"]
-    XCTAssertTrue(done.waitForExistence(timeout: 5), "Expected the completion sheet")
+    guard done.waitForExistence(timeout: 3) else { return }
     done.tap()
     let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: done)
     XCTAssertEqual(XCTWaiter.wait(for: [gone], timeout: 5), .completed)

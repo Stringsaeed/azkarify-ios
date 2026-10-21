@@ -61,7 +61,7 @@ final class JourneyUITests: XCTestCase {
     step.tap()
     waitForSelection(step, selected: true)
     // Heading out has one step, so checking it finishes the journey.
-    app.dismissCompletionSheet()
+    app.dismissCompletionSheetIfShown()
     app.terminate()
     app.launch()
     app.open(.today)
@@ -79,7 +79,9 @@ final class JourneyUITests: XCTestCase {
     waitForSelection(step, selected: false)
     step.tap()
     waitForSelection(step, selected: true)
-    app.dismissCompletionSheet()
+    XCTAssertFalse(
+      app.buttons["completion.done"].waitForExistence(timeout: 3),
+      "Re-completing a journey already rewarded today earns nothing, so no sheet")
     app.terminate()
     app.launch()
     app.open(.today)
@@ -207,7 +209,7 @@ final class JourneyUITests: XCTestCase {
     step.tap()
     waitForSelection(step, selected: true)
     attachScreenshot(app, name: "\(language) evening journey completion sheet")
-    app.dismissCompletionSheet()
+    app.dismissCompletionSheetIfShown()
     XCTAssertEqual(
       app.staticTexts["journey-completion"].label,
       language == "ar" ? "اكتملت الرحلة" : "Journey complete")

@@ -123,7 +123,7 @@ struct AzkarListView: View {
     .azFormStyle()
     .navigationTitle(AZLocale.text("Azkar", "الأذكار"))
     .searchable(
-      text: $search, placement: .navigationBarDrawer(displayMode: .always),
+      text: $search, placement: .navigationBarDrawer(displayMode: .automatic),
       prompt: AZLocale.text("Search azkar", "ابحث في الأذكار"))
     .background(SearchFieldTypography().allowsHitTesting(false))
     .fullScreenCover(item: $quickStart, onDismiss: showFinishedFocus) {

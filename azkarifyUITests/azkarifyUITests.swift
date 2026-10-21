@@ -152,7 +152,7 @@ final class azkarifyUITests: XCTestCase {
     XCTAssertTrue(done.label.contains("Done"))
     XCTAssertTrue(close.exists, "The last zikr stays open until Done.")
     done.tap()
-    app.dismissCompletionSheet()
+    app.dismissCompletionSheetIfShown()
     XCTAssertTrue(app.buttons["focusMode"].waitForExistence(timeout: 5))
     XCTAssertFalse(close.exists)
     XCTAssertFalse(app.keyboards.firstMatch.exists)
@@ -201,7 +201,7 @@ final class azkarifyUITests: XCTestCase {
     XCTAssertFalse(app.descendants(matching: .any)["slideshowPagination"].firstMatch.exists)
     XCTAssertTrue(app.buttons["slideshowDone"].exists)
     app.buttons["slideshowDone"].tap()
-    app.dismissCompletionSheet()
+    app.dismissCompletionSheetIfShown()
     XCTAssertTrue(app.buttons["focusMode"].waitForExistence(timeout: 5))
   }
 

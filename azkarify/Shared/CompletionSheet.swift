@@ -11,15 +11,15 @@ struct CompletionSummary: Identifiable, Equatable {
 }
 
 extension CompletionSummary {
-  /// Records a finished focus session and describes it for the completion sheet.
-  static func recordFocusSession(_ category: ZikrCategory, in progress: JourneyProgressStore) -> CompletionSummary {
+  /// Records a finished focus session. Returns a summary for the completion sheet only when it earned points.
+  static func recordFocusSession(_ category: ZikrCategory, in progress: JourneyProgressStore) -> CompletionSummary? {
     let before = progress.totalPoints
-    let awarded = progress.completeSlideshow(categoryID: category.id)
+    guard progress.completeSlideshow(categoryID: category.id), progress.totalPoints > before else { return nil }
     return CompletionSummary(
       stickerLabel: AZLocale.text("All read", "اكتملت القراءة"),
       title: category.title,
       message: AZLocale.text("Every zikr in this set, done.", "أتممت كل أذكار هذا الباب."),
-      pointsEarned: awarded ? progress.totalPoints - before : 0,
+      pointsEarned: progress.totalPoints - before,
       totalPoints: progress.totalPoints)
   }
 }
