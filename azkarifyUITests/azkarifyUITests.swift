@@ -32,6 +32,37 @@ final class azkarifyUITests: XCTestCase {
   }
 
   @MainActor
+  func testQuickStartRowAlignsWithFilterAndScrolls() throws {
+    for language in ["ar", "en"] {
+      let app = XCUIApplication.launchConfigured(language: language)
+      app.open(.azkar)
+      let first = app.buttons["quickStart-\(morningAndEvening)"]
+      let last = app.buttons["quickStart-1"]
+      let filter = app.segmentedControls["azkar.filter"]
+      XCTAssertTrue(first.waitForExistence(timeout: 10))
+      XCTAssertTrue(filter.exists)
+      // The first chip starts on the leading edge of the filter below it, fully on screen.
+      if language == "ar" {
+        XCTAssertEqual(first.frame.maxX, filter.frame.maxX, accuracy: 1, "\(language): first chip edge")
+      } else {
+        XCTAssertEqual(first.frame.minX, filter.frame.minX, accuracy: 1, "\(language): first chip edge")
+      }
+      XCTAssertGreaterThanOrEqual(first.frame.minX, 0)
+      XCTAssertLessThanOrEqual(first.frame.maxX, app.frame.maxX)
+
+      let row = app.scrollViews.containing(.button, identifier: first.identifier).firstMatch
+      if language == "ar" { row.swipeRight() } else { row.swipeLeft() }
+      let reachable = XCTNSPredicateExpectation(
+        predicate: NSPredicate { _, _ in
+          last.isHittable && last.frame.minX >= 0 && last.frame.maxX <= app.frame.maxX
+        }, object: nil)
+      XCTAssertEqual(XCTWaiter.wait(for: [reachable], timeout: 5), .completed, "\(language): last chip")
+      attachScreenshot(app, name: "\(language) quick start scrolled to the end")
+      app.terminate()
+    }
+  }
+
+  @MainActor
   func testArabicAppearanceAndFocusMode() throws {
     let app = XCUIApplication.launchConfigured(language: "ar", extraArguments: ["-accent", "teal"])
 
